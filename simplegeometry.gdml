@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
+  <define>
+    <position name="Bottom_1inToppos" x="0" y="0" z="0" unit="cm"/>
+  </define>
+  <materials>
+    <material name="Hydrogen" Z="1">
+      <D unit="g/cm3" value="0.10000000000000001"/>
+      <atom unit="g/mole" value="1"/>
+    </material>
+    <material name="Carbon" Z="6">
+      <D unit="g/cm3" value="0.5"/>
+      <atom unit="g/mole" value="12"/>
+    </material>
+  </materials>
+  <solids>
+    <box name="Top" x="20" y="20" z="20" lunit="cm"/>
+    <tube name="Bottom0x1" rmin="0" rmax="5" z="10" startphi="0" deltaphi="360" aunit="deg" lunit="cm"/>
+  </solids>
+  <structure>
+    <volume name="Bottom">
+      <materialref ref="Carbon"/>
+      <solidref ref="Bottom0x1"/>
+    </volume>
+    <volume name="Top">
+      <materialref ref="Hydrogen"/>
+      <solidref ref="Top"/>
+      <physvol name="Bottom_1" copynumber="1">
+        <volumeref ref="Bottom"/>
+        <positionref ref="Bottom_1inToppos"/>
+      </physvol>
+    </volume>
+  </structure>
+  <setup name="default" version="1.0">
+    <world ref="Top"/>
+  </setup>
+</gdml>
