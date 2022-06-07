@@ -4,6 +4,7 @@
 #include "G4RunManager.hh"
 #include "G4UserRunAction.hh"
 #include "G4UserEventAction.hh"
+#include "G4UserSteppingAction.hh"
 #include "G4Run.hh"
 #include <iostream>
 
@@ -40,8 +41,16 @@ class MyEventAction : public G4UserEventAction {
 
     void BeginOfEventAction(const G4Event*);
     void EndOfEventAction(const G4Event*);
+};
 
+// ...oooOOO0OOOooo......oooOOO0OOOooo......oooOOO0OOOooo...
 
+class MySteppingAction : public G4UserSteppingAction {
+  public:
+    MySteppingAction();
+    ~MySteppingAction();
+
+    void UserSteppingAction(const G4Step*);
 };
 
 

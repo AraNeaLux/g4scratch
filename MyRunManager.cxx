@@ -83,3 +83,27 @@ void MyEventAction::EndOfEventAction(const G4Event* event){
 // ...oooOOO0OOOooo......oooOOO0OOOooo......oooOOO0OOOooo...
 // ...oooOOO0OOOooo......oooOOO0OOOooo......oooOOO0OOOooo...
 
+MySteppingAction::MySteppingAction():G4UserSteppingAction(){
+  printf("MySteppingAction created\n");
+
+}
+
+MySteppingAction::~MySteppingAction(){
+  printf("MySteppingAction destroyed\n");
+
+}
+
+void MySteppingAction::UserSteppingAction(const G4Step*){
+
+
+
+
+
+
+  printf("%s\n",__PRETTY_FUNCTION__);
+  fflush(stdout);
+}
+
+// ...oooOOO0OOOooo......oooOOO0OOOooo......oooOOO0OOOooo...
+// ...oooOOO0OOOooo......oooOOO0OOOooo......oooOOO0OOOooo...
+// ...oooOOO0OOOooo......oooOOO0OOOooo......oooOOO0OOOooo...
