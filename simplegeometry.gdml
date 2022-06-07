@@ -1,37 +1,37 @@
 <?xml version="1.0"?>
 <gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
   <define>
-    <position name="Bottom_1inToppos" x="0" y="0" z="0" unit="cm"/>
+    <position name="myBlock_1inmyWorldpos" x="0" y="0" z="0" unit="cm"/>
   </define>
   <materials>
-    <material name="Hydrogen" Z="1">
-      <D unit="g/cm3" value="0.10000000000000001"/>
-      <atom unit="g/mole" value="1"/>
+    <material name="Vacuum" Z="1">
+      <D unit="g/cm3" value="0"/>
+      <atom unit="g/mole" value="0"/>
     </material>
-    <material name="Carbon" Z="6">
-      <D unit="g/cm3" value="0.5"/>
-      <atom unit="g/mole" value="12"/>
+    <material name="Aluminum" Z="13">
+      <D unit="g/cm3" value="2.7000000000000002"/>
+      <atom unit="g/mole" value="27"/>
     </material>
   </materials>
   <solids>
-    <box name="Top" x="20" y="20" z="20" lunit="cm"/>
-    <tube name="Bottom0x1" rmin="0" rmax="5" z="10" startphi="0" deltaphi="360" aunit="deg" lunit="cm"/>
+    <box name="myWorld" x="20" y="20" z="20" lunit="cm"/>
+    <box name="myBlock0x1" x="2" y="10" z="18" lunit="cm"/>
   </solids>
   <structure>
-    <volume name="Bottom">
-      <materialref ref="Carbon"/>
-      <solidref ref="Bottom0x1"/>
+    <volume name="myBlock">
+      <materialref ref="Aluminum"/>
+      <solidref ref="myBlock0x1"/>
     </volume>
-    <volume name="Top">
-      <materialref ref="Hydrogen"/>
-      <solidref ref="Top"/>
-      <physvol name="Bottom_1" copynumber="1">
-        <volumeref ref="Bottom"/>
-        <positionref ref="Bottom_1inToppos"/>
+    <volume name="myWorld">
+      <materialref ref="Vacuum"/>
+      <solidref ref="myWorld"/>
+      <physvol name="myBlock_1" copynumber="1">
+        <volumeref ref="myBlock"/>
+        <positionref ref="myBlock_1inmyWorldpos"/>
       </physvol>
     </volume>
   </structure>
   <setup name="default" version="1.0">
-    <world ref="Top"/>
+    <world ref="myWorld"/>
   </setup>
 </gdml>
