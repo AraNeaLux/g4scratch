@@ -18,7 +18,7 @@ void MyRunManager::AnalyzeEvent (G4Event *anEvent){
   std::cout << "i am very LOUD" << std::endl;
 
   anEvent->Print();
-};
+}
 
 // ...oooOOO0OOOooo......oooOOO0OOOooo......oooOOO0OOOooo...
 // ...oooOOO0OOOooo......oooOOO0OOOooo......oooOOO0OOOooo...
@@ -67,11 +67,11 @@ void MyEventAction::BeginOfEventAction(const G4Event*){
 
 void MyEventAction::EndOfEventAction(const G4Event* event){
 
-  double x = event->GetPrimaryVertex()->GetX0();
-  double y = event->GetPrimaryVertex()->GetY0();
-  double z = event->GetPrimaryVertex()->GetZ0();
+  double xPrimary = event->GetPrimaryVertex()->GetX0();
+  double yPrimary = event->GetPrimaryVertex()->GetY0();
+  double zPrimary = event->GetPrimaryVertex()->GetZ0();
 
-  printf("%.02f\t %.02f\t %.02f\n",x,y,z);
+  printf("%.02f\t %.02f\t %.02f\n",xPrimary,yPrimary,zPrimary);
 
 
   printf("%s\n",__PRETTY_FUNCTION__);
@@ -95,15 +95,19 @@ MySteppingAction::~MySteppingAction(){
 
 void MySteppingAction::UserSteppingAction(const G4Step* step){
   //step->GetPreStepPoint()->GetPosition();
-  //step->GetPostStepPoint()->GetPosition();
+  G4ThreeVector steppos = step->GetPostStepPoint()->GetPosition();
+  double x = steppos.x();
+  double y = steppos.y();
+  double z = steppos.z();
 
-  double steplength = step->GetStepLength();
-
+  //double steplength = step->GetStepLength();
 
 
   printf("%s\n",__PRETTY_FUNCTION__);
 
-  printf("steplength = %.02f\n",steplength);
+  //printf("steplength = %.02f nm\n",steplength);
+  printf("%.02f\t %.02f\t %.02f\n",x,y,z);
+
 
   fflush(stdout);
 }

@@ -1,5 +1,5 @@
 // g++ -Wl,--copy-dt-needed-entries basic.c `geant4-config --cflags --libs`
-#include "MyDetectorConstruction.h"
+#include "MyDetectorConstructionGDML.h"
 #include "MyPrimaryGeneratorAction.h"
 #include "MyRunManager.h"
 
@@ -7,19 +7,15 @@
 #include "G4RunManager.hh"
 #include "FTFP_BERT.hh"
 
-#include "G4GDMLParser.hh"
 
 int main() {
  printf("hello\n");
  
- G4GDMLParser parser;
-
- parser.Read("simplegeometry.gdml");
 
 
  MyRunManager * runManager = new MyRunManager;
 
- runManager->SetUserInitialization(new MyDetectorConstruction());
+ runManager->SetUserInitialization(new MyDetectorConstructionGDML());
  runManager->SetUserInitialization(new FTFP_BERT());
 
  runManager->SetUserAction(new MyPrimaryGeneratorAction());

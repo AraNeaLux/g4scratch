@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
   <define>
-    <position name="myBlock_1inmyWorldpos" x="0" y="0" z="0" unit="cm"/>
+    <position name="myBlockName_1inmyWorldNamepos" x="0" y="0" z="0" unit="cm"/>
   </define>
   <materials>
     <material name="Vacuum" Z="1">
@@ -14,24 +14,24 @@
     </material>
   </materials>
   <solids>
-    <box name="myWorld" x="20" y="20" z="20" lunit="cm"/>
-    <box name="myBlock0x1" x="2" y="10" z="18" lunit="cm"/>
+    <box name="myWorldName" x="20" y="20" z="20" lunit="cm"/>
+    <box name="myBlockName0x1" x="2" y="10" z="18" lunit="cm"/>
   </solids>
   <structure>
-    <volume name="myBlock">
+    <volume name="myBlockName">
       <materialref ref="Aluminum"/>
-      <solidref ref="myBlock0x1"/>
+      <solidref ref="myBlockName0x1"/>
     </volume>
-    <volume name="myWorld">
+    <volume name="myWorldName">
       <materialref ref="Vacuum"/>
-      <solidref ref="myWorld"/>
-      <physvol name="myBlock_1" copynumber="1">
-        <volumeref ref="myBlock"/>
-        <positionref ref="myBlock_1inmyWorldpos"/>
+      <solidref ref="myWorldName"/>
+      <physvol name="myBlockName_1" copynumber="1">
+        <volumeref ref="myBlockName"/>
+        <positionref ref="myBlockName_1inmyWorldNamepos"/>
       </physvol>
     </volume>
   </structure>
   <setup name="default" version="1.0">
-    <world ref="myWorld"/>
+    <world ref="myWorldName"/>
   </setup>
 </gdml>
