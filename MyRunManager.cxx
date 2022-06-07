@@ -93,14 +93,18 @@ MySteppingAction::~MySteppingAction(){
 
 }
 
-void MySteppingAction::UserSteppingAction(const G4Step*){
+void MySteppingAction::UserSteppingAction(const G4Step* step){
+  //step->GetPreStepPoint()->GetPosition();
+  //step->GetPostStepPoint()->GetPosition();
 
-
-
+  double steplength = step->GetStepLength();
 
 
 
   printf("%s\n",__PRETTY_FUNCTION__);
+
+  printf("steplength = %.02f\n",steplength);
+
   fflush(stdout);
 }
 

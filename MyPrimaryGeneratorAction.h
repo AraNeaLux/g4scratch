@@ -14,7 +14,7 @@ class MyPrimaryGeneratorAction : public G4VUserPrimaryGeneratorAction{
             myGun->SetParticleDefinition(G4Proton::ProtonDefinition());
 
             // Particle Energy
-            myGun->SetParticleEnergy(50.*keV);
+            myGun->SetParticleEnergy(1.*MeV);
             // Particle at -10 cm?
             myGun->SetParticlePosition(G4ThreeVector(-10,0,0));
             // Particle going in +x direction
