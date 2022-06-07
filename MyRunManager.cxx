@@ -49,3 +49,37 @@ void MyRunAction::EndOfRunAction(const G4Run*){
 // ...oooOOO0OOOooo......oooOOO0OOOooo......oooOOO0OOOooo...
 // ...oooOOO0OOOooo......oooOOO0OOOooo......oooOOO0OOOooo...
 
+
+MyEventAction::MyEventAction():G4UserEventAction(){
+  printf("MyEventAction created\n");
+
+}
+
+MyEventAction::~MyEventAction(){
+  printf("MyEventAction destroyed\n");
+
+}
+
+void MyEventAction::BeginOfEventAction(const G4Event*){
+  printf("%s\n",__PRETTY_FUNCTION__);
+  fflush(stdout);
+}
+
+void MyEventAction::EndOfEventAction(const G4Event* event){
+
+  double x = event->GetPrimaryVertex()->GetX0();
+  double y = event->GetPrimaryVertex()->GetY0();
+  double z = event->GetPrimaryVertex()->GetZ0();
+
+  printf("%.02f\t %.02f\t %.02f\n",x,y,z);
+
+
+  printf("%s\n",__PRETTY_FUNCTION__);
+  fflush(stdout);
+
+}
+
+// ...oooOOO0OOOooo......oooOOO0OOOooo......oooOOO0OOOooo...
+// ...oooOOO0OOOooo......oooOOO0OOOooo......oooOOO0OOOooo...
+// ...oooOOO0OOOooo......oooOOO0OOOooo......oooOOO0OOOooo...
+

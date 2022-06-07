@@ -3,6 +3,7 @@
 
 #include "G4RunManager.hh"
 #include "G4UserRunAction.hh"
+#include "G4UserEventAction.hh"
 #include "G4Run.hh"
 #include <iostream>
 
@@ -17,6 +18,8 @@ class MyRunManager : public G4RunManager{
 
 };
 
+// ...oooOOO0OOOooo......oooOOO0OOOooo......oooOOO0OOOooo...
+
 class MyRunAction : public G4UserRunAction {
   public:
     MyRunAction();
@@ -27,6 +30,20 @@ class MyRunAction : public G4UserRunAction {
 
 
 };
+
+// ...oooOOO0OOOooo......oooOOO0OOOooo......oooOOO0OOOooo...
+
+class MyEventAction : public G4UserEventAction {
+  public:
+    MyEventAction();
+    ~MyEventAction();
+
+    void BeginOfEventAction(const G4Event*);
+    void EndOfEventAction(const G4Event*);
+
+
+};
+
 
 
 

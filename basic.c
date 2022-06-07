@@ -28,6 +28,7 @@ int main() {
 // runManager->SetUserAction(/*  RunAction   */);
  runManager->SetUserAction(new MyRunAction());
 // runManager->SetUserAction(/*  EventAction   */);
+ runManager->SetUserAction(new MyEventAction());
 // runManager->SetUserAction(/*  TrackingAction   */);
 // runManager->SetUserAction(/*  SteppingAction   */);
 
