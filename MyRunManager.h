@@ -9,7 +9,6 @@
 #include <iostream>
 #include <fstream>
 
-std::ofstream ofile;
 
 
 
@@ -34,7 +33,6 @@ class MyRunAction : public G4UserRunAction {
     void EndOfRunAction(const G4Run*);
 
 //    std::ofstream ofile;
-
 };
 
 // ...oooOOO0OOOooo......oooOOO0OOOooo......oooOOO0OOOooo...
@@ -46,6 +44,7 @@ class MyEventAction : public G4UserEventAction {
 
     void BeginOfEventAction(const G4Event*);
     void EndOfEventAction(const G4Event*);
+//    std::ofstream ofile;
 };
 
 // ...oooOOO0OOOooo......oooOOO0OOOooo......oooOOO0OOOooo...
@@ -56,6 +55,7 @@ class MySteppingAction : public G4UserSteppingAction {
     ~MySteppingAction();
 
     void UserSteppingAction(const G4Step*);
+    std::ofstream datfile;
 };
 
 

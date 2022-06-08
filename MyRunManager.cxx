@@ -1,13 +1,26 @@
 #include "MyRunManager.h"
 #include <cstdio>
+#include <fstream>
+
+std::fstream logfile;
+
+void writeToLog(const char* text){
+  logfile.open("junk.log", std::fstream::out | std::fstream::app);
+  logfile << text <<G4endl;
+  logfile.close();
+}
+
+std::fstream datfile;
+
+
 
 MyRunManager::MyRunManager():G4RunManager(){
-  printf("MyRunManager created\n");
+  //printf("MyRunManager created\n");
 
 }
 
 MyRunManager::~MyRunManager(){
-  printf("MyRunManager destroyed\n");
+  //printf("MyRunManager destroyed\n");
 
 }
 
@@ -26,16 +39,13 @@ void MyRunManager::AnalyzeEvent (G4Event *anEvent){
 
 
 MyRunAction::MyRunAction():G4UserRunAction(){
-  ofile.open("junk.dat");
   //printf("MyRunAction created\n");
-  ofile << G4endl << "MyRunAction created" << G4endl;
+  writeToLog("MyRunAction created");
 }
 
 MyRunAction::~MyRunAction(){
-  //printf("MyRunAction destroyed\n");
-  ofile << G4endl << "MyRunAction destroyed" << G4endl;
-  ofile.close();
-
+  //ofile << G4endl << "MyRunAction destroyed" << G4endl;
+  writeToLog("MyRunAction destroyed");
 }
 
 void MyRunAction::BeginOfRunAction(const G4Run*){
@@ -54,13 +64,13 @@ void MyRunAction::EndOfRunAction(const G4Run*){
 
 
 MyEventAction::MyEventAction():G4UserEventAction(){
-  printf("MyEventAction created\n");
-
+  //printf("MyEventAction created\n");
+  writeToLog("MyEventAction created");
 }
 
 MyEventAction::~MyEventAction(){
-  printf("MyEventAction destroyed\n");
-
+  //printf("MyEventAction destroyed\n");
+  writeToLog("MyEventAction destoyed");
 }
 
 void MyEventAction::BeginOfEventAction(const G4Event*){
@@ -88,12 +98,25 @@ void MyEventAction::EndOfEventAction(const G4Event* event){
 // ...oooOOO0OOOooo......oooOOO0OOOooo......oooOOO0OOOooo...
 
 MySteppingAction::MySteppingAction():G4UserSteppingAction(){
-  printf("MySteppingAction created\n");
+  //printf("MySteppingAction created\n");
+  writeToLog("MySteppingAction created");
 
+/*
+datfile.open("junk.dat");
+  datfile << "EventID/I:"
+          << "particle/C:"
+          //<< "stepnum/I:"
+          << "x/D:"
+          << "y/D:"
+          << "z/D" << G4endl;
+//          TH1D h("h","h",100,0,100);
+*/
 }
 
 MySteppingAction::~MySteppingAction(){
-  printf("MySteppingAction destroyed\n");
+  //printf("MySteppingAction destroyed\n");
+  writeToLog("MySteppingAction destroyed");
+//  datfile.close();
 
 }
 
@@ -113,9 +136,15 @@ void MySteppingAction::UserSteppingAction(const G4Step* step){
   printf("%s\n",__PRETTY_FUNCTION__);
 
   //printf("steplength = %.02f nm\n",steplength);
-  printf(partname);
-  printf("\n %.02f\t %.02f\t %.02f\n",x,y,z);
+  //printf(partname);
+  //printf("\n %.02f\t %.02f\t %.02f\n",x,y,z);
 
+/*  datfile << MyRunManager::GetRunManager()->GetCurrentEvent()->GetEventID() 
+          << "\t\t" << partname
+          << "\t\t" << x
+          << "\t\t" << y
+          << "\t\t" << z << G4endl;
+*/
 
   fflush(stdout);
 }
