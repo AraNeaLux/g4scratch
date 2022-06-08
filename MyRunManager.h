@@ -9,6 +9,10 @@
 #include <iostream>
 #include <fstream>
 
+std::ofstream ofile;
+
+
+
 class MyRunManager : public G4RunManager{
   public: 
     MyRunManager();
@@ -29,7 +33,7 @@ class MyRunAction : public G4UserRunAction {
     void BeginOfRunAction(const G4Run*);
     void EndOfRunAction(const G4Run*);
 
-    std::ofstream ofile;
+//    std::ofstream ofile;
 
 };
 
