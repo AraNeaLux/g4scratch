@@ -4,6 +4,7 @@
 #include "G4VUserPrimaryGeneratorAction.hh"
 #include "G4ParticleGun.hh"
 #include "G4Proton.hh"
+#include "G4Gamma.hh"
 
 class MyPrimaryGeneratorAction : public G4VUserPrimaryGeneratorAction{
     public:
@@ -12,6 +13,7 @@ class MyPrimaryGeneratorAction : public G4VUserPrimaryGeneratorAction{
             G4ParticleGun* myGun = new G4ParticleGun();
 
             myGun->SetParticleDefinition(G4Proton::ProtonDefinition());
+            //myGun->SetParticleDefinition(G4Gamma::GammaDefinition());
 
             // Particle Energy
             myGun->SetParticleEnergy(10.*MeV);

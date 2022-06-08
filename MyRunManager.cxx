@@ -71,7 +71,8 @@ void MyEventAction::EndOfEventAction(const G4Event* event){
   double yPrimary = event->GetPrimaryVertex()->GetY0();
   double zPrimary = event->GetPrimaryVertex()->GetZ0();
 
-  printf("%.02f\t %.02f\t %.02f\n",xPrimary,yPrimary,zPrimary);
+
+  printf("PRIMARY: %.02f\t %.02f\t %.02f\n",xPrimary,yPrimary,zPrimary);
 
 
   printf("%s\n",__PRETTY_FUNCTION__);
@@ -102,11 +103,15 @@ void MySteppingAction::UserSteppingAction(const G4Step* step){
 
   //double steplength = step->GetStepLength();
 
+  G4Track *track = step->GetTrack();
+  G4String partname = track->GetParticleDefinition()->GetParticleName();
+
 
   printf("%s\n",__PRETTY_FUNCTION__);
 
   //printf("steplength = %.02f nm\n",steplength);
-  printf("%.02f\t %.02f\t %.02f\n",x,y,z);
+  printf(partname);
+  printf("\n %.02f\t %.02f\t %.02f\n",x,y,z);
 
 
   fflush(stdout);

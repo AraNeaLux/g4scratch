@@ -19,7 +19,7 @@ class MyDetectorConstruction : public G4VUserDetectorConstruction{
       G4Box* solidWorld = new G4Box("World",
                                     1000*cm,1000*cm,1000*cm);
       G4Box* solidTarget = new G4Box("Target",
-                                     10*cm, 10*cm, 10*cm);
+                                     5*cm, 5*cm, 5*cm);
    
       // Pointer to Geant4's materials database
       G4NistManager* nist = G4NistManager::Instance();
