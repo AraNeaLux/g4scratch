@@ -26,12 +26,15 @@ void MyRunManager::AnalyzeEvent (G4Event *anEvent){
 
 
 MyRunAction::MyRunAction():G4UserRunAction(){
-  printf("MyRunAction created\n");
-
+  ofile.open("junk.dat");
+  //printf("MyRunAction created\n");
+  ofile << G4endl << "MyRunAction created" << G4endl;
 }
 
 MyRunAction::~MyRunAction(){
-  printf("MyRunAction destroyed\n");
+  //printf("MyRunAction destroyed\n");
+  ofile << G4endl << "MyRunAction destroyed" << G4endl;
+  ofile.close();
 
 }
 

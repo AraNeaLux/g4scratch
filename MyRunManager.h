@@ -7,6 +7,7 @@
 #include "G4UserSteppingAction.hh"
 #include "G4Run.hh"
 #include <iostream>
+#include <fstream>
 
 class MyRunManager : public G4RunManager{
   public: 
@@ -15,8 +16,7 @@ class MyRunManager : public G4RunManager{
 
 
     void AnalyzeEvent (G4Event *anEvent);
-
-
+    
 };
 
 // ...oooOOO0OOOooo......oooOOO0OOOooo......oooOOO0OOOooo...
@@ -29,6 +29,7 @@ class MyRunAction : public G4UserRunAction {
     void BeginOfRunAction(const G4Run*);
     void EndOfRunAction(const G4Run*);
 
+    std::ofstream ofile;
 
 };
 
