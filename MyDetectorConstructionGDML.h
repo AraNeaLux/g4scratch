@@ -23,8 +23,8 @@ class MyDetectorConstructionGDML : public G4VUserDetectorConstruction{
       parser.Read("simplegeometry.gdml");
 
 
-      G4VPhysicalVolume* physWorld = parser.GetWorldVolume();
-      return physWorld;
+      G4VPhysicalVolume *fWorld = parser.GetWorldVolume();
+      return fWorld;
 
     }
 
