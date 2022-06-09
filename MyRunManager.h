@@ -6,6 +6,7 @@
 #include "G4UserEventAction.hh"
 #include "G4UserSteppingAction.hh"
 #include "G4Run.hh"
+#include "G4SystemOfUnits.hh"
 #include <iostream>
 #include <fstream>
 

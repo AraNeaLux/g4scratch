@@ -93,9 +93,9 @@ void MyEventAction::BeginOfEventAction(const G4Event*){
 
 void MyEventAction::EndOfEventAction(const G4Event* event){
 
-  double xPrimary = event->GetPrimaryVertex()->GetX0();
-  double yPrimary = event->GetPrimaryVertex()->GetY0();
-  double zPrimary = event->GetPrimaryVertex()->GetZ0();
+  double xPrimary = event->GetPrimaryVertex()->GetX0()*cm;
+  double yPrimary = event->GetPrimaryVertex()->GetY0()*cm;
+  double zPrimary = event->GetPrimaryVertex()->GetZ0()*cm;
 
 
   printf("PRIMARY: %.02f\t %.02f\t %.02f\n",xPrimary,yPrimary,zPrimary);

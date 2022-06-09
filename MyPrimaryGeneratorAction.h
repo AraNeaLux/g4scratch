@@ -5,6 +5,8 @@
 #include "G4ParticleGun.hh"
 #include "G4Proton.hh"
 #include "G4ParticleTable.hh"
+#include "G4SystemOfUnits.hh"
+#include "Randomize.hh"
 
 class MyPrimaryGeneratorAction : public G4VUserPrimaryGeneratorAction{
     public:
@@ -14,15 +16,25 @@ class MyPrimaryGeneratorAction : public G4VUserPrimaryGeneratorAction{
 
             //myGun->SetParticleDefinition(G4Proton::ProtonDefinition());
             G4ParticleDefinition* particle
-              = G4ParticleTable::GetParticleTable()->FindParticle("proton");
+              = G4ParticleTable::GetParticleTable()->FindParticle("gamma");
             myGun->SetParticleDefinition(particle);
 
             // Particle Energy
-            myGun->SetParticleEnergy(10.*MeV);
+            myGun->SetParticleEnergy(500.*keV);
             // Particle at -10 cm?
-            myGun->SetParticlePosition(G4ThreeVector(-10,0,0));
+            myGun->SetParticlePosition(G4ThreeVector(0*cm,0*cm,0*cm));
             // Particle going in +x direction
-            myGun->SetParticleMomentumDirection(G4ThreeVector(1.0,0,0));
+            //myGun->SetParticleMomentumDirection(G4ThreeVector(1.0,0,0));
+
+            G4double cosTheta = 2*G4UniformRand() - 1., 
+                     phi = 2*CLHEP::pi*G4UniformRand();
+            G4double sinTheta = std::sqrt(1. - cosTheta*cosTheta);
+            G4double ux = sinTheta*std::cos(phi),
+                     uy = sinTheta*std::sin(phi),
+                     uz = cosTheta;
+
+            myGun->SetParticleMomentumDirection(G4ThreeVector(ux,uy,uz));
+
 
             myGun->GeneratePrimaryVertex(anEvent);
         }

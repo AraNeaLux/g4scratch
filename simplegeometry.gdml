@@ -8,9 +8,9 @@
       <D unit="g/cm3" value="0"/>
       <atom unit="g/mole" value="0"/>
     </material>
-    <material name="Aluminum" Z="13">
-      <D unit="g/cm3" value="0.10000000000000001"/>
-      <atom unit="g/mole" value="27"/>
+    <material name="Germanium" Z="32">
+      <D unit="g/cm3" value="5.2999999999999998"/>
+      <atom unit="g/mole" value="72"/>
     </material>
   </materials>
   <solids>
@@ -19,7 +19,7 @@
   </solids>
   <structure>
     <volume name="myBlock">
-      <materialref ref="Aluminum"/>
+      <materialref ref="Germanium"/>
       <solidref ref="myBlock0x1"/>
     </volume>
     <volume name="myWorld">

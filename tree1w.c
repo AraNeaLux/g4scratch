@@ -45,10 +45,10 @@ void tree1r(const char* filename = "tree1.root"){
    t1->SetBranchAddress("EventID",&EventID);
 
    // create two histograms
-   TH1D *hpx   = new TH1D("hpx","px distribution",100,-10,10);
-   TH2D *hpxpy = new TH2D("hpxpy","py vs px",100,-10,10,100,-10,10);
-   TH2D *hpypz = new TH2D("hpypz","pz vs py",100,-10,10,100,-10,10);
-   TH2D *hpxpz = new TH2D("hpxpz","pz vs px",100,-10,10,100,-10,10);
+   TH1D *hpx   = new TH1D("hpx","px distribution",1000,-100,100);
+   TH2D *hpxpy = new TH2D("hpxpy","py vs px",1000,-100,100,1000,-100,100);
+   TH2D *hpypz = new TH2D("hpypz","pz vs py",1000,-100,100,1000,-100,100);
+   TH2D *hpxpz = new TH2D("hpxpz","pz vs px",1000,-100,100,1000,-100,100);
 
    //read all entries and fill the histogramsi
    Int_t nentries = (Int_t)t1->GetEntries();
