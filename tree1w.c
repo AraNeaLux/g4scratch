@@ -1,4 +1,4 @@
-void tree1w(){
+/*void tree1w(){
 
    // create a tree file tree1.root - create the file, the Tree and
    // a few branches
@@ -25,7 +25,7 @@ void tree1w(){
    // save the Tree heade; the file will be automatically closed
    // when going out of the function scope
    t1.Write();
-}
+}*/
 
 void tree1r(const char* filename = "tree1.root"){
 
@@ -35,18 +35,20 @@ void tree1r(const char* filename = "tree1.root"){
 
    TFile *f = new TFile(filename);
    TTree *t1 = (TTree*)f->Get("t1");
-   Float_t px, py, pz;
+   Double_t px, py, pz;
    Double_t random;
-   Int_t ev;
+   Int_t EventID;
    t1->SetBranchAddress("px",&px);
    t1->SetBranchAddress("py",&py);
    t1->SetBranchAddress("pz",&pz);
    t1->SetBranchAddress("random",&random);
-   t1->SetBranchAddress("ev",&ev);
+   t1->SetBranchAddress("EventID",&EventID);
 
    // create two histograms
-   TH1F *hpx   = new TH1F("hpx","px distribution",100,-3,3);
-   TH2F *hpxpy = new TH2F("hpxpy","py vs px",30,-3,3,30,-3,3);
+   TH1D *hpx   = new TH1D("hpx","px distribution",100,-10,10);
+   TH2D *hpxpy = new TH2D("hpxpy","py vs px",100,-10,10,100,-10,10);
+   TH2D *hpypz = new TH2D("hpypz","pz vs py",100,-10,10,100,-10,10);
+   TH2D *hpxpz = new TH2D("hpxpz","pz vs px",100,-10,10,100,-10,10);
 
    //read all entries and fill the histogramsi
    Int_t nentries = (Int_t)t1->GetEntries();
@@ -54,6 +56,8 @@ void tree1r(const char* filename = "tree1.root"){
       t1->GetEntry(i);
       hpx->Fill(px);
       hpxpy->Fill(px,py);
+      hpypz->Fill(py,pz);
+      hpxpz->Fill(px,pz);
    }
 
 //  t1->Write();
