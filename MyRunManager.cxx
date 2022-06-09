@@ -1,13 +1,23 @@
 #include "MyRunManager.h"
+
 #include <cstdio>
 #include <fstream>
 
+//#include <TFile.h>
+
 std::fstream logfile;
 
-void writeToLog(const char* text){
-  logfile.open("junk.log", std::fstream::out | std::fstream::app);
-  logfile << text <<G4endl;
-  logfile.close();
+void writeToLog(const char* text,int rewrite = 0){
+  if (rewrite != 0) {
+    logfile.open("junk.log", std::fstream::out);
+    logfile << text <<G4endl;
+    logfile.close();
+  }
+  else {
+    logfile.open("junk.log", std::fstream::out | std::fstream::app);
+    logfile << text <<G4endl;
+    logfile.close();
+  }
 }
 
 std::fstream datfile;
@@ -16,12 +26,12 @@ std::fstream datfile;
 
 MyRunManager::MyRunManager():G4RunManager(){
   //printf("MyRunManager created\n");
-
+  writeToLog("--- BEGIN OF RUN ---",1);
 }
 
 MyRunManager::~MyRunManager(){
   //printf("MyRunManager destroyed\n");
-
+  writeToLog("--- END OF RUN ---");
 }
 
 
@@ -101,7 +111,7 @@ MySteppingAction::MySteppingAction():G4UserSteppingAction(){
   //printf("MySteppingAction created\n");
   writeToLog("MySteppingAction created");
 
-/*
+
 datfile.open("junk.dat");
   datfile << "EventID/I:"
           << "particle/C:"
@@ -110,13 +120,13 @@ datfile.open("junk.dat");
           << "y/D:"
           << "z/D" << G4endl;
 //          TH1D h("h","h",100,0,100);
-*/
+
 }
 
 MySteppingAction::~MySteppingAction(){
   //printf("MySteppingAction destroyed\n");
   writeToLog("MySteppingAction destroyed");
-//  datfile.close();
+  datfile.close();
 
 }
 
@@ -136,15 +146,19 @@ void MySteppingAction::UserSteppingAction(const G4Step* step){
   printf("%s\n",__PRETTY_FUNCTION__);
 
   //printf("steplength = %.02f nm\n",steplength);
-  //printf(partname);
-  //printf("\n %.02f\t %.02f\t %.02f\n",x,y,z);
+  printf(partname);
+  printf("\n %.02f\t %.02f\t %.02f\n",x,y,z);
 
-/*  datfile << MyRunManager::GetRunManager()->GetCurrentEvent()->GetEventID() 
-          << "\t\t" << partname
-          << "\t\t" << x
-          << "\t\t" << y
-          << "\t\t" << z << G4endl;
-*/
+  x = round( x * 1000.0 ) / 1000.0;
+  y = round( y * 1000.0 ) / 1000.0;
+  z = round( z * 1000.0 ) / 1000.0;
+
+  datfile << MyRunManager::GetRunManager()->GetCurrentEvent()->GetEventID() 
+          << "\t" << partname
+          << "\t" << x
+          << "\t" << y
+          << "\t" << z << G4endl;
+
 
   fflush(stdout);
 }

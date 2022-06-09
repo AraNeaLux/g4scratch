@@ -7,6 +7,8 @@
   //TGeoMaterial *mat2 = new TGeoMaterial("Aluminum",27,13,2.7);
   TGeoMaterial *mat2 = new TGeoMaterial("Aluminum",27,13,0.1);
   TGeoMedium *med2 = new TGeoMedium("Aluminum",2,mat2);
+  //TGeoMaterial *mat2 = new TGeoMaterial("Germanium",72,32,5.3);
+  //TGeoMedium *med2 = new TGeoMedium("Germanium",2,mat2);
 
   TGeoVolume *myWorld = gGeoManager->MakeBox("myWorld",med1,10.,10.,10.);
   TGeoVolume *myBlock = gGeoManager->MakeBox("myBlock",med2,1.,3.,5.);
