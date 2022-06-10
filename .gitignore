@@ -1,4 +1,4 @@
 *.dat
-#.log
-
+*.log
+*.root
 a.out
