@@ -29,7 +29,7 @@ MyRunManager::MyRunManager():G4RunManager(){
   //printf("MyRunManager created\n");
   writeToLog("--- BEGIN OF RUN ---",1);
 
-  MyOutputManager::Get();
+  MyOutputManager::Get()->setupTree();
 
 }
 
@@ -37,6 +37,7 @@ MyRunManager::~MyRunManager(){
   //printf("MyRunManager destroyed\n");
   writeToLog("--- END OF RUN ---");
 
+  MyOutputManager::Get()->closeTree();
 
 }
 
@@ -166,6 +167,9 @@ void MySteppingAction::UserSteppingAction(const G4Step* step){
     }
   }
 
+  // TRACK ID THINGS
+  int fTrackID = track->GetTrackID();
+
 
   // POSITIONY THINGS
   //step->GetPreStepPoint()->GetPosition();
@@ -184,19 +188,17 @@ void MySteppingAction::UserSteppingAction(const G4Step* step){
   //printf(partname);
   //printf("\n %.02f\t %.02f\t %.02f\n",x,y,z);
 
-  x = round( x * 1000.0 ) / 1000.0;
-  y = round( y * 1000.0 ) / 1000.0;
-  z = round( z * 1000.0 ) / 1000.0;
-
   // ENERGY THINGS
   double ke = step->GetPostStepPoint()->GetKineticEnergy();
 
-  datfile << MyRunManager::GetRunManager()->GetCurrentEvent()->GetEventID() 
+/*  datfile << MyRunManager::GetRunManager()->GetCurrentEvent()->GetEventID() 
           << "\t" << partname
           << "\t" << x
           << "\t" << y
           << "\t" << z << G4endl;
+*/
 
+  MyOutputManager::Get()->fill(fEventID,fTrackID,fStepNum,fSubStepNum,fParticleName,ke,x,y,z);
 
   //fflush(stdout);
   writeToLog(__PRETTY_FUNCTION__);
