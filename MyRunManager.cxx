@@ -27,11 +27,16 @@ std::fstream datfile;
 MyRunManager::MyRunManager():G4RunManager(){
   //printf("MyRunManager created\n");
   writeToLog("--- BEGIN OF RUN ---",1);
+
+
+
 }
 
 MyRunManager::~MyRunManager(){
   //printf("MyRunManager destroyed\n");
   writeToLog("--- END OF RUN ---");
+
+
 }
 
 
@@ -42,6 +47,7 @@ void MyRunManager::AnalyzeEvent (G4Event *anEvent){
 
   anEvent->Print();
 }
+
 
 // ...oooOOO0OOOooo......oooOOO0OOOooo......oooOOO0OOOooo...
 // ...oooOOO0OOOooo......oooOOO0OOOooo......oooOOO0OOOooo...
@@ -115,6 +121,10 @@ MySteppingAction::MySteppingAction():G4UserSteppingAction(){
   //printf("MySteppingAction created\n");
   writeToLog("MySteppingAction created");
 
+  fEventID=-1;
+  fParticleName="";
+  fStepNum=-1;
+  fSubStepNum=-1;
 
 datfile.open("junk.dat");
   datfile << "EventID/I:"
@@ -135,6 +145,28 @@ MySteppingAction::~MySteppingAction(){
 }
 
 void MySteppingAction::UserSteppingAction(const G4Step* step){
+
+  G4Track *track = step->GetTrack();
+  G4String partname = track->GetParticleDefinition()->GetParticleName();
+
+  if(fEventID!=MyRunManager::GetRunManager()->GetCurrentEvent()->GetEventID()){
+    // do something useful
+    fParticleName = partname;
+    fStepNum = 0;
+    fSubStepNum = 0;
+    fEventID=MyRunManager::GetRunManager()->GetCurrentEvent()->GetEventID();
+  } else {
+    fStepNum++;
+    if(fParticleName.compare(partname)!= 0){ // current particle not prev particle
+      fSubStepNum = 0;
+      fParticleName = partname;
+    } else {
+      fSubStepNum++;
+    }
+  }
+
+
+  // POSITIONY THINGS
   //step->GetPreStepPoint()->GetPosition();
   G4ThreeVector steppos = step->GetPostStepPoint()->GetPosition();
   double x = steppos.x();
@@ -143,8 +175,6 @@ void MySteppingAction::UserSteppingAction(const G4Step* step){
 
   //double steplength = step->GetStepLength();
 
-  G4Track *track = step->GetTrack();
-  G4String partname = track->GetParticleDefinition()->GetParticleName();
 
 
   //printf("%s\n",__PRETTY_FUNCTION__);
@@ -156,6 +186,9 @@ void MySteppingAction::UserSteppingAction(const G4Step* step){
   x = round( x * 1000.0 ) / 1000.0;
   y = round( y * 1000.0 ) / 1000.0;
   z = round( z * 1000.0 ) / 1000.0;
+
+  // ENERGY THINGS
+  double ke = step->GetPostStepPoint()->GetKineticEnergy();
 
   datfile << MyRunManager::GetRunManager()->GetCurrentEvent()->GetEventID() 
           << "\t" << partname

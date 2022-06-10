@@ -1,4 +1,4 @@
-// g++ -Wl,--copy-dt-needed-entries basic.c `geant4-config --cflags --libs`
+// g++ -Wl,--copy-dt-needed-entries basic.c MyRunManager.cxx `geant4-config --cflags --libs`
 #include "MyDetectorConstructionGDML.h"
 #include "MyPrimaryGeneratorAction.h"
 #include "MyRunManager.h"
@@ -31,7 +31,7 @@ int main() {
 
  runManager->Initialize();
 
- runManager->BeamOn(1000000);
+ runManager->BeamOn(10000);
 
  delete runManager; 
 

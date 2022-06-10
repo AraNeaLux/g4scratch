@@ -20,7 +20,8 @@ class MyRunManager : public G4RunManager{
 
 
     void AnalyzeEvent (G4Event *anEvent);
-    
+
+ 
 };
 
 // ...oooOOO0OOOooo......oooOOO0OOOooo......oooOOO0OOOooo...
@@ -57,6 +58,12 @@ class MySteppingAction : public G4UserSteppingAction {
 
     void UserSteppingAction(const G4Step*);
     std::ofstream datfile;
+
+    long fEventID;
+    std::string fParticleName;
+    long fStepNum;
+    long fSubStepNum;
+
 };
 
 
