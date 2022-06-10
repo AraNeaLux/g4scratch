@@ -1,6 +1,14 @@
 #include "MyOutputManager.h"
 #include <cstdio>
 
+MyOutputManager* MyOutputManager::fptr = 0;
+
+MyOutputManager* MyOutputManager::Get(){
+  if(fptr == 0){
+    fptr = new MyOutputManager();
+  }
+  return fptr;
+}
 
 MyOutputManager::MyOutputManager() {
   printf("%s\n",__PRETTY_FUNCTION__);

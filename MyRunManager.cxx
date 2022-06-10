@@ -1,4 +1,5 @@
 #include "MyRunManager.h"
+#include "MyOutputManager.h"
 
 #include <cstdio>
 #include <fstream>
@@ -28,7 +29,7 @@ MyRunManager::MyRunManager():G4RunManager(){
   //printf("MyRunManager created\n");
   writeToLog("--- BEGIN OF RUN ---",1);
 
-
+  MyOutputManager::Get();
 
 }
 

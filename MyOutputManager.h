@@ -4,13 +4,16 @@
 class MyOutputManager{
 
   public: 
-    MyOutputManager();
+    static MyOutputManager* Get();
+
     ~MyOutputManager();
     void setupTree(const char *fname);
     void closeTree();
 
 
   private:
+    MyOutputManager();
+    static MyOutputManager* fptr;
 //    TFile *foutput;
 //    TTree *fTree;
 

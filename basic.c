@@ -1,4 +1,5 @@
-// g++ -Wl,--copy-dt-needed-entries basic.c MyRunManager.cxx `geant4-config --cflags --libs`
+// g++ -Wl,--copy-dt-needed-entries basic.c MyRunManager.cxx MyOutputManager.cxx `geant4-config --cflags --libs`
+
 #include "MyDetectorConstructionGDML.h"
 #include "MyPrimaryGeneratorAction.h"
 #include "MyRunManager.h"
