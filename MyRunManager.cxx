@@ -151,6 +151,8 @@ void MySteppingAction::UserSteppingAction(const G4Step* step){
   G4Track *track = step->GetTrack();
   G4String partname = track->GetParticleDefinition()->GetParticleName();
 
+
+/*
   if(fEventID!=MyRunManager::GetRunManager()->GetCurrentEvent()->GetEventID()){
     // do something useful
     fParticleName = partname;
@@ -166,10 +168,15 @@ void MySteppingAction::UserSteppingAction(const G4Step* step){
       fSubStepNum++;
     }
   }
+*/
+
 
   // TRACK ID THINGS
   int fTrackID = track->GetTrackID();
 
+  // STEP ID THINGS
+  int fStepNum = track->GetCurrentStepNumber();
+  int fSubStepNum = step->GetSecondaryInCurrentStep()->GetTrackID();
 
   // POSITIONY THINGS
   //step->GetPreStepPoint()->GetPosition();

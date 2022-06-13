@@ -35,7 +35,7 @@ int main() {
 
  runManager->Initialize();
 
- runManager->BeamOn(10);
+ runManager->BeamOn(1000000);
 
  delete runManager; 
 
