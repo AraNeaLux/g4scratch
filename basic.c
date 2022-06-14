@@ -10,35 +10,36 @@
 #include <cstdio>
 #include "G4RunManager.hh"
 #include "FTFP_BERT.hh"
-
+#include "G4GDMLParser.hh"
 
 int main() {
- printf("hello\n");
+  printf("hello\n");
+  
+  G4GDMLParser parser;
+  parser.Read("simplegeometry.gdml");
  
-
-
- MyRunManager * runManager = new MyRunManager;
-
- runManager->SetUserInitialization(new MyDetectorConstructionGDML());
- runManager->SetUserInitialization(new FTFP_BERT());
-
- runManager->SetUserAction(new MyPrimaryGeneratorAction());
-
-// runManager->SetUserAction(/*  StackingAction   */);
-// runManager->SetUserAction(/*  RunAction   */);
- runManager->SetUserAction(new MyRunAction());
-// runManager->SetUserAction(/*  EventAction   */);
- runManager->SetUserAction(new MyEventAction());
-// runManager->SetUserAction(/*  TrackingAction   */);
-// runManager->SetUserAction(/*  SteppingAction   */);
- runManager->SetUserAction(new MySteppingAction());
-
- runManager->Initialize();
-
- runManager->BeamOn(1000000);
-
- delete runManager; 
-
-
- return 0;
+  MyRunManager * runManager = new MyRunManager;
+ 
+  runManager->SetUserInitialization(new MyDetectorConstructionGDML(parser));
+  runManager->SetUserInitialization(new FTFP_BERT());
+ 
+  runManager->SetUserAction(new MyPrimaryGeneratorAction());
+ 
+ // runManager->SetUserAction(/*  StackingAction   */);
+ // runManager->SetUserAction(/*  RunAction   */);
+  runManager->SetUserAction(new MyRunAction());
+ // runManager->SetUserAction(/*  EventAction   */);
+  runManager->SetUserAction(new MyEventAction());
+ // runManager->SetUserAction(/*  TrackingAction   */);
+ // runManager->SetUserAction(/*  SteppingAction   */);
+  runManager->SetUserAction(new MySteppingAction());
+ 
+  runManager->Initialize();
+ 
+  runManager->BeamOn(100000);
+ 
+  delete runManager; 
+ 
+ 
+  return 0;
 }

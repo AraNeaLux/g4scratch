@@ -1,5 +1,6 @@
 #include "MyRunManager.h"
 #include "MyOutputManager.h"
+#include "MyDetectorConstructionGDML.h"
 
 #include <cstdio>
 #include <fstream>
@@ -170,13 +171,15 @@ void MySteppingAction::UserSteppingAction(const G4Step* step){
   }
 */
 
+  // EVENT ID THINGS
+  fEventID=MyRunManager::GetRunManager()->GetCurrentEvent()->GetEventID();
 
   // TRACK ID THINGS
   int fTrackID = track->GetTrackID();
 
   // STEP ID THINGS
   int fStepNum = track->GetCurrentStepNumber();
-  int fSubStepNum = step->GetSecondaryInCurrentStep()->GetTrackID();
+  //int fSubStepNum = step->GetSecondaryInCurrentStep()->GetTrackID();
 
   // POSITIONY THINGS
   //step->GetPreStepPoint()->GetPosition();
@@ -185,10 +188,11 @@ void MySteppingAction::UserSteppingAction(const G4Step* step){
   double y = steppos.y();
   double z = steppos.z();
 
-  //double steplength = step->GetStepLength();
-
-
-
+/*  // Material?
+  if (step->GetPostStepPoint()->GetMaterial()->GetName()==fdet->GetMaterial()) {
+    printf("in det\n");
+  }
+*/
   //printf("%s\n",__PRETTY_FUNCTION__);
 
   //printf("steplength = %.02f nm\n",steplength);
