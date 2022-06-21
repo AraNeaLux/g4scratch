@@ -31,6 +31,7 @@ void MyOutputManager::setupTree(const char* fname){
   fTree->Branch("StepNum",      &fStepNum);     
   fTree->Branch("SubStepNum",   &fSubStepNum);  
   fTree->Branch("ParticleName", &fParticleName); 
+  fTree->Branch("Volume",       &fVolume);     
   fTree->Branch("ke",           &fke);           
   fTree->Branch("x",            &fx);            
   fTree->Branch("y",            &fy);            
@@ -50,6 +51,7 @@ void MyOutputManager::clear(){
   fStepNum      = -1;
   fSubStepNum   = -1; 
   fParticleName = ""; 
+  fVolume       = -1;
   fke           = sqrt(-1); 
   fx            = sqrt(-1); 
   fy            = sqrt(-1); 
@@ -62,6 +64,7 @@ void MyOutputManager::fill(int eventID,
                            int stepNum,
                            int subStepNum,
                            std::string particleName,
+                           int volume,
                            double ke,
                            double x,
                            double y,
@@ -71,6 +74,7 @@ void MyOutputManager::fill(int eventID,
   fStepNum        = stepNum;      
   fSubStepNum     = subStepNum;   
   fParticleName   = particleName; 
+  fVolume         = volume;
   fke             = ke;           
   fx              = x;            
   fy              = y;            

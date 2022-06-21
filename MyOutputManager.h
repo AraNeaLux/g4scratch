@@ -18,6 +18,7 @@ class MyOutputManager{
               int stepNum,
               int subStepNum,
               std::string particleName,
+              int volume,
               double ke,
               double x,
               double y,
@@ -35,6 +36,7 @@ class MyOutputManager{
     int fStepNum;
     int fSubStepNum;
     std::string fParticleName;
+    int fVolume;
     double fke;
     double fx;
     double fy;

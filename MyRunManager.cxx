@@ -152,6 +152,7 @@ void MySteppingAction::UserSteppingAction(const G4Step* step){
   G4Track *track = step->GetTrack();
   G4String partname = track->GetParticleDefinition()->GetParticleName();
 
+  fParticleName = partname;
 
 /*
   if(fEventID!=MyRunManager::GetRunManager()->GetCurrentEvent()->GetEventID()){
@@ -179,7 +180,18 @@ void MySteppingAction::UserSteppingAction(const G4Step* step){
 
   // STEP ID THINGS
   int fStepNum = track->GetCurrentStepNumber();
-  //int fSubStepNum = step->GetSecondaryInCurrentStep()->GetTrackID();
+
+  // SECONDARIES
+  const std::vector<const G4Track*> *substep = step->GetSecondaryInCurrentStep();
+  for (unsigned int i = 0; i < substep->size(); ++i){
+    int sectrackid = (*step->GetSecondaryInCurrentStep())[i]->GetTrackID();
+    std::vector<int> secondaries;
+    secondaries.push_back(sectrackid);
+
+    for (int x : secondaries)
+      G4cout << x << G4endl;
+  }
+  
 
   // POSITIONY THINGS
   //step->GetPreStepPoint()->GetPosition();
@@ -188,17 +200,25 @@ void MySteppingAction::UserSteppingAction(const G4Step* step){
   double y = steppos.y();
   double z = steppos.z();
 
-/*  // Material?
-  if (step->GetPostStepPoint()->GetMaterial()->GetName()==fdet->GetMaterial()) {
-    printf("in det\n");
-  }
-*/
   //printf("%s\n",__PRETTY_FUNCTION__);
 
   //printf("steplength = %.02f nm\n",steplength);
   //printf(partname);
   //printf("\n %.02f\t %.02f\t %.02f\n",x,y,z);
 
+  // VOLUME THINGS
+  G4VPhysicalVolume *stepvol = step->GetPreStepPoint()->GetPhysicalVolume();
+
+//  printf(stepvol->GetName());
+//  printf("\n");
+/*
+  if (stepvol == fWorld){
+    printf("World\n");
+  } else if (stepvol == myBlock_1){
+    printf("Block\n");
+  };
+  
+*/
   // ENERGY THINGS
   double ke = step->GetPostStepPoint()->GetKineticEnergy();
 
@@ -209,7 +229,7 @@ void MySteppingAction::UserSteppingAction(const G4Step* step){
           << "\t" << z << G4endl;
 */
 
-  MyOutputManager::Get()->fill(fEventID,fTrackID,fStepNum,fSubStepNum,fParticleName,ke,x,y,z);
+  MyOutputManager::Get()->fill(fEventID,fTrackID,fStepNum,fSubStepNum,fParticleName,fVolume,ke,x,y,z);
 
   //fflush(stdout);
   writeToLog(__PRETTY_FUNCTION__);
