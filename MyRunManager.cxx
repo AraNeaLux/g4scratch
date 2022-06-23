@@ -109,7 +109,7 @@ void MyEventAction::EndOfEventAction(const G4Event* event){
   double zPrimary = event->GetPrimaryVertex()->GetZ0()/cm;
 
 
-  printf("PRIMARY: %.02f\t %.02f\t %.02f\n",xPrimary,yPrimary,zPrimary);
+//  printf("PRIMARY: %.02f\t %.02f\t %.02f\n",xPrimary,yPrimary,zPrimary);
 
 
   //printf("%s\n",__PRETTY_FUNCTION__);
@@ -190,8 +190,8 @@ void MySteppingAction::UserSteppingAction(const G4Step* step){
     std::vector<int> secondaries;
     secondaries.push_back(sectrackid);
 
-    for (int x : secondaries)
-      G4cout << x << G4endl;
+//    for (int x : secondaries)
+//      G4cout << x << G4endl;
   }
   
 

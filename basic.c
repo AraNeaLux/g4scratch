@@ -7,6 +7,7 @@
 //#include "MyDetectorConstruction.h"
 #include "MyPrimaryGeneratorAction.h"
 #include "MyRunManager.h"
+#include "MyPhysicsList.h"
 
 #include <cstdio>
 #include "G4RunManager.hh"
@@ -25,7 +26,7 @@ int main() {
   runManager->SetUserInitialization(new MyDetectorConstructionGDML(parser));
   //runManager->SetUserInitialization(new MyDetectorConstruction);
   //runManager->SetUserInitialization(new FTFP_BERT());
-  runManager->SetUserInitialization(new QGSP_BERT_HP());
+  runManager->SetUserInitialization(new MyPhysicsList());
  
   runManager->SetUserAction(new MyPrimaryGeneratorAction());
  
