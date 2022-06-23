@@ -16,13 +16,13 @@ class MyPrimaryGeneratorAction : public G4VUserPrimaryGeneratorAction{
 
             //myGun->SetParticleDefinition(G4Proton::ProtonDefinition());
             G4ParticleDefinition* particle
-              = G4ParticleTable::GetParticleTable()->FindParticle("gamma");
+              = G4ParticleTable::GetParticleTable()->FindParticle("proton");
             myGun->SetParticleDefinition(particle);
 
             // Particle Energy
-            myGun->SetParticleEnergy(2.*MeV);
+            myGun->SetParticleEnergy(5.*MeV);
             // Particle at -10 cm?
-            myGun->SetParticlePosition(G4ThreeVector(-3.*cm,0*cm,0*cm));
+            myGun->SetParticlePosition(G4ThreeVector(-9.*cm,0*cm,0*cm));
             // Particle going in +x direction
             myGun->SetParticleMomentumDirection(G4ThreeVector(1.,0.,0.));
 

@@ -17,7 +17,7 @@ class MyDetectorConstruction : public G4VUserDetectorConstruction{
     G4VPhysicalVolume* Construct(){
 
       G4Box* solidWorld = new G4Box("World",
-                                    1000*cm,1000*cm,1000*cm);
+                                    10*cm,10*cm,10*cm);
       G4Box* solidTarget = new G4Box("Target",
                                      5*cm, 5*cm, 5*cm);
    

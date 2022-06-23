@@ -2,6 +2,8 @@
 #include "MyOutputManager.h"
 #include "MyDetectorConstructionGDML.h"
 
+#include "G4SystemOfUnits.hh"
+
 #include <cstdio>
 #include <fstream>
 
@@ -102,9 +104,9 @@ void MyEventAction::BeginOfEventAction(const G4Event*){
 
 void MyEventAction::EndOfEventAction(const G4Event* event){
 
-  double xPrimary = event->GetPrimaryVertex()->GetX0()*cm;
-  double yPrimary = event->GetPrimaryVertex()->GetY0()*cm;
-  double zPrimary = event->GetPrimaryVertex()->GetZ0()*cm;
+  double xPrimary = event->GetPrimaryVertex()->GetX0()/cm;
+  double yPrimary = event->GetPrimaryVertex()->GetY0()/cm;
+  double zPrimary = event->GetPrimaryVertex()->GetZ0()/cm;
 
 
   printf("PRIMARY: %.02f\t %.02f\t %.02f\n",xPrimary,yPrimary,zPrimary);
@@ -195,10 +197,10 @@ void MySteppingAction::UserSteppingAction(const G4Step* step){
 
   // POSITIONY THINGS
   //step->GetPreStepPoint()->GetPosition();
-  G4ThreeVector steppos = step->GetPostStepPoint()->GetPosition();
-  double x = steppos.x();
-  double y = steppos.y();
-  double z = steppos.z();
+  G4ThreeVector steppos = step->GetPostStepPoint()->GetPosition()*cm;
+  double x = steppos.x()/cm;
+  double y = steppos.y()/cm;
+  double z = steppos.z()/cm;
 
   //printf("%s\n",__PRETTY_FUNCTION__);
 
@@ -229,7 +231,7 @@ void MySteppingAction::UserSteppingAction(const G4Step* step){
           << "\t" << z << G4endl;
 */
 
-  MyOutputManager::Get()->fill(fEventID,fTrackID,fStepNum,fSubStepNum,fParticleName,fVolume,ke,x,y,z);
+  MyOutputManager::Get()->fill(fEventID,fTrackID,fStepNum,fSubStepNum,fParticleName,fVolume,ke,x/cm,y/cm,z/cm);
 
   //fflush(stdout);
   writeToLog(__PRETTY_FUNCTION__);
