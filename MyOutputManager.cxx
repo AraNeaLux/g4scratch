@@ -31,9 +31,11 @@ void MyOutputManager::setupTree(const char* fname){
   fTree->Branch("StepNum",      &fStepNum);     
   fTree->Branch("SubStepNum",   &fSubStepNum);  
   fTree->Branch("ParticleName", &fParticleName); 
-  fTree->Branch("Volume",       &fVolume);     
+  fTree->Branch("Process",      &fProcess);     
   fTree->Branch("ke",           &fke);           
+  fTree->Branch("edep",         &fedep);           
   fTree->Branch("x",            &fx);            
+  fTree->Branch("xdep",         &fxdep);            
   fTree->Branch("y",            &fy);            
   fTree->Branch("z",            &fz);            
 
@@ -51,9 +53,11 @@ void MyOutputManager::clear(){
   fStepNum      = -1;
   fSubStepNum   = -1; 
   fParticleName = ""; 
-  fVolume       = -1;
+  fProcess      = -1;
   fke           = sqrt(-1); 
+  fedep         = sqrt(-1); 
   fx            = sqrt(-1); 
+  fxdep         = sqrt(-1); 
   fy            = sqrt(-1); 
   fz            = sqrt(-1); 
 
@@ -64,9 +68,11 @@ void MyOutputManager::fill(int eventID,
                            int stepNum,
                            int subStepNum,
                            std::string particleName,
-                           int volume,
+                           int process,
                            double ke,
+                           double edep,
                            double x,
+                           double xdep,
                            double y,
                            double z){
   fEventID        = eventID;     
@@ -74,9 +80,11 @@ void MyOutputManager::fill(int eventID,
   fStepNum        = stepNum;      
   fSubStepNum     = subStepNum;   
   fParticleName   = particleName; 
-  fVolume         = volume;
+  fProcess        = process;
   fke             = ke;           
+  fedep           = edep;           
   fx              = x;            
+  fxdep           = xdep;            
   fy              = y;            
   fz              = z;            
 

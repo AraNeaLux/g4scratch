@@ -23,10 +23,23 @@
 #include "G4NeutronTrackingCut.hh"
 #include "G4HadronPhysicsFTFP_BERT.hh"
 */
+#include "G4EmStandardPhysics.hh"
+#include "G4EmStandardPhysics_option1.hh"
+#include "G4EmStandardPhysics_option2.hh"
 #include "G4EmStandardPhysics_option3.hh"
+#include "G4EmStandardPhysics_option4.hh"
 #include "G4EmLivermorePhysics.hh"
+#include "G4EmPenelopePhysics.hh"
 #include "G4EmLowEPPhysics.hh"
 
+#include "G4Decay.hh"
+#include "G4DecayPhysics.hh"
+#include "G4HadronElasticPhysics.hh"
+#include "G4HadronDElasticPhysics.hh"
+#include "G4HadronHElasticPhysics.hh"
+#include "G4HadronInelasticQBBC.hh"
+
+#include "G4StepLimiterPhysics.hh"
 
 #include <cstdio>
 
@@ -84,8 +97,31 @@ class MyPhysicsList: public G4VModularPhysicsList{
     void ConstructProcess(){
       AddTransportation();
 
-      G4VPhysicsConstructor *EMPhysicsList = new G4EmStandardPhysics_option3();
+      //G4VPhysicsConstructor *EMPhysicsList = new G4EmStandardPhysics();
+      //G4VPhysicsConstructor *EMPhysicsList = new G4EmStandardPhysics_option1();
+      //G4VPhysicsConstructor *EMPhysicsList = new G4EmStandardPhysics_option2();
+      //G4VPhysicsConstructor *EMPhysicsList = new G4EmStandardPhysics_option3();
+      G4VPhysicsConstructor *EMPhysicsList = new G4EmStandardPhysics_option4();
+      //G4VPhysicsConstructor *EMPhysicsList = new G4EmLivermorePhysics();
+      //G4VPhysicsConstructor *EMPhysicsList = new G4EmPenelopePhysics();
+      //G4VPhysicsConstructor *EMPhysicsList = new G4EmLowEPPhysics();
+
+
+
       EMPhysicsList->ConstructProcess();
+
+      G4VPhysicsConstructor *DecayPhysicsList = new G4DecayPhysics();
+      DecayPhysicsList->ConstructProcess();
+      
+      G4VPhysicsConstructor *HadronElasticPhysicsList = new G4HadronElasticPhysics();
+      HadronElasticPhysicsList->ConstructProcess();
+
+
+
+
+
+
+
     } 
 
 

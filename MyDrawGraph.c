@@ -39,7 +39,7 @@ void MyDrawGraph(int event = 137){
  
   TGraph* gr = (TGraph*)gROOT->FindObject("gr");
 
-  cout << "gr: " << gr << endl;
+//  cout << "gr: " << gr << endl;
 
   bool first = false;
   double ymin,ymax,xmin,xmax;
@@ -64,7 +64,7 @@ void MyDrawGraph(int event = 137){
   }
   gr->SetTitle(Form("event: %i",event));
 
-  double x[5] = {-.1,.1,.1,-.1,-.1};
+  double x[5] = {-.01,.01,.01,-.01,-.01};
   double y[5] = {-3.0,-3.0,3.0,3.0,-3.0};
   TPolyLine *box = new TPolyLine(5,x,y);
   box->SetLineColor(2);
@@ -117,17 +117,17 @@ void MyDrawGraph(int event = 137){
   box2->SetLineWidth(2);
   box2->SetFillStyle(0);
 
-  gr->GetXaxis()->SetLimits(-10,10);
-  gr->SetMinimum(-10);
-  gr->SetMaximum(10);
+  gr->GetXaxis()->SetLimits(-0.12,0.12);
+  gr->SetMinimum(-.001);
+  gr->SetMaximum(.001);
 
   gr->Draw("Al*");
   box->Draw("same");
   box2->Draw("same");
   if(!first){
 
-    cout << "xmin: " << xmin << "\txmax: "<< xmax << endl;
-    cout << "ymin: " << ymin << "\tymax: "<< ymax << endl;
+//    cout << "xmin: " << xmin << "\txmax: "<< xmax << endl;
+//    cout << "ymin: " << ymin << "\tymax: "<< ymax << endl;
 
     gr->GetYaxis()->SetRangeUser(ymin,ymax);
     gr->GetXaxis()->SetRangeUser(xmin,xmax);

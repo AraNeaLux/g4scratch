@@ -12,7 +12,7 @@
 #include <cstdio>
 #include "G4RunManager.hh"
 #include "FTFP_BERT.hh"
-#include "QGSP_BERT_HP.hh"
+#include "QBBC.hh"
 #include "G4GDMLParser.hh"
 
 int main() {
@@ -26,6 +26,7 @@ int main() {
   runManager->SetUserInitialization(new MyDetectorConstructionGDML(parser));
   //runManager->SetUserInitialization(new MyDetectorConstruction);
   //runManager->SetUserInitialization(new FTFP_BERT());
+  //runManager->SetUserInitialization(new QBBC());
   runManager->SetUserInitialization(new MyPhysicsList());
  
   runManager->SetUserAction(new MyPrimaryGeneratorAction());

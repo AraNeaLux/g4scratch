@@ -48,9 +48,9 @@ MyRunManager::~MyRunManager(){
 void MyRunManager::AnalyzeEvent (G4Event *anEvent){
 
 
-  std::cout << "i am very LOUD" << std::endl;
+  //std::cout << "i am very LOUD" << std::endl;
 
-  anEvent->Print();
+  //anEvent->Print();
 }
 
 
@@ -109,7 +109,7 @@ void MyEventAction::EndOfEventAction(const G4Event* event){
   double zPrimary = event->GetPrimaryVertex()->GetZ0()/cm;
 
 
-//  printf("PRIMARY: %.02f\t %.02f\t %.02f\n",xPrimary,yPrimary,zPrimary);
+  //printf("PRIMARY: %.02f\t %.02f\t %.02f\n",xPrimary,yPrimary,zPrimary);
 
 
   //printf("%s\n",__PRETTY_FUNCTION__);
@@ -130,6 +130,7 @@ MySteppingAction::MySteppingAction():G4UserSteppingAction(){
   fParticleName="";
   fStepNum=-1;
   fSubStepNum=-1;
+  fProcess=-1;
 
 datfile.open("junk.dat");
   datfile << "EventID/I:"
@@ -195,18 +196,6 @@ void MySteppingAction::UserSteppingAction(const G4Step* step){
   }
   
 
-  // POSITIONY THINGS
-  //step->GetPreStepPoint()->GetPosition();
-  G4ThreeVector steppos = step->GetPostStepPoint()->GetPosition()*cm;
-  double x = steppos.x()/cm;
-  double y = steppos.y()/cm;
-  double z = steppos.z()/cm;
-
-  //printf("%s\n",__PRETTY_FUNCTION__);
-
-  //printf("steplength = %.02f nm\n",steplength);
-  //printf(partname);
-  //printf("\n %.02f\t %.02f\t %.02f\n",x,y,z);
 
   // VOLUME THINGS
   G4VPhysicalVolume *stepvol = step->GetPreStepPoint()->GetPhysicalVolume();
@@ -223,6 +212,21 @@ void MySteppingAction::UserSteppingAction(const G4Step* step){
 */
   // ENERGY THINGS
   double ke = step->GetPostStepPoint()->GetKineticEnergy();
+  double edep = step->GetTotalEnergyDeposit();
+
+  // PROCESS THINGS
+  std::string processname 
+    = step->GetPostStepPoint()->GetProcessDefinedStep()->GetProcessName();
+
+  if (processname=="Transportation"){fProcess = 0;}
+  else if (processname=="hIoni"){fProcess = 2;}
+  else if (processname=="CoulombScat"){fProcess = 3;}
+  else if (processname=="ionIoni"){fProcess = 4;}
+  else if (processname=="hadElastic"){fProcess = 5;}
+  else {fProcess=19375;
+    G4cout << processname << G4endl;
+  };
+
 
 /*  datfile << MyRunManager::GetRunManager()->GetCurrentEvent()->GetEventID() 
           << "\t" << partname
@@ -231,7 +235,31 @@ void MySteppingAction::UserSteppingAction(const G4Step* step){
           << "\t" << z << G4endl;
 */
 
-  MyOutputManager::Get()->fill(fEventID,fTrackID,fStepNum,fSubStepNum,fParticleName,fVolume,ke,x/cm,y/cm,z/cm);
+  // POSITIONY THINGS
+  //step->GetPreStepPoint()->GetPosition();
+
+  G4ThreeVector presteppos = step->GetPreStepPoint()->GetPosition()*cm;
+  G4ThreeVector poststeppos = step->GetPostStepPoint()->GetPosition()*cm;
+
+  float x = poststeppos.x()/cm;
+  float y = poststeppos.y()/cm;
+  float z = poststeppos.z()/cm;
+
+  float xdep = x; 
+
+  G4ThreeVector shift = presteppos + G4UniformRand()*(poststeppos - presteppos);
+  if (step->GetTrack()->GetDefinition()->GetPDGCharge()==0.) shift = presteppos;
+  xdep = shift.x()/cm;
+
+
+  //printf("%s\n",__PRETTY_FUNCTION__);
+
+  //printf("steplength = %.02f nm\n",steplength);
+  //printf(partname);
+  //printf("\n %.02f\t %.02f\t %.02f\n",x,y,z);
+
+
+  MyOutputManager::Get()->fill(fEventID,fTrackID,fStepNum,fSubStepNum,fParticleName,fProcess,ke/keV,edep/keV,x/um,xdep/um,y/um,z/um);
 
   //fflush(stdout);
   writeToLog(__PRETTY_FUNCTION__);

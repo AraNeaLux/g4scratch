@@ -5,9 +5,12 @@
   TGeoMaterial *mat1 = new TGeoMaterial("Vacuum",16.,8.,0.);
   TGeoMedium *med1 = new TGeoMedium("Vacuum",1,mat1);
 
-  TGeoMaterial *mat2 = new TGeoMaterial("Aluminum",27,13,2.7);
-  //TGeoMaterial *mat2 = new TGeoMaterial("Aluminum",27,13,0.1);
-  TGeoMedium *med2 = new TGeoMedium("Aluminum",2,mat2);
+//  TGeoMaterial *mat2 = new TGeoMaterial("Aluminum",27,13,2.7);
+//  TGeoMedium *med2 = new TGeoMedium("Aluminum",2,mat2);
+//  TGeoMaterial *mat2 = new TGeoMaterial("Be",9,4,1.85);
+//  TGeoMedium *med2 = new TGeoMedium("Be",2,mat2);
+  TGeoMaterial *mat2 = new TGeoMaterial("Fe",56,26,7.87);
+  TGeoMedium *med2 = new TGeoMedium("Fe",2,mat2);
 
   //TGeoMaterial *mat3 = new TGeoMaterial("Germanium",72,32,5.3);
   //TGeoMedium *med3 = new TGeoMedium("Germanium",3,mat3);
