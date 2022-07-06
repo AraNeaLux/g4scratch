@@ -13,6 +13,8 @@
 #include "G4GDMLParser.hh"
 #include "G4SDManager.hh"
 
+#include "G4UserLimits.hh"
+
 class G4GDMLParser;
 
 class MyDetectorConstructionGDML : public G4VUserDetectorConstruction{
@@ -30,6 +32,12 @@ class MyDetectorConstructionGDML : public G4VUserDetectorConstruction{
     G4VPhysicalVolume* Construct(){
 
       G4VPhysicalVolume *fWorld = fParser.GetWorldVolume();
+
+      G4LogicalVolume *fblock = fParser.GetVolume("myBlock");
+      G4double maxStep = 0.000000001;
+      G4UserLimits *fStepLimit = new G4UserLimits(maxStep,DBL_MAX,DBL_MAX,0.,0.);
+      fblock->SetUserLimits(fStepLimit);
+
       return fWorld;
     }
 

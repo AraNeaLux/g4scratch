@@ -40,6 +40,8 @@
 #include "G4HadronInelasticQBBC.hh"
 
 #include "G4StepLimiterPhysics.hh"
+#include "MyStepMax.h"
+#include "G4ProcessManager.hh"
 
 #include <cstdio>
 
@@ -116,11 +118,23 @@ class MyPhysicsList: public G4VModularPhysicsList{
       G4VPhysicsConstructor *HadronElasticPhysicsList = new G4HadronElasticPhysics();
       HadronElasticPhysicsList->ConstructProcess();
 
+      G4StepLimiterPhysics* stepLimitPhys = new G4StepLimiterPhysics();
+      RegisterPhysics(stepLimitPhys);
 
+      MyStepMax* stepMaxProcess = new MyStepMax();
 
-
-
-
+      auto particleIterator=GetParticleIterator();
+      particleIterator->reset();
+      while ((*particleIterator)()){
+        G4ParticleDefinition* particle = particleIterator->value();
+        G4ProcessManager* pmanager = particle->GetProcessManager();
+        //G4cout << particle->GetParticleName() << G4endl;
+          
+        if (stepMaxProcess->IsApplicable(*particle)){
+          pmanager ->AddDiscreteProcess(stepMaxProcess);
+          G4cout << particle->GetParticleName() << G4endl;
+        }
+      }
 
     } 
 
