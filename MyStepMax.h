@@ -55,7 +55,7 @@ class MyStepMax : public G4VDiscreteProcess
       return (particle.GetPDGCharge() != 0. && !particle.IsShortLived());
     };
 
-    void SetMaxStep(G4double step = 0.00000000001){
+    void SetMaxStep(G4double step = 0.05){
       fMaxChargedStep = step;
     };
 

@@ -118,8 +118,8 @@ class MyPhysicsList: public G4VModularPhysicsList{
       G4VPhysicsConstructor *HadronElasticPhysicsList = new G4HadronElasticPhysics();
       HadronElasticPhysicsList->ConstructProcess();
 
-      G4StepLimiterPhysics* stepLimitPhys = new G4StepLimiterPhysics();
-      RegisterPhysics(stepLimitPhys);
+//      G4StepLimiterPhysics* stepLimitPhys = new G4StepLimiterPhysics();
+//      RegisterPhysics(stepLimitPhys);
 
       MyStepMax* stepMaxProcess = new MyStepMax();
 
@@ -132,6 +132,7 @@ class MyPhysicsList: public G4VModularPhysicsList{
           
         if (stepMaxProcess->IsApplicable(*particle)){
           pmanager ->AddDiscreteProcess(stepMaxProcess);
+          stepMaxProcess->SetMaxStep();
           G4cout << particle->GetParticleName() << G4endl;
         }
       }

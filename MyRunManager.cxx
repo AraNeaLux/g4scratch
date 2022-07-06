@@ -48,9 +48,9 @@ MyRunManager::~MyRunManager(){
 void MyRunManager::AnalyzeEvent (G4Event *anEvent){
 
 
-  //std::cout << "i am very LOUD" << std::endl;
+  std::cout << "i am very LOUD" << std::endl;
 
-  //anEvent->Print();
+  anEvent->Print();
 }
 
 
@@ -219,6 +219,7 @@ void MySteppingAction::UserSteppingAction(const G4Step* step){
     = step->GetPostStepPoint()->GetProcessDefinedStep()->GetProcessName();
 
   if (processname=="Transportation"){fProcess = 0;}
+  else if (processname=="UserMaxStep"){fProcess = 1;}
   else if (processname=="hIoni"){fProcess = 2;}
   else if (processname=="CoulombScat"){fProcess = 3;}
   else if (processname=="ionIoni"){fProcess = 4;}
