@@ -2,17 +2,41 @@
 <gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
   <define>
     <position name="myBlock_1inmyWorldpos" x="0" y="0" z="0" unit="cm"/>
-    <position name="myDetector_1inmyWorldpos" x="-5" y="5" z="0" unit="cm"/>
-    <rotation name="myDetector_1inmyWorldrot" x="-0" y="0" z="45" unit="deg"/>
+    <position name="myLayer1_1inmyWorldpos" x="-2.0000000000000001e-09" y="0" z="0" unit="cm"/>
+    <position name="myDetector_1inmyWorldpos" x="8.5999999999999996" y="0" z="0" unit="cm"/>
+    <position name="myDetector_2inmyWorldpos" x="7.4478183388710022" y="4.2999999999999998" z="0" unit="cm"/>
+    <rotation name="myDetector_2inmyWorldrot" x="-0" y="-0" z="-29.999999999999996" unit="deg"/>
+    <position name="myDetector_3inmyWorldpos" x="4.2999997437000275" y="7.4478188514709469" z="0" unit="cm"/>
+    <rotation name="myDetector_3inmyWorldrot" x="-0" y="-0" z="-59.999999999999993" unit="deg"/>
+    <position name="myDetector_4inmyWorldpos" x="-3.759179392659462e-07" y="8.5999999999999996" z="0" unit="cm"/>
+    <rotation name="myDetector_4inmyWorldrot" x="-0" y="-0" z="-90" unit="deg"/>
+    <position name="myDetector_5inmyWorldpos" x="-4.2999997437000275" y="7.4478188514709469" z="0" unit="cm"/>
+    <rotation name="myDetector_5inmyWorldrot" x="0" y="-0" z="-119.99999999999999" unit="deg"/>
+    <position name="myDetector_6inmyWorldpos" x="-7.4478183388710022" y="4.2999999999999998" z="0" unit="cm"/>
+    <rotation name="myDetector_6inmyWorldrot" x="0" y="-0" z="-150" unit="deg"/>
+    <position name="myDetector_7inmyWorldpos" x="7.4478183388710022" y="-4.2999999999999998" z="0" unit="cm"/>
+    <rotation name="myDetector_7inmyWorldrot" x="-0" y="0" z="29.999999999999996" unit="deg"/>
+    <position name="myDetector_8inmyWorldpos" x="4.2999997437000275" y="-7.4478188514709469" z="0" unit="cm"/>
+    <rotation name="myDetector_8inmyWorldrot" x="-0" y="0" z="59.999999999999993" unit="deg"/>
+    <position name="myDetector_9inmyWorldpos" x="-3.759179392659462e-07" y="-8.5999999999999996" z="0" unit="cm"/>
+    <rotation name="myDetector_9inmyWorldrot" x="-0" y="0" z="90" unit="deg"/>
+    <position name="myDetector_10inmyWorldpos" x="-4.2999997437000275" y="-7.4478188514709469" z="0" unit="cm"/>
+    <rotation name="myDetector_10inmyWorldrot" x="0" y="0" z="119.99999999999999" unit="deg"/>
+    <position name="myDetector_11inmyWorldpos" x="-7.4478183388710022" y="-4.2999999999999998" z="0" unit="cm"/>
+    <rotation name="myDetector_11inmyWorldrot" x="0" y="0" z="150" unit="deg"/>
   </define>
   <materials>
-    <material name="Vacuum" Z="8">
+    <material name="Vacuum" Z="1">
       <D unit="g/cm3" value="0"/>
-      <atom unit="g/mole" value="16"/>
+      <atom unit="g/mole" value="2"/>
     </material>
-    <material name="Fe" Z="26">
-      <D unit="g/cm3" value="7.8700000000000001"/>
-      <atom unit="g/mole" value="56"/>
+    <material name="Au" Z="79">
+      <D unit="g/cm3" value="19.300000000000001"/>
+      <atom unit="g/mole" value="197"/>
+    </material>
+    <material name="p" Z="1">
+      <D unit="g/cm3" value="10"/>
+      <atom unit="g/mole" value="1"/>
     </material>
     <material name="Silicon" Z="14">
       <D unit="g/cm3" value="2.2999999999999998"/>
@@ -21,13 +45,18 @@
   </materials>
   <solids>
     <box name="myWorld" x="20" y="20" z="20" lunit="cm"/>
-    <box name="myBlock0x1" x="0.20000000000000001" y="6" z="10" lunit="cm"/>
-    <box name="myDetector0x1" x="2" y="6" z="10" lunit="cm"/>
+    <box name="myBlock0x1" x="2.0000000000000001e-09" y="6" z="10" lunit="cm"/>
+    <box name="myLayer10x1" x="2.0000000000000001e-09" y="6" z="10" lunit="cm"/>
+    <box name="myDetector0x1" x="2" y="4" z="10" lunit="cm"/>
   </solids>
   <structure>
     <volume name="myBlock">
-      <materialref ref="Fe"/>
+      <materialref ref="Au"/>
       <solidref ref="myBlock0x1"/>
+    </volume>
+    <volume name="myLayer1">
+      <materialref ref="p"/>
+      <solidref ref="myLayer10x1"/>
     </volume>
     <volume name="myDetector">
       <materialref ref="Silicon"/>
@@ -40,10 +69,63 @@
         <volumeref ref="myBlock"/>
         <positionref ref="myBlock_1inmyWorldpos"/>
       </physvol>
+      <physvol name="myLayer1_1" copynumber="1">
+        <volumeref ref="myLayer1"/>
+        <positionref ref="myLayer1_1inmyWorldpos"/>
+      </physvol>
       <physvol name="myDetector_1" copynumber="1">
         <volumeref ref="myDetector"/>
         <positionref ref="myDetector_1inmyWorldpos"/>
-        <rotationref ref="myDetector_1inmyWorldrot"/>
+      </physvol>
+      <physvol name="myDetector_2" copynumber="2">
+        <volumeref ref="myDetector"/>
+        <positionref ref="myDetector_2inmyWorldpos"/>
+        <rotationref ref="myDetector_2inmyWorldrot"/>
+      </physvol>
+      <physvol name="myDetector_3" copynumber="3">
+        <volumeref ref="myDetector"/>
+        <positionref ref="myDetector_3inmyWorldpos"/>
+        <rotationref ref="myDetector_3inmyWorldrot"/>
+      </physvol>
+      <physvol name="myDetector_4" copynumber="4">
+        <volumeref ref="myDetector"/>
+        <positionref ref="myDetector_4inmyWorldpos"/>
+        <rotationref ref="myDetector_4inmyWorldrot"/>
+      </physvol>
+      <physvol name="myDetector_5" copynumber="5">
+        <volumeref ref="myDetector"/>
+        <positionref ref="myDetector_5inmyWorldpos"/>
+        <rotationref ref="myDetector_5inmyWorldrot"/>
+      </physvol>
+      <physvol name="myDetector_6" copynumber="6">
+        <volumeref ref="myDetector"/>
+        <positionref ref="myDetector_6inmyWorldpos"/>
+        <rotationref ref="myDetector_6inmyWorldrot"/>
+      </physvol>
+      <physvol name="myDetector_7" copynumber="7">
+        <volumeref ref="myDetector"/>
+        <positionref ref="myDetector_7inmyWorldpos"/>
+        <rotationref ref="myDetector_7inmyWorldrot"/>
+      </physvol>
+      <physvol name="myDetector_8" copynumber="8">
+        <volumeref ref="myDetector"/>
+        <positionref ref="myDetector_8inmyWorldpos"/>
+        <rotationref ref="myDetector_8inmyWorldrot"/>
+      </physvol>
+      <physvol name="myDetector_9" copynumber="9">
+        <volumeref ref="myDetector"/>
+        <positionref ref="myDetector_9inmyWorldpos"/>
+        <rotationref ref="myDetector_9inmyWorldrot"/>
+      </physvol>
+      <physvol name="myDetector_10" copynumber="10">
+        <volumeref ref="myDetector"/>
+        <positionref ref="myDetector_10inmyWorldpos"/>
+        <rotationref ref="myDetector_10inmyWorldrot"/>
+      </physvol>
+      <physvol name="myDetector_11" copynumber="11">
+        <volumeref ref="myDetector"/>
+        <positionref ref="myDetector_11inmyWorldpos"/>
+        <rotationref ref="myDetector_11inmyWorldrot"/>
       </physvol>
     </volume>
   </structure>

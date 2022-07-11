@@ -64,7 +64,7 @@ void MyDrawGraph(int event = 137){
   }
   gr->SetTitle(Form("event: %i",event));
 
-  double x[5] = {-.01,.01,.01,-.01,-.01};
+  double x[5] = {-.00001,.00001,.00001,-.00001,-.00001};
   double y[5] = {-3.0,-3.0,3.0,3.0,-3.0};
   TPolyLine *box = new TPolyLine(5,x,y);
   box->SetLineColor(2);

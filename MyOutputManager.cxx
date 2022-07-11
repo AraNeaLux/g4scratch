@@ -38,6 +38,7 @@ void MyOutputManager::setupTree(const char* fname){
   fTree->Branch("xdep",         &fxdep);            
   fTree->Branch("y",            &fy);            
   fTree->Branch("z",            &fz);            
+  fTree->Branch("postpos",      &fpostpos);            
 
 }
 
@@ -74,7 +75,8 @@ void MyOutputManager::fill(int eventID,
                            double x,
                            double xdep,
                            double y,
-                           double z){
+                           double z,
+                           G4ThreeVector postpos){
   fEventID        = eventID;     
   fTrackID        = trackID;     
   fStepNum        = stepNum;      
@@ -87,6 +89,7 @@ void MyOutputManager::fill(int eventID,
   fxdep           = xdep;            
   fy              = y;            
   fz              = z;            
+  fpostpos        = postpos;            
 
   fTree->Fill();
 

@@ -35,6 +35,7 @@
 #include "G4Decay.hh"
 #include "G4DecayPhysics.hh"
 #include "G4HadronElasticPhysics.hh"
+#include "G4HadronElasticPhysicsXS.hh"
 #include "G4HadronDElasticPhysics.hh"
 #include "G4HadronHElasticPhysics.hh"
 #include "G4HadronInelasticQBBC.hh"
@@ -115,11 +116,11 @@ class MyPhysicsList: public G4VModularPhysicsList{
       G4VPhysicsConstructor *DecayPhysicsList = new G4DecayPhysics();
       DecayPhysicsList->ConstructProcess();
       
-      G4VPhysicsConstructor *HadronElasticPhysicsList = new G4HadronElasticPhysics();
+      G4VPhysicsConstructor *HadronElasticPhysicsList = new G4HadronElasticPhysicsXS();
       HadronElasticPhysicsList->ConstructProcess();
 
-//      G4StepLimiterPhysics* stepLimitPhys = new G4StepLimiterPhysics();
-//      RegisterPhysics(stepLimitPhys);
+      //G4StepLimiterPhysics* stepLimitPhys = new G4StepLimiterPhysics();
+      //RegisterPhysics(stepLimitPhys);
 
       MyStepMax* stepMaxProcess = new MyStepMax();
 
@@ -132,8 +133,8 @@ class MyPhysicsList: public G4VModularPhysicsList{
           
         if (stepMaxProcess->IsApplicable(*particle)){
           pmanager ->AddDiscreteProcess(stepMaxProcess);
-          stepMaxProcess->SetMaxStep();
-          G4cout << particle->GetParticleName() << G4endl;
+          //stepMaxProcess->SetMaxStep();
+          //G4cout << particle->GetParticleName() << G4endl;
         }
       }
 

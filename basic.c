@@ -15,6 +15,8 @@
 #include "QBBC.hh"
 #include "G4GDMLParser.hh"
 
+#include "G4StepLimiterPhysics.hh"
+
 int main() {
   printf("hello\n");
   
@@ -26,8 +28,12 @@ int main() {
   runManager->SetUserInitialization(new MyDetectorConstructionGDML(parser));
   //runManager->SetUserInitialization(new MyDetectorConstruction);
   //runManager->SetUserInitialization(new FTFP_BERT());
-  //runManager->SetUserInitialization(new QBBC());
-  runManager->SetUserInitialization(new MyPhysicsList());
+  runManager->SetUserInitialization(new QBBC());
+
+  //G4VModularPhysicsList* physicsList = new MyPhysicsList();
+  //physicsList->RegisterPhysics(new G4StepLimiterPhysics());
+  //runManager->SetUserInitialization(physicsList);
+  
  
   runManager->SetUserAction(new MyPrimaryGeneratorAction());
  
@@ -42,7 +48,7 @@ int main() {
  
   runManager->Initialize();
  
-  runManager->BeamOn(10000);
+  runManager->BeamOn(1000000);
  
   delete runManager; 
  

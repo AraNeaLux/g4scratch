@@ -48,9 +48,9 @@ MyRunManager::~MyRunManager(){
 void MyRunManager::AnalyzeEvent (G4Event *anEvent){
 
 
-  std::cout << "i am very LOUD" << std::endl;
+//  std::cout << "i am very LOUD" << std::endl;
 
-  anEvent->Print();
+//  anEvent->Print();
 }
 
 
@@ -252,7 +252,6 @@ void MySteppingAction::UserSteppingAction(const G4Step* step){
   if (step->GetTrack()->GetDefinition()->GetPDGCharge()==0.) shift = presteppos;
   xdep = shift.x()/cm;
 
-
   //printf("%s\n",__PRETTY_FUNCTION__);
 
   //printf("steplength = %.02f nm\n",steplength);
@@ -260,7 +259,7 @@ void MySteppingAction::UserSteppingAction(const G4Step* step){
   //printf("\n %.02f\t %.02f\t %.02f\n",x,y,z);
 
 
-  MyOutputManager::Get()->fill(fEventID,fTrackID,fStepNum,fSubStepNum,fParticleName,fProcess,ke/keV,edep/keV,x/um,xdep/um,y/um,z/um);
+  MyOutputManager::Get()->fill(fEventID,fTrackID,fStepNum,fSubStepNum,fParticleName,fProcess,ke/keV,edep/keV,x/um,xdep/um,y/um,z/um,poststeppos);
 
   //fflush(stdout);
   writeToLog(__PRETTY_FUNCTION__);
