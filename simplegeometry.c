@@ -13,12 +13,12 @@
   TGeoMaterial *mat2 = new TGeoMaterial("Au",197,79,19.3);
   TGeoMedium *med2 = new TGeoMedium("Au",2,mat2);
 
-  TGeoVolume *myBlock = gGeoManager->MakeBox("myBlock",med2,0.000000001,3.,5.);
+  TGeoVolume *myBlock = gGeoManager->MakeBox("myBlock",med2,0.0001,3.,5.);
 
   TGeoMaterial *mat4 = new TGeoMaterial("p",1,1,10);
   TGeoMedium *med4 = new TGeoMedium("p",4,mat4);
 
-  TGeoVolume *myLayer1 = gGeoManager->MakeBox("myLayer1",med4,0.000000001,3.,5.);
+  TGeoVolume *myLayer1 = gGeoManager->MakeBox("myLayer1",med4,0.0001,3.,5.);
 
   //TGeoMaterial *mat3 = new TGeoMaterial("Germanium",72,32,5.3);
   //TGeoMedium *med3 = new TGeoMedium("Germanium",3,mat3);
@@ -33,7 +33,7 @@
   myWorld->AddNode(myBlock,1, new TGeoCombiTrans(0.,0.,0.,rot1));
 
   TGeoRotation *rot2 = new TGeoRotation("rot2", 0., 0., 0.);
-  myWorld->AddNode(myLayer1,1, new TGeoCombiTrans(-0.000000002,0.,0.,rot2));
+  myWorld->AddNode(myLayer1,1, new TGeoCombiTrans(-0.0002,0.,0.,rot2));
 
   float pi = TMath::Pi();
 

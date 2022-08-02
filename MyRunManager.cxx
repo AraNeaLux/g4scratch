@@ -6,6 +6,7 @@
 
 #include <cstdio>
 #include <fstream>
+#include <TVector3.h>
 
 //#include <TFile.h>
 
@@ -224,7 +225,8 @@ void MySteppingAction::UserSteppingAction(const G4Step* step){
   else if (processname=="CoulombScat"){fProcess = 3;}
   else if (processname=="ionIoni"){fProcess = 4;}
   else if (processname=="hadElastic"){fProcess = 5;}
-  else {fProcess=19375;
+  else if (processname=="alphaInelastic"){fProcess = 6;}
+  else {fProcess=57005;
     G4cout << processname << G4endl;
   };
 
@@ -241,6 +243,8 @@ void MySteppingAction::UserSteppingAction(const G4Step* step){
 
   G4ThreeVector presteppos = step->GetPreStepPoint()->GetPosition()*cm;
   G4ThreeVector poststeppos = step->GetPostStepPoint()->GetPosition()*cm;
+
+  TVector3 posvec = TVector3(poststeppos.x(),poststeppos.y(),poststeppos.z());
 
   float x = poststeppos.x()/cm;
   float y = poststeppos.y()/cm;
@@ -259,7 +263,7 @@ void MySteppingAction::UserSteppingAction(const G4Step* step){
   //printf("\n %.02f\t %.02f\t %.02f\n",x,y,z);
 
 
-  MyOutputManager::Get()->fill(fEventID,fTrackID,fStepNum,fSubStepNum,fParticleName,fProcess,ke/keV,edep/keV,x/um,xdep/um,y/um,z/um,poststeppos);
+  MyOutputManager::Get()->fill(fEventID,fTrackID,fStepNum,fSubStepNum,fParticleName,fProcess,ke/keV,edep/keV,x/um,xdep/um,y/um,z/um,posvec);
 
   //fflush(stdout);
   writeToLog(__PRETTY_FUNCTION__);

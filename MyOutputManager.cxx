@@ -1,5 +1,6 @@
 #include "MyOutputManager.h"
 #include <cstdio>
+#include <TVector3.h>
 
 MyOutputManager* MyOutputManager::fptr = 0;
 
@@ -76,7 +77,7 @@ void MyOutputManager::fill(int eventID,
                            double xdep,
                            double y,
                            double z,
-                           G4ThreeVector postpos){
+                           TVector3 postpos){
   fEventID        = eventID;     
   fTrackID        = trackID;     
   fStepNum        = stepNum;      

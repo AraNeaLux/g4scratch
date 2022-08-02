@@ -34,7 +34,7 @@ class MyDetectorConstructionGDML : public G4VUserDetectorConstruction{
       G4VPhysicalVolume *fWorld = fParser.GetWorldVolume();
 
       G4LogicalVolume *fblock = fParser.GetVolume("myBlock");
-      G4double maxStep = 0.01;
+      G4double maxStep = 0.000001;
       G4UserLimits *fStepLimit = new G4UserLimits(maxStep);
       fblock->SetUserLimits(fStepLimit);
 

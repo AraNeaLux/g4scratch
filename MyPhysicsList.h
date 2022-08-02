@@ -35,10 +35,10 @@
 #include "G4Decay.hh"
 #include "G4DecayPhysics.hh"
 #include "G4HadronElasticPhysics.hh"
-#include "G4HadronElasticPhysicsXS.hh"
-#include "G4HadronDElasticPhysics.hh"
-#include "G4HadronHElasticPhysics.hh"
+#include "G4HadronPhysicsQGSP_BERT.hh"
+#include "G4IonPhysics.hh"
 #include "G4HadronInelasticQBBC.hh"
+#include "G4hMultipleScattering.hh"
 
 #include "G4StepLimiterPhysics.hh"
 #include "MyStepMax.h"
@@ -113,11 +113,20 @@ class MyPhysicsList: public G4VModularPhysicsList{
 
       EMPhysicsList->ConstructProcess();
 
-      G4VPhysicsConstructor *DecayPhysicsList = new G4DecayPhysics();
-      DecayPhysicsList->ConstructProcess();
+      //G4VPhysicsConstructor *DecayPhysicsList = new G4DecayPhysics();
+      //DecayPhysicsList->ConstructProcess();
       
-      G4VPhysicsConstructor *HadronElasticPhysicsList = new G4HadronElasticPhysicsXS();
-      HadronElasticPhysicsList->ConstructProcess();
+      //G4VPhysicsConstructor *HadronElasticPhysicsList = new G4HadronElasticPhysics();
+      //HadronElasticPhysicsList->ConstructProcess();
+
+      //G4VPhysicsConstructor *HadronPhysicsList = new G4HadronPhysicsQGSP_BERT();
+      //HadronPhysicsList->ConstructProcess();
+
+      //G4VPhysicsConstructor *IonPhysicsList = new G4IonPhysics();
+      //IonPhysicsList->ConstructProcess();
+
+
+
 
       //G4StepLimiterPhysics* stepLimitPhys = new G4StepLimiterPhysics();
       //RegisterPhysics(stepLimitPhys);
@@ -130,9 +139,11 @@ class MyPhysicsList: public G4VModularPhysicsList{
         G4ParticleDefinition* particle = particleIterator->value();
         G4ProcessManager* pmanager = particle->GetProcessManager();
         //G4cout << particle->GetParticleName() << G4endl;
+
+        //pmanager->AddProcess(new G4hMultipleScattering());
           
         if (stepMaxProcess->IsApplicable(*particle)){
-          pmanager ->AddDiscreteProcess(stepMaxProcess);
+          //pmanager ->AddDiscreteProcess(stepMaxProcess);
           //stepMaxProcess->SetMaxStep();
           //G4cout << particle->GetParticleName() << G4endl;
         }

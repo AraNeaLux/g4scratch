@@ -13,6 +13,7 @@
 #include "G4RunManager.hh"
 #include "FTFP_BERT.hh"
 #include "QBBC.hh"
+#include "QGSP_BERT.hh"
 #include "G4GDMLParser.hh"
 
 #include "G4StepLimiterPhysics.hh"
@@ -28,11 +29,12 @@ int main() {
   runManager->SetUserInitialization(new MyDetectorConstructionGDML(parser));
   //runManager->SetUserInitialization(new MyDetectorConstruction);
   //runManager->SetUserInitialization(new FTFP_BERT());
-  runManager->SetUserInitialization(new QBBC());
+  //runManager->SetUserInitialization(new QBBC());
+  //runManager->SetUserInitialization(new QGSP_BERT());
 
-  //G4VModularPhysicsList* physicsList = new MyPhysicsList();
+  G4VModularPhysicsList* physicsList = new MyPhysicsList();
   //physicsList->RegisterPhysics(new G4StepLimiterPhysics());
-  //runManager->SetUserInitialization(physicsList);
+  runManager->SetUserInitialization(physicsList);
   
  
   runManager->SetUserAction(new MyPrimaryGeneratorAction());
@@ -48,7 +50,7 @@ int main() {
  
   runManager->Initialize();
  
-  runManager->BeamOn(1000000);
+  runManager->BeamOn(100000);
  
   delete runManager; 
  

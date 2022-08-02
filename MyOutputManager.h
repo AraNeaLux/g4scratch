@@ -3,7 +3,7 @@
 
 #include <TTree.h>
 #include <TFile.h>
-#include "G4ThreeVector.hh"
+#include <TVector3.h>
 
 class MyOutputManager{
 
@@ -26,7 +26,7 @@ class MyOutputManager{
               double xdep,
               double y,
               double z,
-              G4ThreeVector postpos);
+              TVector3 postpos);
 
   private:
     MyOutputManager();
@@ -47,7 +47,7 @@ class MyOutputManager{
     double fxdep;
     double fy;
     double fz;
-    G4ThreeVector fpostpos;
+    TVector3 fpostpos;
 
 };
 
