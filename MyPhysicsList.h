@@ -131,9 +131,9 @@ class MyPhysicsList: public G4VModularPhysicsList{
         //G4cout << particle->GetParticleName() << G4endl;
           
         if (stepMaxProcess->IsApplicable(*particle)){
-          pmanager ->AddDiscreteProcess(stepMaxProcess);
-          stepMaxProcess->SetMaxStep();
-          G4cout << particle->GetParticleName() << G4endl;
+          //pmanager ->AddDiscreteProcess(stepMaxProcess);
+          //stepMaxProcess->SetMaxStep();
+          //G4cout << particle->GetParticleName() << G4endl;
         }
       }
 
