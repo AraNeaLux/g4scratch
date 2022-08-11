@@ -201,8 +201,8 @@ void MySteppingAction::UserSteppingAction(const G4Step* step){
   // VOLUME THINGS
   G4VPhysicalVolume *stepvol = step->GetPreStepPoint()->GetPhysicalVolume();
 
-//  printf(stepvol->GetName());
-//  printf("\n");
+  printf(stepvol->GetName());
+  printf("\n");
 /*
   if (stepvol == fWorld){
     printf("World\n");
