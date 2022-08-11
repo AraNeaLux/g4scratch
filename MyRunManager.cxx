@@ -230,6 +230,7 @@ void MySteppingAction::UserSteppingAction(const G4Step* step){
   else if (processname=="ionIoni"){fProcess = 4;}
   else if (processname=="hadElastic"){fProcess = 5;}
   else if (processname=="alphaInelastic"){fProcess = 6;}
+  else if (processname=="msc"){fProcess = 7;}
   else {fProcess=57005;
     G4cout << processname << G4endl;
   };
