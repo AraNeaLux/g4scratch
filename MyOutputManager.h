@@ -17,7 +17,7 @@ class MyOutputManager{
     void fill(int eventID,
               int trackID,
               int stepNum,
-              int subStepNum,
+              int volume,
               std::string particleName,
               int process,
               double ke,
@@ -38,7 +38,7 @@ class MyOutputManager{
     int fEventID;
     int fTrackID;
     int fStepNum;
-    int fSubStepNum;
+    int fVolume;
     std::string fParticleName;
     int fProcess;
     double fke;

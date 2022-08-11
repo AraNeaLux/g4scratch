@@ -130,7 +130,7 @@ MySteppingAction::MySteppingAction():G4UserSteppingAction(){
   fEventID=-1;
   fParticleName="";
   fStepNum=-1;
-  fSubStepNum=-1;
+  fVolume=-1;
   fProcess=-1;
 
 datfile.open("junk.dat");
@@ -201,16 +201,20 @@ void MySteppingAction::UserSteppingAction(const G4Step* step){
   // VOLUME THINGS
   G4VPhysicalVolume *stepvol = step->GetPreStepPoint()->GetPhysicalVolume();
 
-  printf(stepvol->GetName());
-  printf("\n");
-/*
-  if (stepvol == fWorld){
-    printf("World\n");
-  } else if (stepvol == myBlock_1){
-    printf("Block\n");
+  const G4String volname = stepvol->GetName();
+  //printf(volname);
+  //printf("\n");
+  if (volname == "myWorld_PV"){
+    fVolume = 0;
+  } else if (volname == "myBlock_1"){
+    fVolume = 1;
+  } else if (volname == "myLayer1_1"){
+    fVolume = 2;
+  } else if (volname.rfind("myDetector",0)==0){
+    fVolume = 13;
   };
   
-*/
+
   // ENERGY THINGS
   double ke = step->GetPostStepPoint()->GetKineticEnergy();
   double edep = step->GetTotalEnergyDeposit();
@@ -263,7 +267,7 @@ void MySteppingAction::UserSteppingAction(const G4Step* step){
   //printf("\n %.02f\t %.02f\t %.02f\n",x,y,z);
 
 
-  MyOutputManager::Get()->fill(fEventID,fTrackID,fStepNum,fSubStepNum,fParticleName,fProcess,ke/keV,edep/keV,x/um,xdep/um,y/um,z/um,posvec);
+  MyOutputManager::Get()->fill(fEventID,fTrackID,fStepNum,fVolume,fParticleName,fProcess,ke/keV,edep/keV,x/um,xdep/um,y/um,z/um,posvec);
 
   //fflush(stdout);
   writeToLog(__PRETTY_FUNCTION__);
