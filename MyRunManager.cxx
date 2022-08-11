@@ -48,9 +48,9 @@ MyRunManager::~MyRunManager(){
 void MyRunManager::AnalyzeEvent (G4Event *anEvent){
 
 
-  std::cout << "i am very LOUD" << std::endl;
+  //std::cout << "i am very LOUD" << std::endl;
 
-  anEvent->Print();
+  //anEvent->Print();
 }
 
 
