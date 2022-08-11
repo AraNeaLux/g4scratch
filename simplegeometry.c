@@ -10,8 +10,10 @@
 //  TGeoMedium *med2 = new TGeoMedium("Aluminum",2,mat2);
 //  TGeoMaterial *mat2 = new TGeoMaterial("Be",9,4,1.85);
 //  TGeoMedium *med2 = new TGeoMedium("Be",2,mat2);
-  TGeoMaterial *mat2 = new TGeoMaterial("Au",197,79,19.3);
-  TGeoMedium *med2 = new TGeoMedium("Au",2,mat2);
+//  TGeoMaterial *mat2 = new TGeoMaterial("Au",197,79,19.3);
+//  TGeoMedium *med2 = new TGeoMedium("Au",2,mat2);
+  TGeoMaterial *mat2 = new TGeoMaterial("Fe",56,26,7.874);
+  TGeoMedium *med2 = new TGeoMedium("Fe",2,mat2);
 
   TGeoVolume *myBlock = gGeoManager->MakeBox("myBlock",med2,0.0001,3.,5.);
 

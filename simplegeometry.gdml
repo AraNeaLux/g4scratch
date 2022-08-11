@@ -2,7 +2,7 @@
 <gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
   <define>
     <position name="myBlock_1inmyWorldpos" x="0" y="0" z="0" unit="cm"/>
-    <position name="myLayer1_1inmyWorldpos" x="-2.0000000000000001e-09" y="0" z="0" unit="cm"/>
+    <position name="myLayer1_1inmyWorldpos" x="-0.00020000000000000001" y="0" z="0" unit="cm"/>
     <position name="myDetector_1inmyWorldpos" x="8.5999999999999996" y="0" z="0" unit="cm"/>
     <position name="myDetector_2inmyWorldpos" x="7.4478183388710022" y="4.2999999999999998" z="0" unit="cm"/>
     <rotation name="myDetector_2inmyWorldrot" x="-0" y="-0" z="-29.999999999999996" unit="deg"/>
@@ -30,9 +30,9 @@
       <D unit="g/cm3" value="0"/>
       <atom unit="g/mole" value="2"/>
     </material>
-    <material name="Au" Z="79">
-      <D unit="g/cm3" value="19.300000000000001"/>
-      <atom unit="g/mole" value="197"/>
+    <material name="Fe" Z="26">
+      <D unit="g/cm3" value="7.8739999999999997"/>
+      <atom unit="g/mole" value="56"/>
     </material>
     <material name="p" Z="1">
       <D unit="g/cm3" value="10"/>
@@ -45,13 +45,13 @@
   </materials>
   <solids>
     <box name="myWorld" x="20" y="20" z="20" lunit="cm"/>
-    <box name="myBlock0x1" x="2.0000000000000001e-09" y="6" z="10" lunit="cm"/>
-    <box name="myLayer10x1" x="2.0000000000000001e-09" y="6" z="10" lunit="cm"/>
+    <box name="myBlock0x1" x="0.00020000000000000001" y="6" z="10" lunit="cm"/>
+    <box name="myLayer10x1" x="0.00020000000000000001" y="6" z="10" lunit="cm"/>
     <box name="myDetector0x1" x="2" y="4" z="10" lunit="cm"/>
   </solids>
   <structure>
     <volume name="myBlock">
-      <materialref ref="Au"/>
+      <materialref ref="Fe"/>
       <solidref ref="myBlock0x1"/>
     </volume>
     <volume name="myLayer1">
