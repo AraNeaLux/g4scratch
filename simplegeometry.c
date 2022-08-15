@@ -15,7 +15,7 @@
 //  TGeoMaterial *mat2 = new TGeoMaterial("Fe",56,26,7.874);
 //  TGeoMedium *med2 = new TGeoMedium("Fe",2,mat2);
 
-  TGeoVolume *myBlock = gGeoManager->MakeBox("myBlock",med2,5.,3.,0.0001);
+  TGeoVolume *myBlock = gGeoManager->MakeBox("myBlock",med2,3.,5.,0.001);
 
   TGeoMaterial *mat4 = new TGeoMaterial("p",1,1,10);
   TGeoMedium *med4 = new TGeoMedium("p",4,mat4);
@@ -27,7 +27,7 @@
   TGeoMaterial *mat3 = new TGeoMaterial("Silicon",28,14,2.3);
   TGeoMedium *med3 = new TGeoMedium("Silicon",3,mat3);
 
-  TGeoVolume *myDetector = gGeoManager->MakeBox("myDetector",med3,5.,2.,1.);
+  TGeoVolume *myDetector = gGeoManager->MakeBox("myDetector",med3,1.,2.,5.);
 
   gGeoManager->SetTopVolume(myWorld);
 
@@ -41,27 +41,28 @@
 
   double r = 8.6;
 
-  TGeoRotation *drot2p = new TGeoRotation("drot2p", 0., -30., 0.);
-  TGeoRotation *drot3p = new TGeoRotation("drot3p", 0., -60., 0.);
-  TGeoRotation *drot4p = new TGeoRotation("drot4p", 0., -90., 0.);
-  TGeoRotation *drot5p = new TGeoRotation("drot5p", 0., -120., 0.);
-  TGeoRotation *drot6p = new TGeoRotation("drot6p", 0., -150., 0.);
-  TGeoRotation *drot2n = new TGeoRotation("drot2n", 0., 30., 0.);
-  TGeoRotation *drot3n = new TGeoRotation("drot3n", 0., 60., 0.);
-  TGeoRotation *drot4n = new TGeoRotation("drot4n", 0., 90., 0.);
-  TGeoRotation *drot5n = new TGeoRotation("drot5n", 0., 120., 0.);
-  TGeoRotation *drot6n = new TGeoRotation("drot6n", 0., 150., 0.);
-  myWorld->AddNode(myDetector,1, new TGeoTranslation(0.,0.,r));
-  myWorld->AddNode(myDetector,2, new TGeoCombiTrans(0.,r*sin(pi/6),r*cos(pi/6),drot2p));
-  myWorld->AddNode(myDetector,3, new TGeoCombiTrans(0.,r*sin(pi/3),r*cos(pi/3),drot3p));
-  myWorld->AddNode(myDetector,4, new TGeoCombiTrans(0.,r*sin(pi/2),r*cos(pi/2),drot4p));
-  myWorld->AddNode(myDetector,5, new TGeoCombiTrans(0.,r*sin(pi/3),-r*cos(pi/3),drot5p));
-  myWorld->AddNode(myDetector,6, new TGeoCombiTrans(0.,r*sin(pi/6),-r*cos(pi/6),drot6p));
-  myWorld->AddNode(myDetector,7, new TGeoCombiTrans(0.,-r*sin(pi/6),r*cos(pi/6),drot2n));
-  myWorld->AddNode(myDetector,8, new TGeoCombiTrans(0.,-r*sin(pi/3),r*cos(pi/3),drot3n));
-  myWorld->AddNode(myDetector,9, new TGeoCombiTrans(0.,-r*sin(pi/2),r*cos(pi/2),drot4n));
-  myWorld->AddNode(myDetector,10, new TGeoCombiTrans(0.,-r*sin(pi/3),-r*cos(pi/3),drot5n));
-  myWorld->AddNode(myDetector,11, new TGeoCombiTrans(0.,-r*sin(pi/6),-r*cos(pi/6),drot6n));
+  TGeoRotation *drot1p = new TGeoRotation("drot2p", 0. ,90. ,90.);
+  TGeoRotation *drot2p = new TGeoRotation("drot2p", 0. ,90. ,60.);
+  TGeoRotation *drot3p = new TGeoRotation("drot3p", 0. ,90. ,30.);
+  TGeoRotation *drot4p = new TGeoRotation("drot4p", 0. ,90. ,0.);
+  TGeoRotation *drot5p = new TGeoRotation("drot5p", 0. ,90. ,150.);
+  TGeoRotation *drot6p = new TGeoRotation("drot6p", 0. ,90. ,120.);
+  TGeoRotation *drot2n = new TGeoRotation("drot2n", 0. ,90. ,-60.);
+  TGeoRotation *drot3n = new TGeoRotation("drot3n", 0. ,90. ,-30.);
+  TGeoRotation *drot4n = new TGeoRotation("drot4n", 0. ,90. ,0.);
+  TGeoRotation *drot5n = new TGeoRotation("drot5n", 0. ,90. ,-150.);
+  TGeoRotation *drot6n = new TGeoRotation("drot6n", 0. ,90. ,-120.);
+  myWorld->AddNode(myDetector,1, new TGeoCombiTrans(0.,0.,r,drot1p));
+  myWorld->AddNode(myDetector,2, new TGeoCombiTrans(r*sin(pi/6),0.,r*cos(pi/6),drot2p));
+  myWorld->AddNode(myDetector,3, new TGeoCombiTrans(r*sin(pi/3),0.,r*cos(pi/3),drot3p));
+  myWorld->AddNode(myDetector,4, new TGeoCombiTrans(r*sin(pi/2),0.,r*cos(pi/2),drot4p));
+  myWorld->AddNode(myDetector,5, new TGeoCombiTrans(r*sin(pi/3),0.,-r*cos(pi/3),drot5p));
+  myWorld->AddNode(myDetector,6, new TGeoCombiTrans(r*sin(pi/6),0.,-r*cos(pi/6),drot6p));
+  myWorld->AddNode(myDetector,7, new TGeoCombiTrans(-r*sin(pi/6),0.,r*cos(pi/6),drot2n));
+  myWorld->AddNode(myDetector,8, new TGeoCombiTrans(-r*sin(pi/3),0.,r*cos(pi/3),drot3n));
+  myWorld->AddNode(myDetector,9, new TGeoCombiTrans(-r*sin(pi/2),0.,r*cos(pi/2),drot4n));
+  myWorld->AddNode(myDetector,10, new TGeoCombiTrans(-r*sin(pi/3),0.,-r*cos(pi/3),drot5n));
+  myWorld->AddNode(myDetector,11, new TGeoCombiTrans(-r*sin(pi/6),0.,-r*cos(pi/6),drot6n));
 
   gGeoManager->CloseGeometry();
 

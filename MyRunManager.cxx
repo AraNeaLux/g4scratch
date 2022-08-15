@@ -223,6 +223,7 @@ void MySteppingAction::UserSteppingAction(const G4Step* step){
   std::string processname 
     = step->GetPostStepPoint()->GetProcessDefinedStep()->GetProcessName();
 
+  //G4cout << processname << G4endl;
   if (processname=="Transportation"){fProcess = 0;}
   else if (processname=="UserMaxStep"){fProcess = 1;}
   else if (processname=="hIoni"){fProcess = 2;}
@@ -230,7 +231,8 @@ void MySteppingAction::UserSteppingAction(const G4Step* step){
   else if (processname=="ionIoni"){fProcess = 4;}
   else if (processname=="hadElastic"){fProcess = 5;}
   else if (processname=="alphaInelastic"){fProcess = 6;}
-  else if (processname=="msc"){fProcess = 7;}
+  else if (processname=="msc"){fProcess = 7;
+                               G4cout << processname << G4endl;}
   else {fProcess=57005;
     G4cout << processname << G4endl;
   };
