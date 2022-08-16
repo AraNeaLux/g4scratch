@@ -15,7 +15,7 @@
 //  TGeoMaterial *mat2 = new TGeoMaterial("Fe",56,26,7.874);
 //  TGeoMedium *med2 = new TGeoMedium("Fe",2,mat2);
 
-  TGeoVolume *myBlock = gGeoManager->MakeBox("myBlock",med2,3.,5.,0.001);
+  TGeoVolume *myBlock = gGeoManager->MakeBox("myBlock",med2,0.0001,3.,5.);
 
   TGeoMaterial *mat4 = new TGeoMaterial("p",1,1,10);
   TGeoMedium *med4 = new TGeoMedium("p",4,mat4);
@@ -24,14 +24,15 @@
 
   //TGeoMaterial *mat3 = new TGeoMaterial("Germanium",72,32,5.3);
   //TGeoMedium *med3 = new TGeoMedium("Germanium",3,mat3);
-  TGeoMaterial *mat3 = new TGeoMaterial("Silicon",28,14,2.3);
+  //TGeoMaterial *mat3 = new TGeoMaterial("Silicon",28,14,2.3);
+  TGeoMaterial *mat3 = new TGeoMaterial("Silicon",28,14,0);
   TGeoMedium *med3 = new TGeoMedium("Silicon",3,mat3);
 
   TGeoVolume *myDetector = gGeoManager->MakeBox("myDetector",med3,1.,2.,5.);
 
   gGeoManager->SetTopVolume(myWorld);
 
-  TGeoRotation *rot1 = new TGeoRotation("rot1", 0., 0., 0.);
+  TGeoRotation *rot1 = new TGeoRotation("rot1", 0., 90., 90.);
   myWorld->AddNode(myBlock,1, new TGeoCombiTrans(0.,0.,0.,rot1));
 
   //TGeoRotation *rot2 = new TGeoRotation("rot2", 0., 0., 0.);

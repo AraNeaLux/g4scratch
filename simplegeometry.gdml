@@ -2,6 +2,7 @@
 <gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
   <define>
     <position name="myBlock_1inmyWorldpos" x="0" y="0" z="0" unit="cm"/>
+    <rotation name="myBlock_1inmyWorldrot" x="-90" y="-0" z="-90" unit="deg"/>
     <position name="myDetector_1inmyWorldpos" x="0" y="0" z="8.5999999999999996" unit="cm"/>
     <rotation name="myDetector_1inmyWorldrot" x="-90" y="-0" z="-90" unit="deg"/>
     <position name="myDetector_2inmyWorldpos" x="4.2999999999999998" y="0" z="7.4478183388710022" unit="cm"/>
@@ -39,13 +40,13 @@
       <atom unit="g/mole" value="1"/>
     </material>
     <material name="Silicon" Z="14">
-      <D unit="g/cm3" value="2.2999999999999998"/>
+      <D unit="g/cm3" value="0"/>
       <atom unit="g/mole" value="28"/>
     </material>
   </materials>
   <solids>
     <box name="myWorld" x="20" y="20" z="20" lunit="cm"/>
-    <box name="myBlock0x1" x="6" y="10" z="0.002" lunit="cm"/>
+    <box name="myBlock0x1" x="0.00020000000000000001" y="6" z="10" lunit="cm"/>
     <box name="myDetector0x1" x="2" y="4" z="10" lunit="cm"/>
   </solids>
   <structure>
@@ -63,6 +64,7 @@
       <physvol name="myBlock_1" copynumber="1">
         <volumeref ref="myBlock"/>
         <positionref ref="myBlock_1inmyWorldpos"/>
+        <rotationref ref="myBlock_1inmyWorldrot"/>
       </physvol>
       <physvol name="myDetector_1" copynumber="1">
         <volumeref ref="myDetector"/>

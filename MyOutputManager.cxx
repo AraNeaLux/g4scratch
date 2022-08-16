@@ -35,6 +35,7 @@ void MyOutputManager::setupTree(const char* fname){
   fTree->Branch("Process",      &fProcess);     
   fTree->Branch("ke",           &fke);           
   fTree->Branch("edep",         &fedep);           
+  fTree->Branch("StepLen",      &fStepLen);           
   fTree->Branch("x",            &fx);            
   fTree->Branch("xdep",         &fxdep);            
   fTree->Branch("y",            &fy);            
@@ -58,6 +59,7 @@ void MyOutputManager::clear(){
   fProcess      = -1;
   fke           = sqrt(-1); 
   fedep         = sqrt(-1); 
+  fStepLen      = sqrt(-1); 
   fx            = sqrt(-1); 
   fxdep         = sqrt(-1); 
   fy            = sqrt(-1); 
@@ -73,6 +75,7 @@ void MyOutputManager::fill(int eventID,
                            int process,
                            double ke,
                            double edep,
+                           double stepLen,
                            double x,
                            double xdep,
                            double y,
@@ -86,6 +89,7 @@ void MyOutputManager::fill(int eventID,
   fProcess        = process;
   fke             = ke;           
   fedep           = edep;           
+  fStepLen           = stepLen;           
   fx              = x;            
   fxdep           = xdep;            
   fy              = y;            

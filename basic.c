@@ -18,7 +18,7 @@
 
 #include "G4StepLimiterPhysics.hh"
 
-int main() {
+int main(int argc, char **argv) {
   printf("hello\n");
   
   G4GDMLParser parser;
@@ -50,8 +50,14 @@ int main() {
  
   runManager->Initialize();
  
-  runManager->BeamOn(1000000);
+  if(argc<2) {
+    runManager->BeamOn(100000);
+  } else {
+    int iterations = atoi(argv[1]);
+    runManager->BeamOn(iterations);
+  }
  
+
   delete runManager; 
  
  

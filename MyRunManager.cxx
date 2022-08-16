@@ -6,7 +6,11 @@
 
 #include <cstdio>
 #include <fstream>
+#include <iostream>
 #include <TVector3.h>
+
+#include <string>
+#include <G4String.hh>
 
 //#include <TFile.h>
 
@@ -152,7 +156,6 @@ MySteppingAction::~MySteppingAction(){
 }
 
 void MySteppingAction::UserSteppingAction(const G4Step* step){
-
   G4Track *track = step->GetTrack();
   G4String partname = track->GetParticleDefinition()->GetParticleName();
 
@@ -203,17 +206,18 @@ void MySteppingAction::UserSteppingAction(const G4Step* step){
 
   const G4String volname = stepvol->GetName();
   //printf(volname);
-  //printf("\n");
+  //printf("\n\n");
   if (volname == "myWorld_PV"){
     fVolume = 0;
   } else if (volname == "myBlock_1"){
     fVolume = 1;
   } else if (volname == "myLayer1_1"){
     fVolume = 2;
-  } else if (volname.rfind("myDetector",0)==0){
-    fVolume = 13;
-  };
-  
+  } else if(volname.contains("myDetector")) {
+    size_t last_index = volname.find_last_not_of("0123456789");
+    std::string result = volname.substr(last_index + 1); 
+    fVolume = atoi(result.c_str())-1 + 13;  
+  }
 
   // ENERGY THINGS
   double ke = step->GetPostStepPoint()->GetKineticEnergy();
@@ -245,6 +249,10 @@ void MySteppingAction::UserSteppingAction(const G4Step* step){
           << "\t" << z << G4endl;
 */
 
+  // STEP LENGTH THINGS
+  fStepLen = step->GetStepLength();
+
+
   // POSITIONY THINGS
   //step->GetPreStepPoint()->GetPosition();
 
@@ -270,7 +278,7 @@ void MySteppingAction::UserSteppingAction(const G4Step* step){
   //printf("\n %.02f\t %.02f\t %.02f\n",x,y,z);
 
 
-  MyOutputManager::Get()->fill(fEventID,fTrackID,fStepNum,fVolume,fParticleName,fProcess,ke/keV,edep/keV,x/um,xdep/um,y/um,z/um,posvec);
+  MyOutputManager::Get()->fill(fEventID,fTrackID,fStepNum,fVolume,fParticleName,fProcess,ke/keV,edep/keV,fStepLen/um,x/um,xdep/um,y/um,z/um,posvec);
 
   //fflush(stdout);
   writeToLog(__PRETTY_FUNCTION__);

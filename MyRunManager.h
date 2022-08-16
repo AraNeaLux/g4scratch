@@ -63,6 +63,7 @@ class MySteppingAction : public G4UserSteppingAction {
     std::string fParticleName;
     long fProcess;
     long fStepNum;
+    double fStepLen;
     long fVolume;
 
 };

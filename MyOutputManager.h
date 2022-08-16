@@ -22,6 +22,7 @@ class MyOutputManager{
               int process,
               double ke,
               double edep,
+              double stepLen,
               double x,
               double xdep,
               double y,
@@ -43,6 +44,7 @@ class MyOutputManager{
     int fProcess;
     double fke;
     double fedep;
+    double fStepLen;
     double fx;
     double fxdep;
     double fy;
