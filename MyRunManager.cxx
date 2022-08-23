@@ -318,7 +318,7 @@ MyTrackingAction::~MyTrackingAction(){
 }
 
 void MyTrackingAction::PreUserTrackingAction(const G4Track* track){
-  //fpTrackingManager->SetStoreTrajectory(2);
+  fpTrackingManager->SetStoreTrajectory(true);
   writeToLog(__PRETTY_FUNCTION__);
 }
 
