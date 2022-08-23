@@ -47,6 +47,7 @@ int main(int argc, char **argv) {
  // runManager->SetUserAction(/*  TrackingAction   */);
  // runManager->SetUserAction(/*  SteppingAction   */);
   runManager->SetUserAction(new MySteppingAction());
+  runManager->SetUserAction(new MyTrackingAction());
  
   runManager->Initialize();
  

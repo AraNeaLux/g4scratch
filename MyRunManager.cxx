@@ -113,10 +113,28 @@ void MyEventAction::EndOfEventAction(const G4Event* event){
   double yPrimary = event->GetPrimaryVertex()->GetY0()/cm;
   double zPrimary = event->GetPrimaryVertex()->GetZ0()/cm;
 
-
   //printf("PRIMARY: %.02f\t %.02f\t %.02f\n",xPrimary,yPrimary,zPrimary);
 
+  G4TrajectoryContainer* trajectoryContainer = event->GetTrajectoryContainer();
+  G4int n_trajectories = 0;
+  if (trajectoryContainer) n_trajectories = trajectoryContainer->entries();
 
+  if (n_trajectories != 0){
+    G4cout << n_trajectories << G4endl;
+  }
+/*
+  G4int eventID = event->GetEventID();
+  if ( eventID < 100 || eventID % 100 == 0) {
+    G4cout << ">>> Event: " << eventID  << G4endl;
+    if ( trajectoryContainer ) {
+      G4cout << "    " << n_trajectories
+             << " trajectories stored in this event." << G4endl;
+    }
+    G4VHitsCollection* hc = event->GetHCofThisEvent()->GetHC(0);
+    G4cout << "    "  
+           << hc->GetSize() << " hits stored in this event" << G4endl;
+  }  
+*/
   //printf("%s\n",__PRETTY_FUNCTION__);
   fflush(stdout);
   writeToLog(__PRETTY_FUNCTION__);
@@ -281,6 +299,30 @@ void MySteppingAction::UserSteppingAction(const G4Step* step){
   MyOutputManager::Get()->fill(fEventID,fTrackID,fStepNum,fVolume,fParticleName,fProcess,ke/keV,edep/keV,fStepLen/um,x/um,xdep/um,y/um,z/um,posvec);
 
   //fflush(stdout);
+  writeToLog(__PRETTY_FUNCTION__);
+}
+
+// ...oooOOO0OOOooo......oooOOO0OOOooo......oooOOO0OOOooo...
+// ...oooOOO0OOOooo......oooOOO0OOOooo......oooOOO0OOOooo...
+// ...oooOOO0OOOooo......oooOOO0OOOooo......oooOOO0OOOooo...
+
+
+MyTrackingAction::MyTrackingAction():G4UserTrackingAction(){
+  //printf("MyTrackingAction created\n");
+  writeToLog("MyTrackingAction created");
+}
+
+MyTrackingAction::~MyTrackingAction(){
+  //printf("MyTrackingAction destroyed\n");
+  writeToLog("MyTrackingAction destroyed");
+}
+
+void MyTrackingAction::PreUserTrackingAction(const G4Track* track){
+  //fpTrackingManager->SetStoreTrajectory(2);
+  writeToLog(__PRETTY_FUNCTION__);
+}
+
+void MyTrackingAction::PostUserTrackingAction(const G4Track* track){
   writeToLog(__PRETTY_FUNCTION__);
 }
 
