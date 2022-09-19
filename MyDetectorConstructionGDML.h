@@ -44,7 +44,9 @@ class MyDetectorConstructionGDML : public G4VUserDetectorConstruction{
     void ConstructSD(){
       G4SDManager *SDman = G4SDManager::GetSDMpointer();
 
-      MySensitiveDetector* aSD = new MySensitiveDetector("detector");
+      G4String SDname = "detector";
+      G4String HCname = "HitsCollectionName";
+      MySensitiveDetector* aSD = new MySensitiveDetector(SDname,HCname);
       SDman->AddNewDetector(aSD);
 
 

@@ -3,6 +3,9 @@
 #include "MyDetectorConstructionGDML.h"
 
 #include "G4SystemOfUnits.hh"
+#include "G4Trajectory.hh"
+#include "G4TrajectoryPoint.hh"
+#include "G4AttDef.hh"
 
 #include <cstdio>
 #include <fstream>
@@ -114,27 +117,44 @@ void MyEventAction::EndOfEventAction(const G4Event* event){
   double zPrimary = event->GetPrimaryVertex()->GetZ0()/cm;
 
   //printf("PRIMARY: %.02f\t %.02f\t %.02f\n",xPrimary,yPrimary,zPrimary);
-
+/*
   G4TrajectoryContainer* trajectoryContainer = event->GetTrajectoryContainer();
   G4int n_trajectories = 0;
   if (trajectoryContainer) n_trajectories = trajectoryContainer->entries();
 
-  if (n_trajectories != 0){
-    G4cout << n_trajectories << G4endl;
+  for (G4int i=0;i<n_trajectories;i++){
+    G4VTrajectory *trj = (G4Trajectory*)((*trajectoryContainer)[i]);
+    //G4VTrajectory* trj = (G4Trajectory*)((*(event->GetTrajectoryContainer()))[i]);
+    //G4cout << trj->GetParticleName() << G4endl;
+    G4int n_pts = trj->GetPointEntries();
+    if (n_pts != 6){
+    G4cout << n_pts << G4endl;
+    for (G4int i=0;i<n_pts;i++){
+      
+      G4TrajectoryPoint *pt = (G4TrajectoryPoint*)trj->GetPoint(i);
+      G4ThreeVector intpt = pt->GetPosition();
+      G4cout << intpt << G4endl;
+
+      G4cout << "Map size: " << pt->GetAttDefs()->begin()->second.GetDesc() << G4endl;
+      G4cout << "Vec size: "  << G4endl;
+    }
+    }
   }
-/*
+
+*/
+
+
+/*  
   G4int eventID = event->GetEventID();
-  if ( eventID < 100 || eventID % 100 == 0) {
+  if ( eventID < 100 || eventID % 1000 == 0) {
     G4cout << ">>> Event: " << eventID  << G4endl;
     if ( trajectoryContainer ) {
       G4cout << "    " << n_trajectories
              << " trajectories stored in this event." << G4endl;
     }
-    G4VHitsCollection* hc = event->GetHCofThisEvent()->GetHC(0);
-    G4cout << "    "  
-           << hc->GetSize() << " hits stored in this event" << G4endl;
-  }  
+  }
 */
+
   //printf("%s\n",__PRETTY_FUNCTION__);
   fflush(stdout);
   writeToLog(__PRETTY_FUNCTION__);
@@ -174,6 +194,8 @@ MySteppingAction::~MySteppingAction(){
 }
 
 void MySteppingAction::UserSteppingAction(const G4Step* step){
+  return; 
+ 
   G4Track *track = step->GetTrack();
   G4String partname = track->GetParticleDefinition()->GetParticleName();
 
@@ -306,7 +328,7 @@ void MySteppingAction::UserSteppingAction(const G4Step* step){
 // ...oooOOO0OOOooo......oooOOO0OOOooo......oooOOO0OOOooo...
 // ...oooOOO0OOOooo......oooOOO0OOOooo......oooOOO0OOOooo...
 
-
+/*
 MyTrackingAction::MyTrackingAction():G4UserTrackingAction(){
   //printf("MyTrackingAction created\n");
   writeToLog("MyTrackingAction created");
@@ -325,7 +347,7 @@ void MyTrackingAction::PreUserTrackingAction(const G4Track* track){
 void MyTrackingAction::PostUserTrackingAction(const G4Track* track){
   writeToLog(__PRETTY_FUNCTION__);
 }
-
+*/
 // ...oooOOO0OOOooo......oooOOO0OOOooo......oooOOO0OOOooo...
 // ...oooOOO0OOOooo......oooOOO0OOOooo......oooOOO0OOOooo...
 // ...oooOOO0OOOooo......oooOOO0OOOooo......oooOOO0OOOooo...
