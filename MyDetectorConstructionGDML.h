@@ -38,10 +38,11 @@ class MyDetectorConstructionGDML : public G4VUserDetectorConstruction{
       G4UserLimits *fStepLimit = new G4UserLimits(maxStep);
       fblock->SetUserLimits(fStepLimit);
 */
+      G4cout << "Made World" << G4endl;
       return fWorld;
     }
 
-    void ConstructSD(){
+    void ConstructSDandField(){
       G4SDManager *SDman = G4SDManager::GetSDMpointer();
 
       G4String SDname = "detector";
@@ -49,11 +50,14 @@ class MyDetectorConstructionGDML : public G4VUserDetectorConstruction{
       MySensitiveDetector* aSD = new MySensitiveDetector(SDname,HCname);
       SDman->AddNewDetector(aSD);
 
+      G4cout << "Added new SD" << G4endl;
 
-      G4LogicalVolume *fdet = fParser.GetVolume("myDetector");
+
+      G4String volname = "myDetector";
+      G4LogicalVolume *fdet = fParser.GetVolume(volname);
       fdet->SetSensitiveDetector(aSD);
 
-
+      G4cout << "Added " << volname << G4endl;
 
     }
 

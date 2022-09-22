@@ -116,6 +116,8 @@ void MyEventAction::EndOfEventAction(const G4Event* event){
   double yPrimary = event->GetPrimaryVertex()->GetY0()/cm;
   double zPrimary = event->GetPrimaryVertex()->GetZ0()/cm;
 
+  G4VHitsCollection* hc = event->GetHCofThisEvent()->GetHC(0);
+
   //printf("PRIMARY: %.02f\t %.02f\t %.02f\n",xPrimary,yPrimary,zPrimary);
 /*
   G4TrajectoryContainer* trajectoryContainer = event->GetTrajectoryContainer();
@@ -194,7 +196,6 @@ MySteppingAction::~MySteppingAction(){
 }
 
 void MySteppingAction::UserSteppingAction(const G4Step* step){
-  return; 
  
   G4Track *track = step->GetTrack();
   G4String partname = track->GetParticleDefinition()->GetParticleName();
@@ -254,9 +255,9 @@ void MySteppingAction::UserSteppingAction(const G4Step* step){
   } else if (volname == "myLayer1_1"){
     fVolume = 2;
   } else if(volname.contains("myDetector")) {
-    size_t last_index = volname.find_last_not_of("0123456789");
-    std::string result = volname.substr(last_index + 1); 
-    fVolume = atoi(result.c_str())-1 + 13;  
+      size_t last_index = volname.find_last_not_of("0123456789");
+      std::string result = volname.substr(last_index + 1); 
+      fVolume = atoi(result.c_str())-1 + 13;  
   }
 
   // ENERGY THINGS
