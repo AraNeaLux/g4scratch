@@ -24,8 +24,8 @@
 
   //TGeoMaterial *mat3 = new TGeoMaterial("Germanium",72,32,5.3);
   //TGeoMedium *med3 = new TGeoMedium("Germanium",3,mat3);
-  //TGeoMaterial *mat3 = new TGeoMaterial("Silicon",28,14,2.3);
-  TGeoMaterial *mat3 = new TGeoMaterial("Silicon",28,14,0);
+  TGeoMaterial *mat3 = new TGeoMaterial("Silicon",28,14,2.3);
+  //TGeoMaterial *mat3 = new TGeoMaterial("Silicon",28,14,0);
   TGeoMedium *med3 = new TGeoMedium("Silicon",3,mat3);
 
   TGeoVolume *myDetector = gGeoManager->MakeBox("myDetector",med3,1.,2.,5.);

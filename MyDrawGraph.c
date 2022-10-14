@@ -1,3 +1,157 @@
+#include <cstdio>
+ 
+TGraph* makeTrack(int event){
+
+  // Open file with tree
+  TFile *_file0 = TFile::Open("output.root");
+  TTree *t1 = (TTree*)_file0->Get("t1");
+
+  // Make vectors to store track data
+  std::vector<double> xposvec;
+  std::vector<double> yposvec;
+
+  // Set initial positions
+  double xinit = -90000;
+  double yinit = 0;
+  xposvec.push_back(xinit);
+  yposvec.push_back(yinit);
+  //cout << xinit << "\t" << yinit << endl;
+
+  // variable stuff
+  double xpos;
+  double ypos;
+  std::string particleName;
+  int EventID;
+  int Volume;
+  int StepNum;
+
+  // Get tree info locations
+  t1->SetBranchAddress("z",&xpos);
+  t1->SetBranchAddress("y",&ypos);
+  t1->SetBranchAddress("EventID",&EventID);
+  t1->SetBranchAddress("Volume",&Volume);
+
+  // Add positions to vectors by event number
+  for (long i = 0;i<t1->GetEntries();i++){
+    t1->GetEntry(i);
+    if (EventID==event){
+      //cout << xpos << "\t" << ypos << endl;
+      xposvec.push_back(xpos); 
+      yposvec.push_back(ypos);
+    } else if (EventID > event){
+      break;
+    }
+  }
+
+  // Make graph
+  TGraph* gr = new TGraph(xposvec.size(),&(xposvec[0]),&(yposvec[0]));
+
+  for(int i = 0;i<xposvec.size();i++){
+    gr->SetPoint(i,xposvec[i],yposvec[i]);
+  }
+  
+  _file0->Close();
+  return gr;
+}
+
+TPolyLine* makeDetector(double theta = TMath::Pi()/2.){
+
+  // Distance to center of box
+  double r = 86000;
+
+  double dx1,dy1;
+  double dx2,dy2;
+  double dx3,dy3;
+  double dx4,dy4;
+
+  double dx1p,dy1p;
+  double dx2p,dy2p;
+  double dx3p,dy3p;
+  double dx4p,dy4p;
+
+  // Coords of corners of box
+  dx1 = -10000.0;
+  dy1 = -20000.0;
+
+  dx2 =  10000.0;
+  dy2 = -20000.0;
+
+  dx3 =  10000.0;
+  dy3 =  20000.0;
+
+  dx4 = -10000.0;
+  dy4 =  20000.0;
+
+  // Rotate boxes
+  dx1p = dx1*cos(-theta)+dy1*sin(-theta);
+  dy1p = dy1*cos(-theta)-dx1*sin(-theta);
+
+  dx2p = dx2*cos(-theta)+dy2*sin(-theta);
+  dy2p = dy2*cos(-theta)-dx2*sin(-theta);
+
+  dx3p = dx3*cos(-theta)+dy3*sin(-theta);
+  dy3p = dy3*cos(-theta)-dx3*sin(-theta);
+
+  dx4p = dx4*cos(-theta)+dy4*sin(-theta);
+  dy4p = dy4*cos(-theta)-dx4*sin(-theta);
+
+  // Translate boxes
+  double xt = r*cos(theta);
+  double yt = r*sin(theta);
+  double x2[5] = {dx1p+xt,dx2p+xt,dx3p+xt,dx4p+xt,dx1p+xt};
+  double y2[5] = {dy1p+yt,dy2p+yt,dy3p+yt,dy4p+yt,dy1p+yt};
+
+  TPolyLine *box2 = new TPolyLine(5,x2,y2);
+  box2->SetLineColor(kBlue);
+  box2->SetLineWidth(2);
+  box2->SetFillStyle(0);
+  
+  return box2;
+}
+
+TPolyLine* makeTarget(){
+  double x[5] = {-1.,1.,1.,-1.,-1.};
+  double y[5] = {-30000.0,-30000.0,30000.0,30000.0,-30000.0};
+  TPolyLine *box = new TPolyLine(5,x,y);
+  box->SetLineColor(2);
+  box->SetLineWidth(2);
+  box->SetFillStyle(0);
+  return box;
+}
+
+void makeSetup(){
+
+  // Make an "empty" graph with setup dimensions
+  double x[1];
+  double y[1];
+  x[0] = 0;
+  y[0] = 0;
+  TGraph* gr = new TGraph(1,x,y);
+  gr->GetXaxis()->SetLimits(-100000,100000);
+  gr->SetMinimum(-100000);
+  gr->SetMaximum(100000);
+
+  gr->Draw();
+
+  // Place boxes on graph
+  TPolyLine *box = makeTarget();
+  box->Draw("same");
+
+  for (int i=7; i<=17; i++){
+    TPolyLine *box2 = makeDetector(TMath::Pi()*i/6);
+    box2->Draw("same"); 
+  }
+
+}
+
+void makePicture(int num = 10, int start = 0){
+  makeSetup();
+  for (int i=0;i<num;i++){
+    TGraph* gr = makeTrack(i+start);
+    gr->Draw("same");
+  }
+}
+
 void MyDrawGraph(int event = 137){
   
   TFile *_file0 = TFile::Open("output.root");
@@ -215,3 +369,5 @@ void MyDrawGraph(int event = 137){
   box2->Draw("same");
 */
 }
+
+

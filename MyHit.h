@@ -8,7 +8,10 @@
 
 class MyHit : public G4VHit{
   public: 
-    MyHit() : G4VHit(), fPos(G4ThreeVector()) {
+    MyHit() : G4VHit(), 
+    fPos(G4ThreeVector()),
+    fEdep(0.),
+    fChamberNb(-1){
 
     };
 
@@ -16,14 +19,22 @@ class MyHit : public G4VHit{
     };
 
     virtual void Print(){
-      G4cout << "position: " << G4BestUnit(fPos, "Length") << G4endl;
+      G4cout << "position: \t" << G4BestUnit(fPos, "Length") << G4endl;
+      G4cout << "edep: \t" << G4BestUnit(fEdep, "Energy") << G4endl;
+      G4cout << "ChamberNb: \t" << fChamberNb << G4endl;
     };
    
     G4ThreeVector fPos;
+    double fEdep;
+    int fChamberNb;
 
     void SetPos(G4ThreeVector xyz) {fPos=xyz; };
+    void SetEdep(double edep) {fEdep = edep;};
+    void SetChamberNb(int chamberNb) {fChamberNb = chamberNb;};
 
     G4ThreeVector GetPos() {return fPos; };
+    double GetEdep() {return fEdep; };
+    int GetChamberNb() {return fChamberNb; };
     
     
 

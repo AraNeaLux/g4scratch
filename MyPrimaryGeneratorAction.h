@@ -20,7 +20,7 @@ class MyPrimaryGeneratorAction : public G4VUserPrimaryGeneratorAction{
             myGun->SetParticleDefinition(particle);
 
             // Particle Energy
-            myGun->SetParticleEnergy(5.*MeV);
+            myGun->SetParticleEnergy(10.*MeV);
             // Particle at -10 cm?
             myGun->SetParticlePosition(G4ThreeVector(0.*cm,0.*cm,-9.*cm));
             // Particle going in +x direction

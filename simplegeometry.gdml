@@ -40,7 +40,7 @@
       <atom unit="g/mole" value="1"/>
     </material>
     <material name="Silicon" Z="14">
-      <D unit="g/cm3" value="0"/>
+      <D unit="g/cm3" value="2.2999999999999998"/>
       <atom unit="g/mole" value="28"/>
     </material>
   </materials>

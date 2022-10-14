@@ -36,6 +36,11 @@ G4bool MySensitiveDetector::ProcessHits(G4Step* aStep, G4TouchableHistory*){
 
   hit->SetPos(aStep->GetPostStepPoint()->GetPosition());
 
+  double edep = aStep->GetTotalEnergyDeposit();
+  hit->SetEdep(edep);
+
+  hit->SetChamberNb(aStep->GetPreStepPoint()->GetTouchableHandle()->GetCopyNumber());
+
   fHitsCollection->insert(hit);
 
   hit->Print();
@@ -45,5 +50,5 @@ G4bool MySensitiveDetector::ProcessHits(G4Step* aStep, G4TouchableHistory*){
 
 
 void MySensitiveDetector::EndOfEvent(G4HCofThisEvent*){
-
+  
 }
