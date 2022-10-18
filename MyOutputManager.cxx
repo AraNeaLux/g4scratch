@@ -37,7 +37,7 @@ void MyOutputManager::setupTree(const char* fname){
   fTree->Branch("edep",         &fedep);           
   fTree->Branch("StepLen",      &fStepLen);           
   fTree->Branch("x",            &fx);            
-  fTree->Branch("xdep",         &fxdep);            
+  fTree->Branch("zdep",         &fzdep);            
   fTree->Branch("y",            &fy);            
   fTree->Branch("z",            &fz);            
   fTree->Branch("postpos",      &fpostpos);            
@@ -61,7 +61,7 @@ void MyOutputManager::clear(){
   fedep         = sqrt(-1); 
   fStepLen      = sqrt(-1); 
   fx            = sqrt(-1); 
-  fxdep         = sqrt(-1); 
+  fzdep         = sqrt(-1); 
   fy            = sqrt(-1); 
   fz            = sqrt(-1); 
 
@@ -77,7 +77,7 @@ void MyOutputManager::fill(int eventID,
                            double edep,
                            double stepLen,
                            double x,
-                           double xdep,
+                           double zdep,
                            double y,
                            double z,
                            TVector3 postpos){
@@ -91,7 +91,7 @@ void MyOutputManager::fill(int eventID,
   fedep           = edep;           
   fStepLen           = stepLen;           
   fx              = x;            
-  fxdep           = xdep;            
+  fzdep           = zdep;            
   fy              = y;            
   fz              = z;            
   fpostpos        = postpos;            

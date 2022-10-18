@@ -6,29 +6,29 @@
   TGeoMedium *med1 = new TGeoMedium("Vacuum",1,mat1);
   TGeoVolume *myWorld = gGeoManager->MakeBox("myWorld",med1,10.,10.,10.);
 
-//  TGeoMaterial *mat2 = new TGeoMaterial("Aluminum",27,13,2.7);
-//  TGeoMedium *med2 = new TGeoMedium("Aluminum",2,mat2);
+  TGeoMaterial *mat2 = new TGeoMaterial("Aluminum",27,13,2.7);
+  TGeoMedium *med2 = new TGeoMedium("Aluminum",2,mat2);
 //  TGeoMaterial *mat2 = new TGeoMaterial("Be",9,4,1.85);
 //  TGeoMedium *med2 = new TGeoMedium("Be",2,mat2);
-  TGeoMaterial *mat2 = new TGeoMaterial("Au",197,79,19.3);
-  TGeoMedium *med2 = new TGeoMedium("Au",2,mat2);
+//  TGeoMaterial *mat2 = new TGeoMaterial("Au",197,79,19.3);
+//  TGeoMedium *med2 = new TGeoMedium("Au",2,mat2);
 //  TGeoMaterial *mat2 = new TGeoMaterial("Fe",56,26,7.874);
 //  TGeoMedium *med2 = new TGeoMedium("Fe",2,mat2);
 
-  TGeoVolume *myBlock = gGeoManager->MakeBox("myBlock",med2,0.0001,3.,5.);
+  TGeoVolume *myBlock = gGeoManager->MakeBox("myBlock",med2,1.,3.,5.);
 
-  TGeoMaterial *mat4 = new TGeoMaterial("p",1,1,10);
-  TGeoMedium *med4 = new TGeoMedium("p",4,mat4);
+//  TGeoMaterial *mat4 = new TGeoMaterial("p",1,1,10);
+//  TGeoMedium *med4 = new TGeoMedium("p",4,mat4);
 
   //TGeoVolume *myLayer1 = gGeoManager->MakeBox("myLayer1",med4,0.0000001,3.,5.);
 
   //TGeoMaterial *mat3 = new TGeoMaterial("Germanium",72,32,5.3);
   //TGeoMedium *med3 = new TGeoMedium("Germanium",3,mat3);
-  TGeoMaterial *mat3 = new TGeoMaterial("Silicon",28,14,2.3);
+  //TGeoMaterial *mat3 = new TGeoMaterial("Silicon",28,14,2.3);
   //TGeoMaterial *mat3 = new TGeoMaterial("Silicon",28,14,0);
-  TGeoMedium *med3 = new TGeoMedium("Silicon",3,mat3);
+  //TGeoMedium *med3 = new TGeoMedium("Silicon",3,mat3);
 
-  TGeoVolume *myDetector = gGeoManager->MakeBox("myDetector",med3,1.,2.,5.);
+  //TGeoVolume *myDetector = gGeoManager->MakeBox("myDetector",med3,1.,2.,5.);
 
   gGeoManager->SetTopVolume(myWorld);
 
@@ -37,7 +37,7 @@
 
   //TGeoRotation *rot2 = new TGeoRotation("rot2", 0., 0., 0.);
   //myWorld->AddNode(myLayer1,1, new TGeoCombiTrans(-0.0001001,0.,0.,rot2));
-
+/*
   float pi = TMath::Pi();
 
   double r = 8.6;
@@ -64,7 +64,7 @@
   myWorld->AddNode(myDetector,9, new TGeoCombiTrans(-r*sin(pi/2),0.,r*cos(pi/2),drot4n));
   myWorld->AddNode(myDetector,10, new TGeoCombiTrans(-r*sin(pi/3),0.,-r*cos(pi/3),drot5n));
   myWorld->AddNode(myDetector,11, new TGeoCombiTrans(-r*sin(pi/6),0.,-r*cos(pi/6),drot6n));
-
+*/
   gGeoManager->CloseGeometry();
 
   myWorld->SetLineColor(kMagenta);

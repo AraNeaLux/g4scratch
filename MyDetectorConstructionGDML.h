@@ -54,8 +54,8 @@ class MyDetectorConstructionGDML : public G4VUserDetectorConstruction{
 
 
       G4String volname = "myDetector";
-      G4LogicalVolume *fdet = fParser.GetVolume(volname);
-      fdet->SetSensitiveDetector(aSD);
+      //G4LogicalVolume *fdet = fParser.GetVolume(volname);
+      //fdet->SetSensitiveDetector(aSD);
 
       G4cout << "Added " << volname << G4endl;
 

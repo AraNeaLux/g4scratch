@@ -24,7 +24,7 @@ class MyOutputManager{
               double edep,
               double stepLen,
               double x,
-              double xdep,
+              double zdep,
               double y,
               double z,
               TVector3 postpos);
@@ -46,7 +46,7 @@ class MyOutputManager{
     double fedep;
     double fStepLen;
     double fx;
-    double fxdep;
+    double fzdep;
     double fy;
     double fz;
     TVector3 fpostpos;

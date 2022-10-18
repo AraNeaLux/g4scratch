@@ -306,11 +306,11 @@ void MySteppingAction::UserSteppingAction(const G4Step* step){
   float y = poststeppos.y()/cm;
   float z = poststeppos.z()/cm;
 
-  float xdep = x; 
+  float zdep = z; 
 
   G4ThreeVector shift = presteppos + G4UniformRand()*(poststeppos - presteppos);
   if (step->GetTrack()->GetDefinition()->GetPDGCharge()==0.) shift = presteppos;
-  xdep = shift.x()/cm;
+  zdep = shift.z()/cm;
 
   //printf("%s\n",__PRETTY_FUNCTION__);
 
@@ -319,7 +319,16 @@ void MySteppingAction::UserSteppingAction(const G4Step* step){
   //printf("\n %.02f\t %.02f\t %.02f\n",x,y,z);
 
 
-  MyOutputManager::Get()->fill(fEventID,fTrackID,fStepNum,fVolume,fParticleName,fProcess,ke/keV,edep/keV,fStepLen/um,x/um,xdep/um,y/um,z/um,posvec);
+  MyOutputManager::Get()->fill(fEventID,
+                               fTrackID,
+                               fStepNum,
+                               fVolume,
+                               fParticleName,
+                               fProcess,
+                               ke/keV,
+                               edep/keV,
+                               fStepLen/um,
+                               x/um,zdep/um,y/um,z/um,posvec);
 
   //fflush(stdout);
   writeToLog(__PRETTY_FUNCTION__);
