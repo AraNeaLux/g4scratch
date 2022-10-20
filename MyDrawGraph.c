@@ -1,6 +1,6 @@
-#include <cstdio>
+//#include <cstdio>
  
-TGraph* makeTrack(int event){
+TGraph* makeRSTrack(int event){
 
   // Open file with tree
   TFile *_file0 = TFile::Open("output.root");
@@ -29,19 +29,42 @@ TGraph* makeTrack(int event){
   t1->SetBranchAddress("z",&xpos);
   t1->SetBranchAddress("y",&ypos);
   t1->SetBranchAddress("EventID",&EventID);
+  t1->SetBranchAddress("StepNum",&StepNum);
   t1->SetBranchAddress("Volume",&Volume);
 
+  double theta = 0;
+  double thresh = 0;
+  double weight = 1;
+
   // Add positions to vectors by event number
+  TRandom3* r = new TRandom3();
   for (long i = 0;i<t1->GetEntries();i++){
     t1->GetEntry(i);
-    if (EventID==event){
+    if (EventID==event ){//&& weight < thresh){
+      cout << event << endl;
+      if (StepNum == 1){
+        t1->GetEntry(i+2);  
+        TVector3 scattervec(0,ypos,(xpos-1));
+        theta = scattervec.Theta();
+        thresh = 20*TMath::Exp(theta-TMath::Pi())-0.85;
+        weight = r->Rndm();
+        t1->GetEntry(i);
+      } 
       //cout << xpos << "\t" << ypos << endl;
-      xposvec.push_back(xpos); 
-      yposvec.push_back(ypos);
+      //cout << thresh << "\t" << weight << endl;
+      //if (weight < thresh){
+        xposvec.push_back(xpos); 
+        yposvec.push_back(ypos);
+      //}
     } else if (EventID > event){
       break;
     }
   }
+
+
+  
+
+
 
   // Make graph
   TGraph* gr = new TGraph(xposvec.size(),&(xposvec[0]),&(yposvec[0]));
@@ -54,7 +77,7 @@ TGraph* makeTrack(int event){
   return gr;
 }
 
-TPolyLine* makeDetector(double theta = TMath::Pi()/2.){
+TPolyLine* makeRSDetector(double theta = TMath::Pi()/2.){
 
   // Distance to center of box
   double r = 86000;
@@ -109,7 +132,7 @@ TPolyLine* makeDetector(double theta = TMath::Pi()/2.){
   return box2;
 }
 
-TPolyLine* makeTarget(){
+TPolyLine* makeRSTarget(){
   double x[5] = {-1.,1.,1.,-1.,-1.};
   double y[5] = {-30000.0,-30000.0,30000.0,30000.0,-30000.0};
   TPolyLine *box = new TPolyLine(5,x,y);
@@ -119,37 +142,41 @@ TPolyLine* makeTarget(){
   return box;
 }
 
-void makeSetup(){
-
+TGraph* makeRSBlankCanvas(){
   // Make an "empty" graph with setup dimensions
-  double x[1];
-  double y[1];
-  x[0] = 0;
-  y[0] = 0;
-  TGraph* gr = new TGraph(1,x,y);
-  gr->GetXaxis()->SetLimits(-100000,100000);
-  gr->SetMinimum(-100000);
-  gr->SetMaximum(100000);
+  double x[5] = {-100000.,-100000.,100000.,100000.,-100000};
+  double y[5] = {-100000.,100000.,100000.,-100000.,-100000};
+  TGraph* gr = new TGraph(5,x,y);
+  return gr;
+}
 
-  gr->Draw();
-
+void makeRSSetup(){
   // Place boxes on graph
-  TPolyLine *box = makeTarget();
+  TPolyLine *box = makeRSTarget();
   box->Draw("same");
 
   for (int i=7; i<=17; i++){
-    TPolyLine *box2 = makeDetector(TMath::Pi()*i/6);
+    TPolyLine *box2 = makeRSDetector(TMath::Pi()*i/6);
     box2->Draw("same"); 
   }
-
 }
 
-void makePicture(int num = 10, int start = 0){
-  makeSetup();
+TMultiGraph* makeRSMultiGr(int num=10, int start=10){
+  TMultiGraph* mg = new TMultiGraph;
+  mg->Add(makeRSBlankCanvas());
   for (int i=0;i<num;i++){
-    TGraph* gr = makeTrack(i+start);
-    gr->Draw("same");
+    mg->Add(makeRSTrack(i+start));
+    //gr->Draw("same");
   }
+  return mg;
+}
+
+void makeRSPicture(int num =10, int start = 0){
+  
+  TMultiGraph* mg = makeRSMultiGr(num, start);
+  mg->Draw("Al*");
+  makeRSSetup();
+
 }
 
 void MyDrawGraph(int event = 137){

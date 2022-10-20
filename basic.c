@@ -8,6 +8,7 @@
 #include "MyPrimaryGeneratorAction.h"
 #include "MyRunManager.h"
 #include "MyPhysicsList.h"
+#include "MySensitiveDetector.h"
 
 #include <cstdio>
 #include "G4RunManager.hh"
@@ -52,7 +53,7 @@ int main(int argc, char **argv) {
   runManager->Initialize();
  
   if(argc<2) {
-    runManager->BeamOn(100000);
+    runManager->BeamOn(10000);
   } else {
     int iterations = atoi(argv[1]);
     runManager->BeamOn(iterations);
