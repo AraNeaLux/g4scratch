@@ -2,7 +2,7 @@
 
   new TGeoManager("world", "A simple geometry.");
 
-  TGeoMaterial *mat1 = new TGeoMaterial("Vacuum",2.,1.,0.);
+  TGeoMaterial *mat1 = new TGeoMaterial("Vacuum",1.,0.,0.);
   TGeoMedium *med1 = new TGeoMedium("Vacuum",1,mat1);
   TGeoVolume *myWorld = gGeoManager->MakeBox("myWorld",med1,10.,10.,10.);
 
