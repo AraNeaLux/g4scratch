@@ -37,34 +37,7 @@
 
   //TGeoRotation *rot2 = new TGeoRotation("rot2", 0., 0., 0.);
   //myWorld->AddNode(myLayer1,1, new TGeoCombiTrans(-0.0001001,0.,0.,rot2));
-/*
-  float pi = TMath::Pi();
-
-  double r = 8.6;
-
-  TGeoRotation *drot1p = new TGeoRotation("drot2p", 0. ,90. ,90.);
-  TGeoRotation *drot2p = new TGeoRotation("drot2p", 0. ,90. ,60.);
-  TGeoRotation *drot3p = new TGeoRotation("drot3p", 0. ,90. ,30.);
-  TGeoRotation *drot4p = new TGeoRotation("drot4p", 0. ,90. ,0.);
-  TGeoRotation *drot5p = new TGeoRotation("drot5p", 0. ,90. ,150.);
-  TGeoRotation *drot6p = new TGeoRotation("drot6p", 0. ,90. ,120.);
-  TGeoRotation *drot2n = new TGeoRotation("drot2n", 0. ,90. ,-60.);
-  TGeoRotation *drot3n = new TGeoRotation("drot3n", 0. ,90. ,-30.);
-  TGeoRotation *drot4n = new TGeoRotation("drot4n", 0. ,90. ,0.);
-  TGeoRotation *drot5n = new TGeoRotation("drot5n", 0. ,90. ,-150.);
-  TGeoRotation *drot6n = new TGeoRotation("drot6n", 0. ,90. ,-120.);
-  myWorld->AddNode(myDetector,1, new TGeoCombiTrans(0.,0.,r,drot1p));
-  myWorld->AddNode(myDetector,2, new TGeoCombiTrans(r*sin(pi/6),0.,r*cos(pi/6),drot2p));
-  myWorld->AddNode(myDetector,3, new TGeoCombiTrans(r*sin(pi/3),0.,r*cos(pi/3),drot3p));
-  myWorld->AddNode(myDetector,4, new TGeoCombiTrans(r*sin(pi/2),0.,r*cos(pi/2),drot4p));
-  myWorld->AddNode(myDetector,5, new TGeoCombiTrans(r*sin(pi/3),0.,-r*cos(pi/3),drot5p));
-  myWorld->AddNode(myDetector,6, new TGeoCombiTrans(r*sin(pi/6),0.,-r*cos(pi/6),drot6p));
-  myWorld->AddNode(myDetector,7, new TGeoCombiTrans(-r*sin(pi/6),0.,r*cos(pi/6),drot2n));
-  myWorld->AddNode(myDetector,8, new TGeoCombiTrans(-r*sin(pi/3),0.,r*cos(pi/3),drot3n));
-  myWorld->AddNode(myDetector,9, new TGeoCombiTrans(-r*sin(pi/2),0.,r*cos(pi/2),drot4n));
-  myWorld->AddNode(myDetector,10, new TGeoCombiTrans(-r*sin(pi/3),0.,-r*cos(pi/3),drot5n));
-  myWorld->AddNode(myDetector,11, new TGeoCombiTrans(-r*sin(pi/6),0.,-r*cos(pi/6),drot6n));
-*/
+ 
   gGeoManager->CloseGeometry();
 
   myWorld->SetLineColor(kMagenta);
