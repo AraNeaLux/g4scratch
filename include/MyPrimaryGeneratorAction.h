@@ -20,11 +20,11 @@ class MyPrimaryGeneratorAction : public G4VUserPrimaryGeneratorAction{
             myGun->SetParticleDefinition(particle);
 
             // Particle Energy
-            myGun->SetParticleEnergy(10.*MeV);
+            myGun->SetParticleEnergy(500.*keV);
             // Particle at -10 cm?
-            myGun->SetParticlePosition(G4ThreeVector(-9.*cm,0*cm,0*cm));
+            myGun->SetParticlePosition(G4ThreeVector(0.*cm,0.*cm,-9.*cm));
             // Particle going in +x direction
-            myGun->SetParticleMomentumDirection(G4ThreeVector(1.,0.,0.));
+            myGun->SetParticleMomentumDirection(G4ThreeVector(0.,0.,1.));
 
 /*
             // random gamma camera
@@ -36,8 +36,10 @@ class MyPrimaryGeneratorAction : public G4VUserPrimaryGeneratorAction{
                      uz = cosTheta;
 
             myGun->SetParticleMomentumDirection(G4ThreeVector(ux,uy,uz));
-*/
 
+            // Particle Energy
+            myGun->SetParticleEnergy(.5*MeV);
+*/
             myGun->GeneratePrimaryVertex(anEvent);
         }
 

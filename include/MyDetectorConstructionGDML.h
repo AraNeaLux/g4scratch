@@ -34,24 +34,30 @@ class MyDetectorConstructionGDML : public G4VUserDetectorConstruction{
       G4VPhysicalVolume *fWorld = fParser.GetWorldVolume();
 /*
       G4LogicalVolume *fblock = fParser.GetVolume("myBlock");
-      G4double maxStep = 0.000000001;
-      G4UserLimits *fStepLimit = new G4UserLimits(maxStep,DBL_MAX,DBL_MAX,0.,0.);
+      G4double maxStep = 0.000001;
+      G4UserLimits *fStepLimit = new G4UserLimits(maxStep);
       fblock->SetUserLimits(fStepLimit);
 */
+      G4cout << "Made World" << G4endl;
       return fWorld;
     }
 
-    void ConstructSD(){
+    void ConstructSDandField(){
       G4SDManager *SDman = G4SDManager::GetSDMpointer();
 
-      MySensitiveDetector* aSD = new MySensitiveDetector("detector");
+      G4String SDname = "detector";
+      G4String HCname = "HitsCollectionName";
+      MySensitiveDetector* aSD = new MySensitiveDetector(SDname,HCname);
       SDman->AddNewDetector(aSD);
 
-
-      G4LogicalVolume *fdet = fParser.GetVolume("myDetector");
-      fdet->SetSensitiveDetector(aSD);
+      G4cout << "Added new SD" << G4endl;
 
 
+      G4String volname = "myDetector";
+      //G4LogicalVolume *fdet = fParser.GetVolume(volname);
+      //fdet->SetSensitiveDetector(aSD);
+
+      G4cout << "Added " << volname << G4endl;
 
     }
 

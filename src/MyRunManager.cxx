@@ -3,9 +3,17 @@
 #include "MyDetectorConstructionGDML.h"
 
 #include "G4SystemOfUnits.hh"
+#include "G4Trajectory.hh"
+#include "G4TrajectoryPoint.hh"
+#include "G4AttDef.hh"
 
 #include <cstdio>
 #include <fstream>
+#include <iostream>
+#include <TVector3.h>
+
+#include <string>
+#include <G4String.hh>
 
 //#include <TFile.h>
 
@@ -48,9 +56,9 @@ MyRunManager::~MyRunManager(){
 void MyRunManager::AnalyzeEvent (G4Event *anEvent){
 
 
-  //std::cout << "i am very LOUD" << std::endl;
+//  std::cout << "i am very LOUD" << std::endl;
 
-  //anEvent->Print();
+//  anEvent->Print();
 }
 
 
@@ -108,9 +116,46 @@ void MyEventAction::EndOfEventAction(const G4Event* event){
   double yPrimary = event->GetPrimaryVertex()->GetY0()/cm;
   double zPrimary = event->GetPrimaryVertex()->GetZ0()/cm;
 
+  G4VHitsCollection* hc = event->GetHCofThisEvent()->GetHC(0);
 
   //printf("PRIMARY: %.02f\t %.02f\t %.02f\n",xPrimary,yPrimary,zPrimary);
+/*
+  G4TrajectoryContainer* trajectoryContainer = event->GetTrajectoryContainer();
+  G4int n_trajectories = 0;
+  if (trajectoryContainer) n_trajectories = trajectoryContainer->entries();
 
+  for (G4int i=0;i<n_trajectories;i++){
+    G4VTrajectory *trj = (G4Trajectory*)((*trajectoryContainer)[i]);
+    //G4VTrajectory* trj = (G4Trajectory*)((*(event->GetTrajectoryContainer()))[i]);
+    //G4cout << trj->GetParticleName() << G4endl;
+    G4int n_pts = trj->GetPointEntries();
+    if (n_pts != 6){
+    G4cout << n_pts << G4endl;
+    for (G4int i=0;i<n_pts;i++){
+      
+      G4TrajectoryPoint *pt = (G4TrajectoryPoint*)trj->GetPoint(i);
+      G4ThreeVector intpt = pt->GetPosition();
+      G4cout << intpt << G4endl;
+
+      G4cout << "Map size: " << pt->GetAttDefs()->begin()->second.GetDesc() << G4endl;
+      G4cout << "Vec size: "  << G4endl;
+    }
+    }
+  }
+
+*/
+
+
+/*  
+  G4int eventID = event->GetEventID();
+  if ( eventID < 100 || eventID % 1000 == 0) {
+    G4cout << ">>> Event: " << eventID  << G4endl;
+    if ( trajectoryContainer ) {
+      G4cout << "    " << n_trajectories
+             << " trajectories stored in this event." << G4endl;
+    }
+  }
+*/
 
   //printf("%s\n",__PRETTY_FUNCTION__);
   fflush(stdout);
@@ -129,7 +174,7 @@ MySteppingAction::MySteppingAction():G4UserSteppingAction(){
   fEventID=-1;
   fParticleName="";
   fStepNum=-1;
-  fSubStepNum=-1;
+  fVolume=-1;
   fProcess=-1;
 
 datfile.open("junk.dat");
@@ -151,7 +196,7 @@ MySteppingAction::~MySteppingAction(){
 }
 
 void MySteppingAction::UserSteppingAction(const G4Step* step){
-
+ 
   G4Track *track = step->GetTrack();
   G4String partname = track->GetParticleDefinition()->GetParticleName();
 
@@ -200,16 +245,21 @@ void MySteppingAction::UserSteppingAction(const G4Step* step){
   // VOLUME THINGS
   G4VPhysicalVolume *stepvol = step->GetPreStepPoint()->GetPhysicalVolume();
 
-//  printf(stepvol->GetName());
-//  printf("\n");
-/*
-  if (stepvol == fWorld){
-    printf("World\n");
-  } else if (stepvol == myBlock_1){
-    printf("Block\n");
-  };
-  
-*/
+  const G4String volname = stepvol->GetName();
+  //printf(volname);
+  //printf("\n\n");
+  if (volname == "myWorld_PV"){
+    fVolume = 0;
+  } else if (volname == "myBlock_1"){
+    fVolume = 1;
+  } else if (volname == "myLayer1_1"){
+    fVolume = 2;
+  } else if(volname.contains("myDetector")) {
+      size_t last_index = volname.find_last_not_of("0123456789");
+      std::string result = volname.substr(last_index + 1); 
+      fVolume = atoi(result.c_str())-1 + 13;  
+  }
+
   // ENERGY THINGS
   double ke = step->GetPostStepPoint()->GetKineticEnergy();
   double edep = step->GetTotalEnergyDeposit();
@@ -218,13 +268,17 @@ void MySteppingAction::UserSteppingAction(const G4Step* step){
   std::string processname 
     = step->GetPostStepPoint()->GetProcessDefinedStep()->GetProcessName();
 
+  //G4cout << processname << G4endl;
   if (processname=="Transportation"){fProcess = 0;}
   else if (processname=="UserMaxStep"){fProcess = 1;}
   else if (processname=="hIoni"){fProcess = 2;}
   else if (processname=="CoulombScat"){fProcess = 3;}
   else if (processname=="ionIoni"){fProcess = 4;}
   else if (processname=="hadElastic"){fProcess = 5;}
-  else {fProcess=19375;
+  else if (processname=="alphaInelastic"){fProcess = 6;}
+  else if (processname=="msc"){fProcess = 7;}
+                               //G4cout << processname << G4endl;}
+  else {fProcess=57005;
     G4cout << processname << G4endl;
   };
 
@@ -236,22 +290,27 @@ void MySteppingAction::UserSteppingAction(const G4Step* step){
           << "\t" << z << G4endl;
 */
 
+  // STEP LENGTH THINGS
+  fStepLen = step->GetStepLength();
+
+
   // POSITIONY THINGS
   //step->GetPreStepPoint()->GetPosition();
 
   G4ThreeVector presteppos = step->GetPreStepPoint()->GetPosition()*cm;
   G4ThreeVector poststeppos = step->GetPostStepPoint()->GetPosition()*cm;
 
+  TVector3 posvec = TVector3(poststeppos.x(),poststeppos.y(),poststeppos.z());
+
   float x = poststeppos.x()/cm;
   float y = poststeppos.y()/cm;
   float z = poststeppos.z()/cm;
 
-  float xdep = x; 
+  float zdep = z; 
 
   G4ThreeVector shift = presteppos + G4UniformRand()*(poststeppos - presteppos);
   if (step->GetTrack()->GetDefinition()->GetPDGCharge()==0.) shift = presteppos;
-  xdep = shift.x()/cm;
-
+  zdep = shift.z()/cm;
 
   //printf("%s\n",__PRETTY_FUNCTION__);
 
@@ -260,12 +319,45 @@ void MySteppingAction::UserSteppingAction(const G4Step* step){
   //printf("\n %.02f\t %.02f\t %.02f\n",x,y,z);
 
 
-  MyOutputManager::Get()->fill(fEventID,fTrackID,fStepNum,fSubStepNum,fParticleName,fProcess,ke/keV,edep/keV,x/um,xdep/um,y/um,z/um);
+  MyOutputManager::Get()->fill(fEventID,
+                               fTrackID,
+                               fStepNum,
+                               fVolume,
+                               fParticleName,
+                               fProcess,
+                               ke/keV,
+                               edep/keV,
+                               fStepLen/um,
+                               x/um,zdep/um,y/um,z/um,posvec);
 
   //fflush(stdout);
   writeToLog(__PRETTY_FUNCTION__);
 }
 
+// ...oooOOO0OOOooo......oooOOO0OOOooo......oooOOO0OOOooo...
+// ...oooOOO0OOOooo......oooOOO0OOOooo......oooOOO0OOOooo...
+// ...oooOOO0OOOooo......oooOOO0OOOooo......oooOOO0OOOooo...
+
+/*
+MyTrackingAction::MyTrackingAction():G4UserTrackingAction(){
+  //printf("MyTrackingAction created\n");
+  writeToLog("MyTrackingAction created");
+}
+
+MyTrackingAction::~MyTrackingAction(){
+  //printf("MyTrackingAction destroyed\n");
+  writeToLog("MyTrackingAction destroyed");
+}
+
+void MyTrackingAction::PreUserTrackingAction(const G4Track* track){
+  fpTrackingManager->SetStoreTrajectory(true);
+  writeToLog(__PRETTY_FUNCTION__);
+}
+
+void MyTrackingAction::PostUserTrackingAction(const G4Track* track){
+  writeToLog(__PRETTY_FUNCTION__);
+}
+*/
 // ...oooOOO0OOOooo......oooOOO0OOOooo......oooOOO0OOOooo...
 // ...oooOOO0OOOooo......oooOOO0OOOooo......oooOOO0OOOooo...
 // ...oooOOO0OOOooo......oooOOO0OOOooo......oooOOO0OOOooo...

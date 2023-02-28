@@ -5,6 +5,7 @@
 #include "G4UserRunAction.hh"
 #include "G4UserEventAction.hh"
 #include "G4UserSteppingAction.hh"
+#include "G4UserTrackingAction.hh"
 #include "G4Run.hh"
 #include "G4SystemOfUnits.hh"
 #include <iostream>
@@ -63,12 +64,20 @@ class MySteppingAction : public G4UserSteppingAction {
     std::string fParticleName;
     long fProcess;
     long fStepNum;
-    long fSubStepNum;
+    double fStepLen;
+    long fVolume;
 
 };
 
+// ...oooOOO0OOOooo......oooOOO0OOOooo......oooOOO0OOOooo...
 
+class MyTrackingAction : public G4UserTrackingAction {
+  public:
+    MyTrackingAction();
+    ~MyTrackingAction();
 
-
+    void PreUserTrackingAction(const G4Track*);
+    void PostUserTrackingAction(const G4Track*);
+};
 
 #endif

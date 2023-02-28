@@ -3,6 +3,7 @@
 
 #include <TTree.h>
 #include <TFile.h>
+#include <TVector3.h>
 
 class MyOutputManager{
 
@@ -16,15 +17,17 @@ class MyOutputManager{
     void fill(int eventID,
               int trackID,
               int stepNum,
-              int subStepNum,
+              int volume,
               std::string particleName,
               int process,
               double ke,
               double edep,
+              double stepLen,
               double x,
-              double xdep,
+              double zdep,
               double y,
-              double z);
+              double z,
+              TVector3 postpos);
 
   private:
     MyOutputManager();
@@ -36,15 +39,17 @@ class MyOutputManager{
     int fEventID;
     int fTrackID;
     int fStepNum;
-    int fSubStepNum;
+    int fVolume;
     std::string fParticleName;
     int fProcess;
     double fke;
     double fedep;
+    double fStepLen;
     double fx;
-    double fxdep;
+    double fzdep;
     double fy;
     double fz;
+    TVector3 fpostpos;
 
 };
 

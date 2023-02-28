@@ -1,5 +1,6 @@
 #include "MyOutputManager.h"
 #include <cstdio>
+#include <TVector3.h>
 
 MyOutputManager* MyOutputManager::fptr = 0;
 
@@ -29,15 +30,17 @@ void MyOutputManager::setupTree(const char* fname){
   fTree->Branch("EventID",      &fEventID);     
   fTree->Branch("TrackID",      &fTrackID);     
   fTree->Branch("StepNum",      &fStepNum);     
-  fTree->Branch("SubStepNum",   &fSubStepNum);  
+  fTree->Branch("Volume",       &fVolume);  
   fTree->Branch("ParticleName", &fParticleName); 
   fTree->Branch("Process",      &fProcess);     
   fTree->Branch("ke",           &fke);           
   fTree->Branch("edep",         &fedep);           
+  fTree->Branch("StepLen",      &fStepLen);           
   fTree->Branch("x",            &fx);            
-  fTree->Branch("xdep",         &fxdep);            
+  fTree->Branch("zdep",         &fzdep);            
   fTree->Branch("y",            &fy);            
   fTree->Branch("z",            &fz);            
+  fTree->Branch("postpos",      &fpostpos);            
 
 }
 
@@ -51,13 +54,14 @@ void MyOutputManager::clear(){
   fEventID      = -1;
   fTrackID      = -1;
   fStepNum      = -1;
-  fSubStepNum   = -1; 
+  fVolume       = -1; 
   fParticleName = ""; 
   fProcess      = -1;
   fke           = sqrt(-1); 
   fedep         = sqrt(-1); 
+  fStepLen      = sqrt(-1); 
   fx            = sqrt(-1); 
-  fxdep         = sqrt(-1); 
+  fzdep         = sqrt(-1); 
   fy            = sqrt(-1); 
   fz            = sqrt(-1); 
 
@@ -66,27 +70,31 @@ void MyOutputManager::clear(){
 void MyOutputManager::fill(int eventID,
                            int trackID,
                            int stepNum,
-                           int subStepNum,
+                           int volume,
                            std::string particleName,
                            int process,
                            double ke,
                            double edep,
+                           double stepLen,
                            double x,
-                           double xdep,
+                           double zdep,
                            double y,
-                           double z){
+                           double z,
+                           TVector3 postpos){
   fEventID        = eventID;     
   fTrackID        = trackID;     
   fStepNum        = stepNum;      
-  fSubStepNum     = subStepNum;   
+  fVolume         = volume;   
   fParticleName   = particleName; 
   fProcess        = process;
   fke             = ke;           
   fedep           = edep;           
+  fStepLen           = stepLen;           
   fx              = x;            
-  fxdep           = xdep;            
+  fzdep           = zdep;            
   fy              = y;            
   fz              = z;            
+  fpostpos        = postpos;            
 
   fTree->Fill();
 

@@ -2,36 +2,26 @@
 <gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
   <define>
     <position name="myBlock_1inmyWorldpos" x="0" y="0" z="0" unit="cm"/>
-    <position name="myDetector_1inmyWorldpos" x="-5" y="5" z="0" unit="cm"/>
-    <rotation name="myDetector_1inmyWorldrot" x="-0" y="0" z="45" unit="deg"/>
+    <rotation name="myBlock_1inmyWorldrot" x="-90" y="-0" z="-90" unit="deg"/>
   </define>
   <materials>
-    <material name="Vacuum" Z="8">
+    <material name="Vacuum" Z="1">
       <D unit="g/cm3" value="0"/>
-      <atom unit="g/mole" value="16"/>
+      <atom unit="g/mole" value="1"/>
     </material>
-    <material name="Fe" Z="26">
-      <D unit="g/cm3" value="7.8700000000000001"/>
-      <atom unit="g/mole" value="56"/>
-    </material>
-    <material name="Silicon" Z="14">
-      <D unit="g/cm3" value="2.2999999999999998"/>
-      <atom unit="g/mole" value="28"/>
+    <material name="Aluminum" Z="13">
+      <D unit="g/cm3" value="2.7000000000000002"/>
+      <atom unit="g/mole" value="27"/>
     </material>
   </materials>
   <solids>
     <box name="myWorld" x="20" y="20" z="20" lunit="cm"/>
-    <box name="myBlock0x1" x="0.20000000000000001" y="6" z="10" lunit="cm"/>
-    <box name="myDetector0x1" x="2" y="6" z="10" lunit="cm"/>
+    <box name="myBlock0x1" x="2" y="6" z="10" lunit="cm"/>
   </solids>
   <structure>
     <volume name="myBlock">
-      <materialref ref="Fe"/>
+      <materialref ref="Aluminum"/>
       <solidref ref="myBlock0x1"/>
-    </volume>
-    <volume name="myDetector">
-      <materialref ref="Silicon"/>
-      <solidref ref="myDetector0x1"/>
     </volume>
     <volume name="myWorld">
       <materialref ref="Vacuum"/>
@@ -39,11 +29,7 @@
       <physvol name="myBlock_1" copynumber="1">
         <volumeref ref="myBlock"/>
         <positionref ref="myBlock_1inmyWorldpos"/>
-      </physvol>
-      <physvol name="myDetector_1" copynumber="1">
-        <volumeref ref="myDetector"/>
-        <positionref ref="myDetector_1inmyWorldpos"/>
-        <rotationref ref="myDetector_1inmyWorldrot"/>
+        <rotationref ref="myBlock_1inmyWorldrot"/>
       </physvol>
     </volume>
   </structure>

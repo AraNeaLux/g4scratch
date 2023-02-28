@@ -8,14 +8,18 @@
 #include "MyPrimaryGeneratorAction.h"
 #include "MyRunManager.h"
 #include "MyPhysicsList.h"
+#include "MySensitiveDetector.h"
 
 #include <cstdio>
 #include "G4RunManager.hh"
 #include "FTFP_BERT.hh"
 #include "QBBC.hh"
+#include "QGSP_BERT.hh"
 #include "G4GDMLParser.hh"
 
-int main() {
+#include "G4StepLimiterPhysics.hh"
+
+int main(int argc, char **argv) {
   printf("hello\n");
   
   G4GDMLParser parser;
@@ -27,7 +31,12 @@ int main() {
   //runManager->SetUserInitialization(new MyDetectorConstruction);
   //runManager->SetUserInitialization(new FTFP_BERT());
   //runManager->SetUserInitialization(new QBBC());
-  runManager->SetUserInitialization(new MyPhysicsList());
+  //runManager->SetUserInitialization(new QGSP_BERT());
+
+  G4VModularPhysicsList* physicsList = new MyPhysicsList();
+  //physicsList->RegisterPhysics(new G4StepLimiterPhysics());
+  runManager->SetUserInitialization(physicsList);
+  
  
   runManager->SetUserAction(new MyPrimaryGeneratorAction());
  
@@ -39,11 +48,18 @@ int main() {
  // runManager->SetUserAction(/*  TrackingAction   */);
  // runManager->SetUserAction(/*  SteppingAction   */);
   runManager->SetUserAction(new MySteppingAction());
+  //runManager->SetUserAction(new MyTrackingAction());
  
   runManager->Initialize();
  
-  runManager->BeamOn(10000);
+  if(argc<2) {
+    runManager->BeamOn(10000);
+  } else {
+    int iterations = atoi(argv[1]);
+    runManager->BeamOn(iterations);
+  }
  
+
   delete runManager; 
  
  
