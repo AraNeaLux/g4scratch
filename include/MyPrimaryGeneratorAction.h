@@ -11,6 +11,14 @@
 class MyPrimaryGeneratorAction : public G4VUserPrimaryGeneratorAction{
     public:
 
+        MyPrimaryGeneratorAction(double energy = 500):G4VUserPrimaryGeneratorAction(){
+            fEnergy=energy;
+
+        }
+        virtual ~MyPrimaryGeneratorAction(){}
+
+        double fEnergy;
+
         void GeneratePrimaries(G4Event* anEvent){
             G4ParticleGun* myGun = new G4ParticleGun();
 
@@ -20,7 +28,7 @@ class MyPrimaryGeneratorAction : public G4VUserPrimaryGeneratorAction{
             myGun->SetParticleDefinition(particle);
 
             // Particle Energy
-            myGun->SetParticleEnergy(500.*keV);
+            myGun->SetParticleEnergy(fEnergy*keV);
             // Particle at -10 cm?
             myGun->SetParticlePosition(G4ThreeVector(0.*cm,0.*cm,-9.*cm));
             // Particle going in +x direction
