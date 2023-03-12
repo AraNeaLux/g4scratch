@@ -16,7 +16,7 @@
 
 class MyRunManager : public G4RunManager{
   public: 
-    MyRunManager();
+    MyRunManager(std::string fName = "output.root");
     ~MyRunManager();
 
 

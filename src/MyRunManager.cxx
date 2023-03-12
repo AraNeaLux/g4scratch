@@ -36,11 +36,11 @@ std::fstream datfile;
 
 
 
-MyRunManager::MyRunManager():G4RunManager(){
+MyRunManager::MyRunManager(std::string fName):G4RunManager(){
   //printf("MyRunManager created\n");
   writeToLog("--- BEGIN OF RUN ---",1);
 
-  MyOutputManager::Get()->setupTree();
+  MyOutputManager::Get()->setupTree(fName.c_str());
 
 }
 

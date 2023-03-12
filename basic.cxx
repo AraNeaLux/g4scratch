@@ -22,10 +22,21 @@
 int main(int argc, char **argv) {
   printf("hello\n");
   
+  double energy = 500;
+  std::string fName = "output";
+  if (argc>1){
+    energy = atof(argv[1]);
+    std::string e(argv[1]);
+    fName += e;
+  }
+  fName += ".root";
+
+
   G4GDMLParser parser;
   parser.Read("simplegeometry.gdml");
- 
-  MyRunManager * runManager = new MyRunManager;
+
+   
+  MyRunManager * runManager = new MyRunManager(fName);
  
   runManager->SetUserInitialization(new MyDetectorConstructionGDML(parser));
   //runManager->SetUserInitialization(new MyDetectorConstruction);
@@ -38,7 +49,7 @@ int main(int argc, char **argv) {
   runManager->SetUserInitialization(physicsList);
   
  
-  runManager->SetUserAction(new MyPrimaryGeneratorAction());
+  runManager->SetUserAction(new MyPrimaryGeneratorAction(energy));
  
  // runManager->SetUserAction(/*  StackingAction   */);
  // runManager->SetUserAction(/*  RunAction   */);

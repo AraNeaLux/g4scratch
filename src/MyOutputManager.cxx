@@ -24,7 +24,7 @@ MyOutputManager::~MyOutputManager() {
 
 
 void MyOutputManager::setupTree(const char* fname){
-  foutput = new TFile("output.root","recreate");
+  foutput = new TFile(fname,"recreate");
   fTree = new TTree("t1","My Awesome Tree!");
 
   fTree->Branch("EventID",      &fEventID);     
