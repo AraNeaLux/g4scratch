@@ -1,12 +1,13 @@
 
 
 #include "MyDetectorConstruction.h"
-
+//#include <filesystem>
 #include <G4GDMLParser.hh>
 
 void MyDetectorConstruction::WriteGDML(G4VPhysicalVolume *world) {
   G4GDMLParser parser;
-  std::filesystem::remove("geo_test.gdml");
+  //std::filesystem::remove("geo_test.gdml");
+  std::remove("geo_test.gdml");
   parser.Write("geo_test.gdml",world);
 }
 
