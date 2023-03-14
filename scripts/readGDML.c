@@ -1,11 +1,11 @@
-{
-  new TGeoManager("worldcopy", "Read a simple geometry.");
-  TGeoManager::Import("simplegeometry.gdml");
+void readGDML(const char *fname="simplegeometry.gdml") {
+  TGeoManager *gm = new TGeoManager("worldcopy", "Read a simple geometry.");
+  TGeoManager::Import(fname);
 
-  worldcopyTopVol = gGeoManager->GetTopVolume();
+  TGeoVolume *worldcopyTopVol = gGeoManager->GetTopVolume();
   //worldcopyTopVol->SetLineColor(kMagenta);
   //myBlock->SetLineColor(kCyan);
-  gGeoManager->SetTopVisible();
+  gm->SetTopVisible();
   worldcopyTopVol->Draw();
 
 }

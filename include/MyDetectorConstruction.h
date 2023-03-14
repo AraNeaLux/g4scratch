@@ -14,7 +14,13 @@ class MyDetectorConstruction : public G4VUserDetectorConstruction{
     MyDetectorConstruction(){}
     ~MyDetectorConstruction(){}
 
-    G4VPhysicalVolume* Construct();
+    virtual G4VPhysicalVolume* Construct();
+
+    void WriteGDML(G4VPhysicalVolume*);
+
+  private:
+    G4VPhysicalVolume* fPhysWorld;
+
 
 };
 
