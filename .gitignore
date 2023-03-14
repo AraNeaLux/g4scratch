@@ -2,3 +2,6 @@
 *.log
 *.root
 a.out
+basic
+/build
+/bin
