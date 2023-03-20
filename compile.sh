@@ -18,5 +18,5 @@ INC+=" -I./include "
 
 
 echo g++ $CFLAGS basic.c $SRC $INC $GFLAGS $LIBS $(root-config --cflags --libs) -ltbb
-g++ $CFLAGS basic.c $SRC $INC $GFLAGS $LIBS $(root-config --cflags --libs) -ltbb
+g++ $CFLAGS basic.cxx $SRC $INC $GFLAGS $LIBS $(root-config --cflags --libs) -ltbb
 
