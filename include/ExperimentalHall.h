@@ -15,6 +15,8 @@ class ExperimentalHall {
 
     void SetXYZ(double x, double y, double z);
 
+    G4LogicalVolume    *GetLogical()   { return fExpHallLogical;  }
+    G4VPhysicalVolume  *GetPhysical()  { return fExpHallPhysical; }
 
   private:
     double fExpHallX;

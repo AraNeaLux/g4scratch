@@ -1,7 +1,3 @@
-// g++ -Wl,--copy-dt-needed-entries basic.c MyRunManager.cxx MyOutputManager.cxx `geant4-config --cflags --libs`
-
-
-// g++ -Wl,--copy-dt-needed-entries basic.c MyRunManager.cxx MyOutputManager.cxx -DG4VIS_USE_OPENGL -DG4UI_USE_TCSH -DG4INTY_USE_QT -DG4UI_USE_QT -DG4VIS_USE_OPENGLQT -I/usr/include/QtCore -I/usr/include/QtGui -I/usr/include/QtOpenGL -W -Wall -pedantic -Wno-non-virtual-dtor -Wno-long-long -Wwrite-strings -Wpointer-arith -Woverloaded-virtual -Wno-variadic-macros -pipe -DG4USE_STD11 -pthread -ftls-model=initial-exec -std=c++11 -DG4MULTITHREADED -I/opt/geant4.10.05-install/bin/../include/Geant4  `geant4-config --libs` `root-config --cflags --libs` -ltbb
 
 //#include "MyDetectorConstructionGDML.h"
 #include "MyDetectorConstruction.h"
@@ -9,6 +5,8 @@
 #include "MyRunManager.h"
 #include "MyPhysicsList.h"
 #include "MySensitiveDetector.h"
+
+#include "ExperimentConstruction.h"
 
 #include <cstdio>
 #include "G4RunManager.hh"
@@ -31,15 +29,19 @@ int main(int argc, char **argv) {
   }
   fName += ".root";
 
-
-//  G4GDMLParser parser;
-//  parser.Read("simplegeometry.gdml");
-
-   
+  //G4MTRunManager *runManager = new ....
   MyRunManager * runManager = new MyRunManager(fName);
- 
+
+//experimental setup
+  ExperimentConstruction *experiment = new ExperimentConstruction();
+  experiment->Construct();
+  experiment->writeGDML();
+  runManager->SetUserInitialization(experiment);
+  
+
+//physics list.... 
 //  runManager->SetUserInitialization(new MyDetectorConstructionGDML(parser));
-  runManager->SetUserInitialization(new MyDetectorConstruction);
+//  runManager->SetUserInitialization(new MyDetectorConstruction);
   //runManager->SetUserInitialization(new FTFP_BERT());
   //runManager->SetUserInitialization(new QBBC());
   //runManager->SetUserInitialization(new QGSP_BERT());
@@ -47,6 +49,7 @@ int main(int argc, char **argv) {
   //physicsList->RegisterPhysics(new G4StepLimiterPhysics());
   runManager->SetUserInitialization(physicsList);
   
+
  
   runManager->SetUserAction(new MyPrimaryGeneratorAction(energy));
  
@@ -59,8 +62,14 @@ int main(int argc, char **argv) {
  // runManager->SetUserAction(/*  SteppingAction   */);
   runManager->SetUserAction(new MySteppingAction());
   //runManager->SetUserAction(new MyTrackingAction());
+
+
+  std::cout << " I AM HERE 1" << std::endl;
  
   runManager->Initialize();
+
+  std::cout << " I AM HERE 2" << std::endl;
+
  
   if(argc<2) {
     runManager->BeamOn(10000);

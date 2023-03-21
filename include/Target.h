@@ -10,6 +10,9 @@ class Target {
     ~Target();
 
     G4VPhysicalVolume *Construct();
+    
+    //G4LogicalVolume    *GetLogical()   { return fTargetLogical;  }
+    //G4VPhysicalVolume  *GetPhysical()  { return fTargetPhysical; }
 
   private:
     G4LogicalVolume *fParent;
