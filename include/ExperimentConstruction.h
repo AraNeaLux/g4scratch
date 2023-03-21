@@ -1,23 +1,25 @@
 #ifndef __EXPERIMENTCONSTUCTION_H__
 #define __EXPERIMENTCONSTUCTION_H__
 
-#include <G4UserDetectorConstruction.hh>
+#include <G4VUserDetectorConstruction.hh>
 
-class G4PhysicalVolume;
+class G4VPhysicalVolume;
+class ExperimentalHall;
 
-class ExperimentConstruction : public G4UserDetectorConstrution {
+class ExperimentConstruction : public G4VUserDetectorConstruction {
   public:
-    ExperimentConstuction();  
-    ~ExperimentConstuction();  
+    ExperimentConstruction();  
+    ~ExperimentConstruction();  
+    
+    virtual G4VPhysicalVolume *Construct();
 
-    virtual G4PhysicalVolume *Constuct();
+    void writeGDML(std::string oname="experiment.gdml");
 
-    void writeGDML();
-
+    ExperimentalHall *GetHall() { return fExpHall; } 
 
   private:
+     ExperimentalHall *fExpHall;
     
-
 
 };
 
