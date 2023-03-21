@@ -1,12 +1,13 @@
 
 
 #include "MyDetectorConstruction.h"
-
+//#include <filesystem>
 #include <G4GDMLParser.hh>
 
 void MyDetectorConstruction::WriteGDML(G4VPhysicalVolume *world) {
   G4GDMLParser parser;
-  std::filesystem::remove("geo_test.gdml");
+  //std::filesystem::remove("geo_test.gdml");
+  std::remove("geo_test.gdml");
   parser.Write("geo_test.gdml",world);
 }
 
@@ -51,6 +52,10 @@ G4VPhysicalVolume* MyDetectorConstruction::Construct(){
   G4LogicalVolume* logicDetector = new G4LogicalVolume(solidDetector, 
       Si, "myDetector");
 
+
+
+
+
   // Place world
   //G4VPhysicalVolume* physWorld = new G4PVPlacement(
   fPhysWorld = new G4PVPlacement(
@@ -74,6 +79,34 @@ G4VPhysicalVolume* MyDetectorConstruction::Construct(){
       0,                  //copy number
       true);                      //overlaps checking 
 
+
+  // Set parameters for rotated placement
+  G4int nb_cryst = 8;
+  G4int ring_rad = 8*cm;
+  G4double dPhi = CLHEP::twopi/nb_cryst, half_dPhi = 0.5*dPhi;
+  G4double cosdPhi = std::cos(half_dPhi);
+  G4double tandPhi = std::tan(half_dPhi);
+  G4double ring_R1 = 0.5*ring_rad/tandPhi;
+
+  // Place detector(s)
+  for (G4int icrys = 0; icrys < nb_cryst ; icrys++) {
+    G4double phi = icrys*dPhi;
+    G4RotationMatrix rotm  = G4RotationMatrix();
+    rotm.rotateY(90*CLHEP::deg);
+    rotm.rotateZ(phi);
+    G4ThreeVector uz = G4ThreeVector(std::cos(phi),  std::sin(phi),0.);
+    G4ThreeVector position = (ring_R1+0.5*0.5*cm)*uz;
+    G4Transform3D transform = G4Transform3D(rotm,position);
+
+    new G4PVPlacement(transform,             //rotation,position
+                      logicDetector,            //its logical volume
+                      "detector",             //its name
+                      logicWorld,             //its mother  volume
+                      false,                 //no boolean operation
+                      icrys,                 //copy number
+                      true);       // checking overlaps 
+  }
+
 /*
   // Place detector
   G4Transform3D t = G4Translate3D(0.,0.,7.*cm) * G4Rotate3D(1,G4ThreeVector(1,0,0).unit());
@@ -87,7 +120,7 @@ G4VPhysicalVolume* MyDetectorConstruction::Construct(){
       false,                      //no boolean operation
       0,                  //copy number
       true);                      //overlaps checking 
-*/
+
 
   // Place detector
   G4VPhysicalVolume* physDetector = new G4PVPlacement(
@@ -99,7 +132,7 @@ G4VPhysicalVolume* MyDetectorConstruction::Construct(){
       false,                      //no boolean operation
       0,                  //copy number
       true);                      //overlaps checking 
-
+*/
 
 
 
