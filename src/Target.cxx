@@ -38,7 +38,7 @@ G4VPhysicalVolume *Target::Construct() {
 
   G4VPhysicalVolume *targetPhysical = new G4PVPlacement(
                                       0,               // no rotation
-                                      G4ThreeVector(), // at (0,0,0)
+                                      G4ThreeVector(1000,1000,1000), // at (0,0,0)
                                       targetLogical,   // its logical volume
                                       "target_P",      // its name
                                       fParent,         // its morther volume (logical)
