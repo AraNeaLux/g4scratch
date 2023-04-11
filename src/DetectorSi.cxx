@@ -18,9 +18,12 @@ DetectorSi::DetectorSi(G4LogicalVolume *parent) : fParent(parent) {
 DetectorSi::~DetectorSi() { } 
 
 G4VPhysicalVolume *DetectorSi::Construct() {
+
+  // Make Si Material
   G4NistManager* nist = G4NistManager::Instance();
   G4Material* Si  = nist->FindOrBuildMaterial("G4_Si");
 
+  // Make vacuum
   G4double atomicNumber = 1.;
   G4double massOfMole = 1.008*CLHEP::g/CLHEP::mole;
   G4double density = 1.e-25*CLHEP::g/CLHEP::cm3;
@@ -30,6 +33,7 @@ G4VPhysicalVolume *DetectorSi::Construct() {
                                        massOfMole, density, kStateGas,
                                        temperature, pressure);
 
+  // Variables for ring and detector size
   G4double cryst_dX = 0*CLHEP::cm;
   G4double cryst_dY = 2*CLHEP::cm;
   G4double cryst_dZ = 0.5*CLHEP::cm; 
@@ -38,11 +42,12 @@ G4VPhysicalVolume *DetectorSi::Construct() {
   G4double cosdPhi = std::cos(half_dPhi);
   G4double tandPhi = std::tan(half_dPhi);
 
-  G4double ring_R1 = 8*CLHEP::cm;
-  G4double ring_R2 = 9*CLHEP::cm;
+  G4double ring_R1 = 15*CLHEP::cm;
+  G4double ring_R2 = 16*CLHEP::cm;
   //G4double ring_R1 = 0.5*cryst_dY/tandPhi;
   //G4double ring_R2 = (ring_R1+cryst_dZ)/cosdPhi;
 
+  // Making the ring
   G4Tubs* ring =
     new G4Tubs("Ring", ring_R1, ring_R2, 0.5*cryst_dY, 0., CLHEP::twopi);
 
@@ -51,10 +56,12 @@ G4VPhysicalVolume *DetectorSi::Construct() {
                         vacuum,                  //its material
                         "Ring");             //its name
 
-
+  // Making a detector
   G4VSolid* detectorSi = new G4Tubs("detectorSi",cryst_dX,cryst_dY,cryst_dZ,
                                     0*CLHEP::deg,360.*CLHEP::deg);
   G4LogicalVolume* detectorSiLogic = new G4LogicalVolume(detectorSi, Si, "myDetectorSi");
+
+  // Place single detector
 /*
   G4VPhysicalVolume *detectorSiPhysical = new G4PVPlacement(
                                       0,               // no rotation
@@ -66,10 +73,9 @@ G4VPhysicalVolume *DetectorSi::Construct() {
                                       0,               // copy number
                                       true);           // overlap checking
   G4cout << "PLACED DETECTOR" << G4endl;
-
-  //
-
 */
+
+  // Place 
   for (G4int icrys = 0; icrys < nb_cryst ; icrys++) {
     G4double phi = icrys*dPhi;
     G4RotationMatrix rotm  = G4RotationMatrix();
