@@ -22,7 +22,10 @@ G4VPhysicalVolume *ExperimentConstruction::Construct() {
   Target *target = new Target(fExpHall->GetLogical());
   target->Construct();
 
-  DetectorSi *detectorSi = new DetectorSi(fExpHall->GetLogical());
+  DetectorSi *detectorSi = new DetectorSi(fExpHall->GetLogical(),15,45);
+  detectorSi->Construct();
+
+  detectorSi = new DetectorSi(fExpHall->GetLogical(),15,-45);
   detectorSi->Construct();
 
   return fExpHall->GetPhysical();

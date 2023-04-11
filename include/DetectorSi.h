@@ -6,7 +6,7 @@ class G4VPhysicalVolume;
 
 class DetectorSi {
   public:
-    DetectorSi(G4LogicalVolume *parent);
+    DetectorSi(G4LogicalVolume *parent, double radius, double angle); 
     ~DetectorSi();
 
     G4VPhysicalVolume *Construct();
@@ -16,6 +16,12 @@ class DetectorSi {
 
   private:
     G4LogicalVolume *fParent;
+    double fRadius;
+    double fAngle;
+    int fCopyNum;
+    double fCrystRad;
+    double fCrystZ;
+    static int fCopyCounter;
 
 };
 
