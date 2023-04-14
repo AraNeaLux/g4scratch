@@ -3,8 +3,11 @@
 #include "ExperimentalHall.h"
 #include "Target.h"
 #include "DetectorSi.h"
+#include "DetectorGe.h"
+#include "MySensitiveDetector.h"
 
 #include <G4GDMLParser.hh>
+#include <G4SDManager.hh>
 
 #include <fstream>
 #include <cstdio>
@@ -22,13 +25,46 @@ G4VPhysicalVolume *ExperimentConstruction::Construct() {
   Target *target = new Target(fExpHall->GetLogical());
   target->Construct();
 
-  DetectorSi *detectorSi = new DetectorSi(fExpHall->GetLogical(),15,45);
+  DetectorSi *detectorSi = new DetectorSi(fExpHall->GetLogical(),10,45);
   detectorSi->Construct();
 
-  detectorSi = new DetectorSi(fExpHall->GetLogical(),15,-45);
+  detectorSi = new DetectorSi(fExpHall->GetLogical(),10,-45);
   detectorSi->Construct();
+
+  DetectorGe *detectorGe = new DetectorGe(fExpHall->GetLogical(),20,135);
+  detectorGe->Construct();
+
+  detectorGe = new DetectorGe(fExpHall->GetLogical(),20,-135);
+  detectorGe->Construct();
+
+  detectorGe = new DetectorGe(fExpHall->GetLogical(),20,45);
+  detectorGe->Construct();
+
+  detectorGe = new DetectorGe(fExpHall->GetLogical(),20,-45);
+  detectorGe->Construct();
 
   return fExpHall->GetPhysical();
+}
+
+void ExperimentConstruction::ConstructSDandField() {
+
+  G4SDManager *SDman = G4SDManager::GetSDMpointer();
+
+  G4String SDname = "detectorSi_l";
+  G4String HCname = "HCnameSi";
+  MySensitiveDetector* SDSi = new MySensitiveDetector(SDname,HCname);
+  SDman->GetSDMpointer()->AddNewDetector(SDSi);
+  SetSensitiveDetector(SDname,SDSi,true);
+
+  G4cout << "Added detectorSi SD" << G4endl;
+
+  SDname = "detectorGe_l";
+  HCname = "HCnameGe";
+  MySensitiveDetector* SDGe = new MySensitiveDetector(SDname,HCname);
+  SDman->GetSDMpointer()->AddNewDetector(SDGe);
+  SetSensitiveDetector(SDname,SDGe,true);
+
+  G4cout << "Added detectorGe SD" << G4endl;
 }
 
 void ExperimentConstruction::writeGDML(std::string ofile) {

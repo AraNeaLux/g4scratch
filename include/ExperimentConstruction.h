@@ -13,6 +13,8 @@ class ExperimentConstruction : public G4VUserDetectorConstruction {
     
     virtual G4VPhysicalVolume *Construct();
 
+    void ConstructSDandField();
+
     void writeGDML(std::string oname="experiment.gdml");
 
     ExperimentalHall *GetHall() { return fExpHall; } 

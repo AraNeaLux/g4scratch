@@ -1,5 +1,5 @@
 
-#include "DetectorSi.h"
+#include "DetectorGe.h"
 #include "Materials.h"
 
 #include <G4LogicalVolume.hh>
@@ -10,25 +10,25 @@
 
 #include <G4NistManager.hh>
 
-int DetectorSi::fCopyCounter = 100;
+int DetectorGe::fCopyCounter = 100;
 
-DetectorSi::DetectorSi(G4LogicalVolume *parent, double radius, double angle) : fParent(parent) {
+DetectorGe::DetectorGe(G4LogicalVolume *parent, double radius, double angle) : fParent(parent) {
   fRadius = radius;
   fAngle = angle;
   fCopyNum = fCopyCounter++;
-  fCrystRad = 2*CLHEP::cm;
-  fCrystZ = 0.5*CLHEP::cm;
+  fCrystRad = 4.*CLHEP::cm;
+  fCrystZ = 15.*CLHEP::cm/2.; // divide bc weird G4 things
 
 }
 
-DetectorSi::~DetectorSi() { } 
+DetectorGe::~DetectorGe() { } 
 
-G4VPhysicalVolume *DetectorSi::Construct() {
+G4VPhysicalVolume *DetectorGe::Construct() {
 
   // Making a detector
-  G4VSolid* detectorSi = new G4Tubs("detectorSi",0,fCrystRad,fCrystZ,
+  G4VSolid* detectorGe = new G4Tubs("detectorGe",0,fCrystRad,fCrystZ,
                                     0*CLHEP::deg,360.*CLHEP::deg);
-  G4LogicalVolume* detectorSiLogic = new G4LogicalVolume(detectorSi, Materials::Get("Si"), "detectorSi_l");
+  G4LogicalVolume* detectorGeLogic = new G4LogicalVolume(detectorGe, Materials::Get("Ge"), "detectorGe_l");
 
   // Place single detector
 
@@ -40,15 +40,15 @@ G4VPhysicalVolume *DetectorSi::Construct() {
     G4ThreeVector position = (fRadius*CLHEP::cm+fCrystZ/2.)*uz;
     G4Transform3D transform = G4Transform3D(rotm,position);
 
-  G4VPhysicalVolume *detectorSiPhysical = new G4PVPlacement(
+  G4VPhysicalVolume *detectorGePhysical = new G4PVPlacement(
                                       transform, 
-                                      detectorSiLogic,   // its logical volume
-                                      "detectorSi_p",      // its name
+                                      detectorGeLogic,   // its logical volume
+                                      "detectorGe_p",      // its name
                                       fParent,         // its morther volume (logical)
                                       false,           // no boolean operation
                                       fCopyNum,               // copy number
                                       true);           // overlap checking
 
-  return detectorSiPhysical;
+  return detectorGePhysical;
 }
 
