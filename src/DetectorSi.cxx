@@ -1,6 +1,7 @@
 
 #include "DetectorSi.h"
 #include "Materials.h"
+#include "MySensitiveDetector.h"
 
 #include <G4LogicalVolume.hh>
 #include <G4VPhysicalVolume.hh>
@@ -29,6 +30,8 @@ G4VPhysicalVolume *DetectorSi::Construct() {
   G4VSolid* detectorSi = new G4Tubs("detectorSi",0,fCrystRad,fCrystZ,
                                     0*CLHEP::deg,360.*CLHEP::deg);
   G4LogicalVolume* detectorSiLogic = new G4LogicalVolume(detectorSi, Materials::Get("Si"), "detectorSi_l");
+
+  detectorSiLogic->SetSensitiveDetector();
 
   // Place single detector
 
