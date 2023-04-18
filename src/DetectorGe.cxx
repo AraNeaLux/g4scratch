@@ -10,7 +10,7 @@
 
 #include <G4NistManager.hh>
 
-int DetectorGe::fCopyCounter = 100;
+int DetectorGe::fCopyCounter = 200;
 
 DetectorGe::DetectorGe(G4LogicalVolume *parent, double radius, double angle) : fParent(parent) {
   fRadius = radius;

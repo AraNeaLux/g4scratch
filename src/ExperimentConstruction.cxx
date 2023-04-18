@@ -2,6 +2,7 @@
 #include "ExperimentConstruction.h"
 #include "ExperimentalHall.h"
 #include "Target.h"
+#include "VacChamber.h"
 #include "DetectorSi.h"
 #include "DetectorGe.h"
 #include "MySensitiveDetector.h"
@@ -24,6 +25,9 @@ G4VPhysicalVolume *ExperimentConstruction::Construct() {
   
   Target *target = new Target(fExpHall->GetLogical());
   target->Construct();
+
+  //VacChamber *vacChamber = new VacChamber(fExpHall->GetLogical());
+  //vacChamber->Construct();
 
   DetectorSi *detectorSi = new DetectorSi(fExpHall->GetLogical(),10,45);
   detectorSi->Construct();

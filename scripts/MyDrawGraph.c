@@ -1,9 +1,11 @@
 //#include <cstdio>
- 
+
+// Makes a graph with a single track
+// Called by makeRSMultigraph 
 TGraph* makeRSTrack(int event){
 
   // Open file with tree
-  TFile *_file0 = TFile::Open("output.root");
+  TFile *_file0 = TFile::Open("/home/zhou/sandbox/g4scratch/build/output.root");
   TTree *t1 = (TTree*)_file0->Get("t1");
 
   // Make vectors to store track data
@@ -61,11 +63,6 @@ TGraph* makeRSTrack(int event){
     }
   }
 
-
-  
-
-
-
   // Make graph
   TGraph* gr = new TGraph(xposvec.size(),&(xposvec[0]),&(yposvec[0]));
 
@@ -77,6 +74,8 @@ TGraph* makeRSTrack(int event){
   return gr;
 }
 
+// Makes the display boxes for the detectors
+// Called by makeRSSetup
 TPolyLine* makeRSDetector(double theta = TMath::Pi()/2.){
 
   // Distance to center of box
@@ -132,6 +131,9 @@ TPolyLine* makeRSDetector(double theta = TMath::Pi()/2.){
   return box2;
 }
 
+// Makes display target box
+// Called by makeRSSetup
+
 TPolyLine* makeRSTarget(){
   double x[5] = {-1.,1.,1.,-1.,-1.};
   double y[5] = {-30000.0,-30000.0,30000.0,30000.0,-30000.0};
@@ -142,6 +144,8 @@ TPolyLine* makeRSTarget(){
   return box;
 }
 
+// Makes blank canvas to put all the things
+// Called by makeRSMultiGr
 TGraph* makeRSBlankCanvas(){
   // Make an "empty" graph with setup dimensions
   double x[5] = {-100000.,-100000.,100000.,100000.,-100000};
@@ -150,6 +154,8 @@ TGraph* makeRSBlankCanvas(){
   return gr;
 }
 
+// Makes display for setup
+// Called by makeRSPicture
 void makeRSSetup(){
   // Place boxes on graph
   TPolyLine *box = makeRSTarget();
@@ -161,6 +167,8 @@ void makeRSSetup(){
   }
 }
 
+// Makes multigraph of all the tracks
+// Called by makeRSPicture
 TMultiGraph* makeRSMultiGr(int num=10, int start=10){
   TMultiGraph* mg = new TMultiGraph;
   mg->Add(makeRSBlankCanvas());

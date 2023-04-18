@@ -74,7 +74,7 @@ int main(int argc, char **argv) {
   if(argc<2) {
     runManager->BeamOn(10000);
   } else {
-    int iterations = atoi(argv[1]);
+    int iterations = atoi(argv[2]);
     runManager->BeamOn(iterations);
   }
  
